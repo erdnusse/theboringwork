@@ -4,6 +4,7 @@ import { ArrowLeft, Bath, Bed, Building, Calendar, Heart, MapPin, MoveHorizontal
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PropertyCard } from "@/components/property-card"
+import { SiteHeader } from "@/components/site-header"
 
 export default function PropertyDetailPage({ params }: { params: { slug: string } }) {
   // This would normally fetch the property data based on the slug
@@ -33,50 +34,13 @@ export default function PropertyDetailPage({ params }: { params: { slug: string 
       title: "Senior Real Estate Agent",
       phone: "(555) 123-4567",
       email: "sophia@estateelit.com",
-      image: "/placeholder.svg?height=300&width=300&query=professional woman realtor",
+      image: "/confident-realtor.png",
     },
   }
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="bg-white border-b sticky top-0 z-40">
-        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <Building className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">EstateElite</span>
-          </Link>
-          <nav className="hidden md:flex gap-6">
-            <Link href="/" className="text-sm font-medium hover:underline underline-offset-4">
-              Home
-            </Link>
-            <Link href="/properties" className="text-sm font-medium hover:underline underline-offset-4 underline">
-              Properties
-            </Link>
-            <Link href="/agents" className="text-sm font-medium hover:underline underline-offset-4">
-              Agents
-            </Link>
-            <Link href="/about" className="text-sm font-medium hover:underline underline-offset-4">
-              About
-            </Link>
-            <Link href="/contact" className="text-sm font-medium hover:underline underline-offset-4">
-              Contact
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <Link href="/dashboard" className="text-sm font-medium hover:underline underline-offset-4 hidden md:block">
-              Dashboard
-            </Link>
-            <Link href="/sign-in">
-              <Button variant="outline" size="sm">
-                Sign In
-              </Button>
-            </Link>
-            <Link href="/sign-up">
-              <Button size="sm">Sign Up</Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
       <main className="flex-1">
         <div className="container px-4 py-6 md:px-6 md:py-12">
           <div className="flex items-center mb-6">

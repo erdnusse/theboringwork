@@ -3,17 +3,7 @@ import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs/server"
 import { UserButton } from "@clerk/nextjs"
 import Link from "next/link"
-import {
-  BarChart3,
-  ChevronDown,
-  FileText,
-  LayoutDashboard,
-  MessageSquare,
-  Settings,
-  Users,
-  Briefcase,
-  PieChart,
-} from "lucide-react"
+import { ChevronDown, LayoutDashboard, MessageSquare, Settings, Briefcase } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -112,48 +102,14 @@ export default async function DashboardLayout({
               <LayoutDashboard className="h-4 w-4" />
               Overview
             </Link>
+
             <Link
-              href="/dashboard/clients"
+              href="/dashboard/email"
               className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"
             >
-              <Users className="h-4 w-4" />
-              Clients
-            </Link>
-            <Link
-              href="/dashboard/projects"
-              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"
-            >
-              <Briefcase className="h-4 w-4" />
-              Projects
-            </Link>
-            <Link
-              href="/dashboard/reports"
-              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"
-            >
-              <BarChart3 className="h-4 w-4" />
-              Reports
-            </Link>
-            <Link
-              href="/dashboard/analytics"
-              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"
-            >
-              <PieChart className="h-4 w-4" />
-              Analytics
-            </Link>
-            <Link
-              href="/dashboard/documents"
-              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"
-            >
-              <FileText className="h-4 w-4" />
-              Documents
-            </Link>
-            <Link
-              href="/dashboard/messages"
-              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"
-            >
-              <MessageSquare className="h-4 w-4" />
-              Messages
-            </Link>
+              <LayoutDashboard className="h-4 w-4" />
+              Email
+              </Link>
             <Link
               href="/dashboard/settings"
               className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"

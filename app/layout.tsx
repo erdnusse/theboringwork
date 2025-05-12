@@ -7,8 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "EstateElite - Modern Real Estate Platform",
-  description: "Find your dream home with EstateElite, the modern real estate platform.",
+  title: "Rita Barrela",
+  description: "",
     generator: 'v0.dev'
 }
 

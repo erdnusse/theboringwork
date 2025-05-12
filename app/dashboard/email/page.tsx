@@ -40,7 +40,7 @@ export default function EmailSettingsPage() {
     clientId: "",
     clientSecret: "",
     authCode: "",
-    testEmail: "",
+    testEmail: "marco.damiao@gmail.com",
   }
 
   const form = useForm<OAuthSettingsFormValues>({
@@ -205,7 +205,8 @@ export default function EmailSettingsPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {setupStep === "initial" && (
-                  <form onSubmit={form.handleSubmit(handleInitialSetup)}  className="space-y-4">
+                  <form onSubmit={
+                    form.handleSubmit(handleInitialSetup)}  className="space-y-4">
                     <FormField
                       control={form.control}
                       name="email"

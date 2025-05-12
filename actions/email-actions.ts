@@ -14,16 +14,13 @@ import prisma from "@/lib/prisma"
 
 // Helper function to check if user is authorized
 async function isAuthorized() {
+console.log("Checking user authorization...")
   const { userId } = await auth()
-  if (!userId) return false
-
-  // Check if user is an admin
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { role: true },
-  })
-
-  return user?.role === "ADMIN"
+  if (!userId) {
+    console.log("User id missing, user is not authorized")
+    return false
+}
+  return true
 }
 
 // Save email OAuth settings
@@ -33,6 +30,7 @@ export async function saveEmailOAuthSettings(formData: FormData): Promise<{
   authUrl?: string
 }> {
   try {
+    console.log("Saving email OAuth settings...")
     // Check if user is authorized
     if (!(await isAuthorized())) {
       return {

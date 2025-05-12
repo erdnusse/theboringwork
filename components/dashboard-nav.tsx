@@ -1,8 +1,8 @@
 "use client"
 
-import Link from "next/link"
+import Link from "next/link";
 import { usePathname } from "next/navigation"
-import { Home, LayoutDashboard, MessageSquare, Settings, Users } from "lucide-react"
+import { Home, LayoutDashboard, MessageSquare, Settings, Users, Mail } from "lucide-react";
 
 const navItems = [
   {
@@ -21,10 +21,15 @@ const navItems = [
     icon: MessageSquare,
   },
   {
-    title: "Clients",
-    href: "/dashboard/clients",
-    icon: Users,
+ title: "Email",
+ href: "/dashboard/email",
+ icon: Mail,
   },
+ {
+ title: "Clients",
+ href: "/dashboard/clients",
+ icon: Users,
+ },
   {
     title: "Settings",
     href: "/dashboard/settings",

@@ -14,12 +14,12 @@ import prisma from "@/lib/prisma"
 
 // Helper function to check if user is authorized
 async function isAuthorized() {
-console.log("Checking user authorization...")
+  console.log("Checking user authorization...")
   const { userId } = await auth()
   if (!userId) {
     console.log("User id missing, user is not authorized")
     return false
-}
+  }
   return true
 }
 
@@ -99,7 +99,6 @@ export async function completeOAuthSetup(formData: FormData): Promise<{
     }
 
     // Extract form data
-
     const authCode = formData.get("authCode") as string
     const state = formData.get("state") as string
 
@@ -111,54 +110,64 @@ export async function completeOAuthSetup(formData: FormData): Promise<{
       }
     }
 
-    // Exchange authorization code for tokens
-    const { accessToken, refreshToken, tokenExpiry, email } = await exchangeCodeForTokens(authCode, state)
+    try {
+      // Exchange authorization code for tokens
+      const { accessToken, refreshToken, tokenExpiry, email } = await exchangeCodeForTokens(authCode, state)
 
-    // Get client credentials from state
-    const stateData = await prisma.oAuthState.findUnique({
-      where: { id: 1 },
-    })
-    console.log("State value:", state);
-    console.log("State data2:", stateData)
+      // Create email config
+      const config: EmailOAuthConfig = {
+        email,
+        clientId: state, // We'll get the actual values from the state record
+        clientSecret: state, // These will be replaced below
+        refreshToken,
+        accessToken,
+        tokenExpiry,
+      }
 
-    if (!stateData) {
+      // Get client credentials from state
+      const stateData = await prisma.oAuthState.findUnique({
+        where: { id: 1 },
+      })
+
+      if (!stateData) {
+        return {
+          success: false,
+          message: "OAuth state data not found",
+        }
+      }
+
+      // Update config with actual client credentials
+      config.clientId = stateData.clientId
+      config.clientSecret = stateData.clientSecret
+
+      // Test the configuration first
+      const testResult = await testEmailConfig(config)
+      if (!testResult.success) {
+        return testResult
+      }
+
+      // Save the configuration
+      const saved = await saveEmailConfig(config)
+      if (!saved) {
+        return {
+          success: false,
+          message: "Failed to save email configuration",
+        }
+      }
+
+      // Revalidate the path to update the UI
+      revalidatePath("/dashboard/email")
+
+      return {
+        success: true,
+        message: "Email configuration saved successfully",
+      }
+    } catch (error) {
+      console.error("Error during OAuth token exchange:", error)
       return {
         success: false,
-        message: "Invalid state parameter",
+        message: `Failed to complete OAuth setup: ${error instanceof Error ? error.message : "Unknown error"}`,
       }
-    }
-
-    // Create email config
-    const config: EmailOAuthConfig = {
-      email,
-      clientId: stateData.clientId,
-      clientSecret: stateData.clientSecret,
-      refreshToken,
-      accessToken,
-      tokenExpiry,
-    }
-
-    // Test the configuration first
-    const testResult = await testEmailConfig(config)
-    if (!testResult.success) {
-      return testResult
-    }
-
-    // Save the configuration
-    const saved = await saveEmailConfig(config)
-    if (!saved) {
-      return {
-        success: false,
-        message: "Failed to save email configuration",
-      }
-    }
-
-    // Revalidate the path to update the UI
-    revalidatePath("/dashboard/email")
-
-    return {
-      success: true,
-      message: "Email configuration saved successfully",
     }
   } catch (error) {
     console.error("Error completing OAuth setup:", error)

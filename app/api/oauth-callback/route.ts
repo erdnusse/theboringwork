@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
 
     console.log("State data1:", stateData)
 
-    if (!stateData) {
+    if (!stateData || stateData.state !== state) {
       return NextResponse.json({ error: "Invalid state parameter" }, { status: 400 })
     }
 

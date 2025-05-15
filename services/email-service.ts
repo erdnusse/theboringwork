@@ -240,20 +240,29 @@ export async function sendEmail(message: EmailMessage): Promise<boolean> {
 // Test email configuration
 export async function testEmailConfig(config: EmailOAuthConfig): Promise<{ success: boolean; message: string }> {
   try {
-
-    console.log("Config" + config)
     // Create OAuth2 client
     const oauth2Client = createOAuth2Client(config)
 
-    console.log("Config refreshtoken" + config.refreshToken)
+    // Instead of verifying the token directly (which can cause invalid_token errors),
+    // try to refresh the access token which is a better test of validity
+    try {
+      const { credentials } = await oauth2Client.refreshAccessToken()
 
-    // Verify the credentials by getting token info
-    const tokenInfo = await oauth2Client.getTokenInfo(config.refreshToken)
+      if (!credentials.access_token) {
+        return {
+          success: false,
+          message: "Failed to refresh access token with provided credentials",
+        }
+      }
 
-    if (!tokenInfo || !tokenInfo.email) {
+      // Update the config with the new access token
+      config.accessToken = credentials.access_token
+      config.tokenExpiry = credentials.expiry_date || Date.now() + 3600000
+    } catch (refreshError) {
+      console.error("Error refreshing token during test:", refreshError)
       return {
         success: false,
-        message: "Invalid OAuth credentials",
+        message: `OAuth credentials validation failed: ${refreshError instanceof Error ? refreshError.message : "Unknown error"}`,
       }
     }
 

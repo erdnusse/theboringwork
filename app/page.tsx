@@ -2,7 +2,6 @@ import Link from "next/link"
 import { ArrowRight, CheckCircle, ChevronRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { SiteHeader } from "@/components/site-header"
 import { TestimonialCard } from "@/components/testimonial-card"
 
 export default function HomePage() {

@@ -1,19 +1,9 @@
 import type React from "react"
 import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs/server"
-import { UserButton } from "@clerk/nextjs"
 import Link from "next/link"
-import { ChevronDown, LayoutDashboard, MessageSquare, Settings, Briefcase } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { LayoutDashboard, Mail, MessageSquare, Settings } from "lucide-react"
+import { SiteHeader } from "@/components/site-header"
 
 export default async function DashboardLayout({
   children,
@@ -29,7 +19,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
-     
+
       <div className="flex flex-1">
         <aside className="hidden w-[200px] flex-col border-r bg-muted/40 sm:flex">
           <nav className="grid gap-2 px-4 py-6">
@@ -45,9 +35,18 @@ export default async function DashboardLayout({
               href="/dashboard/email"
               className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"
             >
-              <LayoutDashboard className="h-4 w-4" />
+              <Mail className="h-4 w-4" />
               Email
-              </Link>
+            </Link>
+
+            <Link
+              href="/dashboard/messages"
+              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"
+            >
+              <MessageSquare className="h-4 w-4" />
+              Messages
+            </Link>
+
             <Link
               href="/dashboard/settings"
               className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"

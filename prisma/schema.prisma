@@ -1,12 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  //output   = "../generated/prisma"
 }
 
 datasource db {
@@ -16,24 +12,16 @@ datasource db {
 
 // User model
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id
   email     String   @unique
   name      String?
   image     String?
   role      Role     @default(USER)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relations
   inquiries  Inquiry[]
-
-  @@map("users")
-}
-
-enum Role {
-  USER
-  AGENT
-  ADMIN
 }
 
 
@@ -45,43 +33,40 @@ model Inquiry {
   phone     String?
   message   String
   status    InquiryStatus @default(NEW)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  
-  // Relations
-  userId     String?  @map("user_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId     String?
   user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-
-  @@map("inquiries")
 }
 
-enum InquiryStatus {
-  NEW
-  CONTACTED
-  VIEWING_SCHEDULED
-  CLOSED
-}
-
-// Email OAuth Configuration model
+// Email OAuth Configuration
 model EmailOAuthConfig {
   id           String   @id @default(cuid())
   email        String
-  clientId     String   @map("client_id")
-  clientSecret String   @map("client_secret")
-  refreshToken String   @map("refresh_token")
-  accessToken  String?  @map("access_token")
-  tokenExpiry  BigInt?  @map("token_expiry")
-  isActive     Boolean  @default(true) @map("is_active")
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
+  clientId     String
+  clientSecret String
+  refreshToken String
+  accessToken  String?
+  tokenExpiry  BigInt?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  @@unique([email, isActive])
-  @@index([email])
-  @@index([isActive])
-  @@map("email_oauth_config")
+  @@index([email, isActive])
 }
 
-// Email Log model
+// OAuth State for security
+model OAuthState {
+  state        String   @id
+  email        String
+  clientId     String
+  clientSecret String
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+}
+
+// Email Log
 model EmailLog {
   id        String      @id @default(cuid())
   to        String
@@ -89,11 +74,29 @@ model EmailLog {
   content   String
   status    EmailStatus @default(PENDING)
   error     String?
-  sentAt    DateTime?   @map("sent_at")
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
+  sentAt    DateTime?
+  createdAt DateTime    @default(now())
+}
 
-  @@map("email_logs")
+// Enums
+enum Role {
+  USER
+  AGENT
+  ADMIN
+}
+
+enum PropertyStatus {
+  ACTIVE
+  PENDING
+  SOLD
+  RENTED
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  VIEWING_SCHEDULED
+  CLOSED
 }
 
 enum EmailStatus {

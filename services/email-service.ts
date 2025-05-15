@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer"
 import { google } from "googleapis"
 import prisma from "@/lib/prisma"
+import crypto from "crypto"
 
 const OAuth2 = google.auth.OAuth2
 
@@ -266,7 +267,7 @@ export async function testEmailConfig(config: EmailOAuthConfig): Promise<{ succe
 }
 
 // Generate OAuth URL for authorization
-export function generateOAuthUrl(clientId: string, clientSecret: string): string {
+export function generateOAuthUrl(clientId: string, clientSecret: string, email: string): string {
   try {
     if (!clientId || !clientSecret) {
       throw new Error("Client ID and Client Secret are required")
@@ -285,13 +286,33 @@ export function generateOAuthUrl(clientId: string, clientSecret: string): string
       "https://www.googleapis.com/auth/gmail.modify",
     ]
 
+    // Generate a random state value for security
+    const state = crypto.randomBytes(20).toString("hex")
+
+    // Store the state with client credentials in the database for verification
+    // This is a simplified approach - in production, you might want to use a more secure method
+    prisma.oAuthState
+      .create({
+        data: {
+          state,
+          email,
+          clientId,
+          clientSecret,
+          expiresAt: new Date(Date.now() + 3600000), // Expires in 1 hour
+        },
+      })
+      .catch((error) => {
+        console.error("Error storing OAuth state:", error)
+      })
+
     const url = oauth2Client.generateAuthUrl({
       access_type: "offline",
       scope: scopes,
       prompt: "consent",
+      state: state, // Include the state parameter
     })
 
-    console.log("Generated OAuth URL:", url)
+    console.log("Generated OAuth URL with state:", url)
 
     return url
   } catch (error) {
@@ -303,10 +324,27 @@ export function generateOAuthUrl(clientId: string, clientSecret: string): string
 // Exchange authorization code for tokens
 export async function exchangeCodeForTokens(
   code: string,
-  clientId: string,
-  clientSecret: string,
-): Promise<{ accessToken: string; refreshToken: string; tokenExpiry: number }> {
+  state: string,
+): Promise<{ accessToken: string; refreshToken: string; tokenExpiry: number; email: string }> {
   try {
+    // Retrieve the stored state data
+    const stateData = await prisma.oAuthState.findUnique({
+      where: { state },
+    })
+
+    if (!stateData) {
+      throw new Error("Invalid state parameter")
+    }
+
+    // Check if the state has expired
+    if (stateData.expiresAt < new Date()) {
+      await prisma.oAuthState.delete({
+        where: { state },
+      })
+      throw new Error("State parameter has expired")
+    }
+
+    const { clientId, clientSecret, email } = stateData
     const redirectUri = process.env.OAUTH_REDIRECT_URI || "https://developers.google.com/oauthplayground"
 
     const oauth2Client = new OAuth2(clientId, clientSecret, redirectUri)
@@ -317,10 +355,16 @@ export async function exchangeCodeForTokens(
       throw new Error("Failed to obtain tokens")
     }
 
+    // Clean up the used state
+    await prisma.oAuthState.delete({
+      where: { state },
+    })
+
     return {
       accessToken: tokens.access_token,
       refreshToken: tokens.refresh_token,
       tokenExpiry: tokens.expiry_date || Date.now() + 3600000,
+      email,
     }
   } catch (error) {
     console.error("Error exchanging code for tokens:", error)

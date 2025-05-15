@@ -54,7 +54,7 @@ export async function saveEmailOAuthSettings(formData: FormData): Promise<{
 
     try {
       // Generate OAuth URL for authorization
-      const authUrl = generateOAuthUrl(clientId, clientSecret)
+      const authUrl = generateOAuthUrl(clientId, clientSecret, email)
 
       // Log the URL for debugging (will be visible in server logs)
       console.log("Generated OAuth URL:", authUrl)
@@ -99,27 +99,38 @@ export async function completeOAuthSetup(formData: FormData): Promise<{
     }
 
     // Extract form data
-    const email = formData.get("email") as string
-    const clientId = formData.get("clientId") as string
-    const clientSecret = formData.get("clientSecret") as string
+
     const authCode = formData.get("authCode") as string
+    const state = formData.get("state") as string
 
     // Validate form data
-    if (!email || !clientId || !clientSecret || !authCode) {
+    if (!authCode || !state) {
       return {
         success: false,
-        message: "Please fill in all required fields",
+        message: "Authorization code and state are required",
       }
     }
 
     // Exchange authorization code for tokens
-    const { accessToken, refreshToken, tokenExpiry } = await exchangeCodeForTokens(authCode, clientId, clientSecret)
+    const { accessToken, refreshToken, tokenExpiry, email } = await exchangeCodeForTokens(authCode, state)
+
+    // Get client credentials from state
+    const stateData = await prisma.oAuthState.findUnique({
+      where: { state },
+    })
+
+    if (!stateData) {
+      return {
+        success: false,
+        message: "Invalid state parameter",
+      }
+    }
 
     // Create email config
     const config: EmailOAuthConfig = {
       email,
-      clientId,
-      clientSecret,
+      clientId: stateData.clientId,
+      clientSecret: stateData.clientSecret,
       refreshToken,
       accessToken,
       tokenExpiry,

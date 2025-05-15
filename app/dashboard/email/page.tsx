@@ -20,6 +20,7 @@ const oauthSettingsSchema = z.object({
   clientId: z.string().min(1, { message: "Client ID is required" }),
   clientSecret: z.string().min(1, { message: "Client Secret is required" }),
   authCode: z.string().optional(),
+  state: z.string().optional(),
   testEmail: z.string().email({ message: "Please enter a valid test email address" }).optional(),
 })
 
@@ -39,7 +40,8 @@ export default function EmailSettingsPage() {
     email: "",
     clientId: "",
     clientSecret: "",
-    authCode: "",
+    authCode: "asd",
+    state: "asd",
     testEmail: "marco.damiao@gmail.com",
   }
 
@@ -52,8 +54,6 @@ export default function EmailSettingsPage() {
   const handleInitialSetup = async (data: OAuthSettingsFormValues) => {
     setIsSaving(true)
     setFeedback(null)
-
-    console.log("handleInitialSetup called with data:", data) // Debug log
 
     try {
       const formData = new FormData()
@@ -96,14 +96,10 @@ export default function EmailSettingsPage() {
     setIsAuthorizing(true)
     setFeedback(null)
 
-    console.log("handleCompleteSetup called with data:", data) // Debug log
-
     try {
       const formData = new FormData()
-      formData.append("email", data.email)
-      formData.append("clientId", data.clientId)
-      formData.append("clientSecret", data.clientSecret)
       formData.append("authCode", data.authCode || "")
+      formData.append("state", data.state || "")
 
       const result = await completeOAuthSetup(formData)
 
@@ -129,8 +125,6 @@ export default function EmailSettingsPage() {
   // Handle test email submission
   const handleTestEmail = async () => {
     const isValid = await form.trigger("testEmail")
-
-    console.log("handleTestEmail called ") // Debug log
 
     if (!isValid || !form.getValues("testEmail")) {
       form.setError("testEmail", {
@@ -162,6 +156,24 @@ export default function EmailSettingsPage() {
       setIsTesting(false)
     }
   }
+
+  // Parse URL parameters on page load
+  useState(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search)
+      const code = urlParams.get("code")
+      const state = urlParams.get("state")
+
+      if (code && state) {
+        form.setValue("authCode", code)
+        form.setValue("state", state)
+        setSetupStep("authorize")
+
+        // Optional: Clear the URL parameters
+        window.history.replaceState({}, document.title, window.location.pathname)
+      }
+    }
+  })
 
   return (
     <div className="container mx-auto py-6">
@@ -205,8 +217,7 @@ export default function EmailSettingsPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {setupStep === "initial" && (
-                  <form onSubmit={
-                    form.handleSubmit(handleInitialSetup)}  className="space-y-4">
+                  <form onSubmit={form.handleSubmit(handleInitialSetup)} className="space-y-4">
                     <FormField
                       control={form.control}
                       name="email"
@@ -275,59 +286,64 @@ export default function EmailSettingsPage() {
                       <Info className="h-4 w-4" />
                       <AlertTitle>Authorization Required</AlertTitle>
                       <AlertDescription>
-                        Click the button below to authorize access to your Gmail account. You'll be redirected to
-                        Google's authorization page.
+                        {form.getValues("authCode") && form.getValues("state")
+                          ? "We detected authorization parameters in the URL. Please complete the setup below."
+                          : "Click the button below to authorize access to your Gmail account. You'll be redirected to Google's authorization page."}
                       </AlertDescription>
                     </Alert>
 
-                    <div className="flex flex-col items-center justify-center p-4 border rounded-md">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="mb-4"
-                        onClick={() => {
-                          if (authUrl) {
-                            // Log the URL for debugging
-                            console.log("Opening authorization URL:", authUrl)
+                    {!form.getValues("authCode") && (
+                      <div className="flex flex-col items-center justify-center p-4 border rounded-md">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="mb-4"
+                          onClick={() => {
+                            if (authUrl) {
+                              // Log the URL for debugging
+                              console.log("Opening authorization URL:", authUrl)
 
-                            // Try to open the window
-                            const authWindow = window.open(authUrl, "_blank", "width=800,height=700")
+                              // Try to open the window
+                              const authWindow = window.open(authUrl, "_blank", "width=800,height=700")
 
-                            // Check if the window opened successfully
-                            if (!authWindow) {
-                              setFeedback({
-                                type: "error",
-                                message: "Popup blocked! Please allow popups for this site and try again.",
-                              })
+                              // Check if the window opened successfully
+                              if (!authWindow) {
+                                setFeedback({
+                                  type: "error",
+                                  message: "Popup blocked! Please allow popups for this site and try again.",
+                                })
+                              } else {
+                                setFeedback({
+                                  type: "success",
+                                  message:
+                                    "Authorization window opened. Please complete the Google authorization process.",
+                                })
+                              }
                             } else {
                               setFeedback({
-                                type: "success",
-                                message:
-                                  "Authorization window opened. Please complete the Google authorization process.",
+                                type: "error",
+                                message: "Authorization URL is missing. Please try again.",
                               })
                             }
-                          } else {
-                            setFeedback({
-                              type: "error",
-                              message: "Authorization URL is missing. Please try again.",
-                            })
-                          }
-                        }}
-                      >
-                        <Lock className="mr-2 h-4 w-4" />
-                        Authorize with Google
-                      </Button>
+                          }}
+                        >
+                          <Lock className="mr-2 h-4 w-4" />
+                          Authorize with Google
+                        </Button>
 
-                      <p className="text-sm text-muted-foreground mb-4 text-center">
-                        After authorization, Google will provide you with an authorization code. Copy and paste that
-                        code below.
-                      </p>
+                        <p className="text-sm text-muted-foreground mb-4 text-center">
+                          After authorization, you'll be redirected to a page with an authorization code and state
+                          parameter. Copy and paste those values below.
+                        </p>
+                      </div>
+                    )}
 
+                    <div className="grid gap-4">
                       <FormField
                         control={form.control}
                         name="authCode"
                         render={({ field }) => (
-                          <FormItem className="w-full">
+                          <FormItem>
                             <FormLabel>Authorization Code</FormLabel>
                             <FormControl>
                               <Input placeholder="Paste the authorization code here" {...field} />
@@ -336,9 +352,24 @@ export default function EmailSettingsPage() {
                           </FormItem>
                         )}
                       />
+
+                      <FormField
+                        control={form.control}
+                        name="state"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>State Parameter</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Paste the state parameter here" {...field} />
+                            </FormControl>
+                            <FormDescription>This is required for security verification</FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
 
-                    {authUrl && (
+                    {authUrl && !form.getValues("authCode") && (
                       <div className="mt-2 text-center">
                         <p className="text-sm text-muted-foreground mb-2">If the button doesn't work, you can also:</p>
                         <a
@@ -508,8 +539,8 @@ export default function EmailSettingsPage() {
                     <li>
                       Add authorized redirect URIs:
                       <ul className="list-disc list-inside ml-4 mt-1">
-                        <li>For testing: https://developers.google.com/oauthplayground</li>
-                        <li>For production: Your application's callback URL</li>
+                        <li>https://your-domain.com/api/oauth-callback</li>
+                        <li>For local testing: http://localhost:3000/api/oauth-callback</li>
                       </ul>
                     </li>
                     <li>Click "Create"</li>
@@ -524,7 +555,7 @@ export default function EmailSettingsPage() {
                     <li>Enter the Client ID and Client Secret from step 4</li>
                     <li>Click "Continue to Authorization"</li>
                     <li>Follow the authorization process</li>
-                    <li>Copy the authorization code and paste it back in this app</li>
+                    <li>Copy the authorization code and state parameter and paste them back in this app</li>
                   </ol>
                 </div>
               </div>

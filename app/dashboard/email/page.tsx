@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -11,8 +11,13 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Separator } from "@/components/ui/separator"
-import { saveEmailOAuthSettings, completeOAuthSetup, testEmailConfiguration } from "@/actions/email-actions"
-import { AlertCircle, CheckCircle, HelpCircle, Info, Key, Lock, Mail, Settings, TestTube } from "lucide-react"
+import {
+  saveEmailOAuthSettings,
+  completeOAuthSetup,
+  testEmailConfiguration,
+  getEmailConfig,
+} from "@/actions/email-actions"
+import { AlertCircle, CheckCircle, HelpCircle, Info, Key, Lock, Mail, Settings, TestTube, Loader2 } from "lucide-react"
 
 // Form schema for OAuth settings
 const oauthSettingsSchema = z.object({
@@ -31,9 +36,11 @@ export default function EmailSettingsPage() {
   const [isSaving, setIsSaving] = useState(false)
   const [isAuthorizing, setIsAuthorizing] = useState(false)
   const [isTesting, setIsTesting] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null)
   const [authUrl, setAuthUrl] = useState<string | null>(null)
   const [setupStep, setSetupStep] = useState<"initial" | "authorize" | "complete">("initial")
+  const [hasExistingConfig, setHasExistingConfig] = useState(false)
 
   // Default values for the form
   const defaultValues: Partial<OAuthSettingsFormValues> = {
@@ -49,6 +56,40 @@ export default function EmailSettingsPage() {
     resolver: zodResolver(oauthSettingsSchema),
     defaultValues,
   })
+
+  // Fetch existing email configuration on page load
+  useEffect(() => {
+    const fetchEmailConfig = async () => {
+      try {
+        setIsLoading(true)
+        const config = await getEmailConfig()
+
+        if (config && config.success && config.data) {
+          // Set form values with existing configuration
+          form.setValue("email", config.data.email)
+          form.setValue("clientId", config.data.clientId)
+          form.setValue("clientSecret", config.data.clientSecret)
+
+          setHasExistingConfig(true)
+
+          // If we have a complete configuration, show the complete step
+          if (config.data.refreshToken) {
+            setSetupStep("complete")
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching email configuration:", error)
+        setFeedback({
+          type: "error",
+          message: "Failed to load existing email configuration",
+        })
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchEmailConfig()
+  }, [form])
 
   // Handle initial OAuth setup
   const handleInitialSetup = async (data: OAuthSettingsFormValues) => {
@@ -158,7 +199,7 @@ export default function EmailSettingsPage() {
   }
 
   // Parse URL parameters on page load
-  useState(() => {
+  useEffect(() => {
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search)
       const code = urlParams.get("code")
@@ -173,7 +214,7 @@ export default function EmailSettingsPage() {
         window.history.replaceState({}, document.title, window.location.pathname)
       }
     }
-  })
+  }, [form])
 
   return (
     <div className="container mx-auto py-6">
@@ -216,7 +257,12 @@ export default function EmailSettingsPage() {
                 <CardDescription>Set up secure authentication with your Gmail account using OAuth 2.0</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {setupStep === "initial" && (
+                {isLoading ? (
+                  <div className="flex justify-center items-center py-8">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <span className="ml-2">Loading configuration...</span>
+                  </div>
+                ) : setupStep === "initial" ? (
                   <form onSubmit={form.handleSubmit(handleInitialSetup)} className="space-y-4">
                     <FormField
                       control={form.control}
@@ -275,12 +321,14 @@ export default function EmailSettingsPage() {
                     />
 
                     <Button type="submit" disabled={isSaving} className="mt-2">
-                      {isSaving ? "Processing..." : "Continue to Authorization"}
+                      {isSaving
+                        ? "Processing..."
+                        : hasExistingConfig
+                          ? "Update Configuration"
+                          : "Continue to Authorization"}
                     </Button>
                   </form>
-                )}
-
-                {setupStep === "authorize" && (
+                ) : setupStep === "authorize" ? (
                   <form onSubmit={form.handleSubmit(handleCompleteSetup)} className="space-y-4">
                     <Alert className="mb-4">
                       <Info className="h-4 w-4" />
@@ -392,9 +440,7 @@ export default function EmailSettingsPage() {
                       </Button>
                     </div>
                   </form>
-                )}
-
-                {setupStep === "complete" && (
+                ) : (
                   <div className="space-y-4">
                     <Alert>
                       <CheckCircle className="h-4 w-4" />

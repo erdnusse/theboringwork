@@ -116,8 +116,10 @@ export async function completeOAuthSetup(formData: FormData): Promise<{
 
     // Get client credentials from state
     const stateData = await prisma.oAuthState.findUnique({
-      where: { state },
+      where: { id: 1 },
     })
+    console.log("State value:", state);
+    console.log("State data2:", stateData)
 
     if (!stateData) {
       return {

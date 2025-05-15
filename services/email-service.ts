@@ -240,8 +240,12 @@ export async function sendEmail(message: EmailMessage): Promise<boolean> {
 // Test email configuration
 export async function testEmailConfig(config: EmailOAuthConfig): Promise<{ success: boolean; message: string }> {
   try {
+
+    console.log("Config" + config)
     // Create OAuth2 client
     const oauth2Client = createOAuth2Client(config)
+
+    console.log("Config refreshtoken" + config.refreshToken)
 
     // Verify the credentials by getting token info
     const tokenInfo = await oauth2Client.getTokenInfo(config.refreshToken)
@@ -292,8 +296,18 @@ export function generateOAuthUrl(clientId: string, clientSecret: string, email: 
     // Store the state with client credentials in the database for verification
     // This is a simplified approach - in production, you might want to use a more secure method
     prisma.oAuthState
-      .create({
-        data: {
+      .upsert({
+        where: { id: 1 },
+        update: {
+          state,
+          email,
+          clientId,
+          clientSecret,
+          expiresAt: new Date(Date.now() + 3600000), // Expires in 1 hour
+          updatedAt: new Date(),
+        },
+        create: {
+          id: 1,
           state,
           email,
           clientId,
@@ -329,17 +343,19 @@ export async function exchangeCodeForTokens(
   try {
     // Retrieve the stored state data
     const stateData = await prisma.oAuthState.findUnique({
-      where: { state },
+      where: { id: 1 },
     })
+    console.log("State value:", state)
+    console.log("State data3:", stateData)
 
-    if (!stateData) {
+    if (!stateData || stateData.state !== state) {
       throw new Error("Invalid state parameter")
     }
 
     // Check if the state has expired
     if (stateData.expiresAt < new Date()) {
       await prisma.oAuthState.delete({
-        where: { state },
+        where: { id: 1 },
       })
       throw new Error("State parameter has expired")
     }
@@ -356,9 +372,7 @@ export async function exchangeCodeForTokens(
     }
 
     // Clean up the used state
-    await prisma.oAuthState.delete({
-      where: { state },
-    })
+    // No need to delete since we're reusing the same record
 
     return {
       accessToken: tokens.access_token,

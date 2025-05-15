@@ -40,9 +40,9 @@ export default function EmailSettingsPage() {
     email: "",
     clientId: "",
     clientSecret: "",
-    authCode: "asd",
-    state: "asd",
-    testEmail: "marco.damiao@gmail.com",
+    authCode: undefined,
+    state: undefined,
+    testEmail: undefined,
   }
 
   const form = useForm<OAuthSettingsFormValues>({

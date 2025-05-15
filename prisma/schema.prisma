@@ -58,12 +58,16 @@ model EmailOAuthConfig {
 
 // OAuth State for security
 model OAuthState {
-  state        String   @id
+  id           Int      @id @default(1) // Fixed ID of 1
+  state        String   // State is now a regular field, not an ID
   email        String
   clientId     String
   clientSecret String
   expiresAt    DateTime
   createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([state]) // Add index on state for faster lookups
 }
 
 // Email Log

@@ -18,8 +18,10 @@ export async function GET(request: NextRequest) {
 
     // Verify the state exists in our database
     const stateData = await prisma.oAuthState.findUnique({
-      where: { state },
+      where: { id: 1 },
     })
+
+    console.log("State data1:", stateData)
 
     if (!stateData) {
       return NextResponse.json({ error: "Invalid state parameter" }, { status: 400 })

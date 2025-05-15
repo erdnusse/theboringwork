@@ -40,6 +40,23 @@ model Inquiry {
   user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 }
 
+// Contact Message model
+model ContactMessage {
+  id        String          @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  status    ContactStatus   @default(NEW)
+  notes     String?         // Admin notes about the contact
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
 // Email OAuth Configuration
 model EmailOAuthConfig {
   id           String   @id @default(cuid())
@@ -107,4 +124,12 @@ enum EmailStatus {
   PENDING
   SENT
   FAILED
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  REPLIED
+  SPAM
+  ARCHIVED
 }

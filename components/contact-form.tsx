@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -12,6 +12,18 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
 import { submitContactForm } from "@/actions/contact-actions"
+
+// Add reCAPTCHA script dynamically
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "missing_recaptcha_site_key"
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (callback: () => void) => void
+      execute: (siteKey: string, options: { action: string }) => Promise<string>
+    }
+  }
+}
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -32,6 +44,7 @@ type FormValues = z.infer<typeof formSchema>
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false)
   const { toast } = useToast()
 
   const form = useForm<FormValues>({
@@ -44,11 +57,67 @@ export default function ContactForm() {
     },
   })
 
+  // Load reCAPTCHA script
+  useEffect(() => {
+    // Only load if not already loaded
+    if (!window.grecaptcha) {
+      const script = document.createElement("script")
+      script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`
+      script.async = true
+      script.defer = true
+      script.onload = () => {
+        window.grecaptcha.ready(() => {
+          setRecaptchaLoaded(true)
+        })
+      }
+      document.head.appendChild(script)
+
+      return () => {
+        document.head.removeChild(script)
+      }
+    } else {
+      setRecaptchaLoaded(true)
+    }
+  }, [])
+
+  // Get reCAPTCHA token
+  const getRecaptchaToken = async (): Promise<string> => {
+    if (!recaptchaLoaded) {
+      console.warn("reCAPTCHA not loaded yet")
+      return ""
+    }
+
+    try {
+      const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "contact_form" })
+      return token
+    } catch (error) {
+      console.error("Error getting reCAPTCHA token:", error)
+      return ""
+    }
+  }
+
   async function onSubmit(values: FormValues) {
     setIsSubmitting(true)
 
     try {
-      const result = await submitContactForm(values)
+      // Get reCAPTCHA token
+      const recaptchaToken = await getRecaptchaToken()
+
+      if (!recaptchaToken) {
+        toast({
+          title: "reCAPTCHA verification failed",
+          description: "Please try again or contact support if the problem persists.",
+          variant: "destructive",
+        })
+        setIsSubmitting(false)
+        return
+      }
+
+      // Submit form with reCAPTCHA token
+      const result = await submitContactForm({
+        ...values,
+        recaptchaToken,
+      })
 
       if (result.success) {
         toast({
@@ -137,10 +206,34 @@ export default function ContactForm() {
           )}
         />
 
+        {!recaptchaLoaded && <div className="text-sm text-amber-600">Loading security verification...</div>}
+
+        <div className="text-xs text-muted-foreground">
+          This site is protected by reCAPTCHA and the Google{" "}
+          <a
+            href="https://policies.google.com/privacy"
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:text-primary"
+          >
+            Privacy Policy
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://policies.google.com/terms"
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:text-primary"
+          >
+            Terms of Service
+          </a>{" "}
+          apply.
+        </div>
+
         <Button
           type="submit"
           className="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600"
-          disabled={isSubmitting}
+          disabled={isSubmitting || !recaptchaLoaded}
         >
           {isSubmitting ? (
             <>

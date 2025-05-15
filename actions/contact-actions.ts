@@ -10,14 +10,89 @@ const contactFormSchema = z.object({
   email: z.string().email(),
   subject: z.string().min(5),
   message: z.string().min(10),
+  recaptchaToken: z.string(),
 })
 
 type ContactFormData = z.infer<typeof contactFormSchema>
+
+// Function to verify reCAPTCHA token
+async function verifyRecaptcha(token: string): Promise<{ success: boolean; score?: number; error?: string }> {
+  try {
+    const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY
+
+    if (!recaptchaSecret) {
+      console.error("Missing RECAPTCHA_SECRET_KEY environment variable")
+      return { success: false, error: "reCAPTCHA configuration error" }
+    }
+
+    const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        secret: recaptchaSecret,
+        response: token,
+      }).toString(),
+    })
+
+    const data = await response.json()
+
+    if (data.success) {
+      return {
+        success: true,
+        score: data.score,
+      }
+    } else {
+      return {
+        success: false,
+        error: data["error-codes"]?.join(", ") || "reCAPTCHA verification failed",
+      }
+    }
+  } catch (error) {
+    console.error("Error verifying reCAPTCHA:", error)
+    return {
+      success: false,
+      error: "Error verifying reCAPTCHA",
+    }
+  }
+}
 
 export async function submitContactForm(formData: ContactFormData) {
   try {
     // Validate the form data
     const validatedData = contactFormSchema.parse(formData)
+
+    // Verify reCAPTCHA token
+    const recaptchaResult = await verifyRecaptcha(validatedData.recaptchaToken)
+
+    if (!recaptchaResult.success) {
+      return {
+        success: false,
+        error: "Security verification failed. Please try again.",
+      }
+    }
+
+    // Check if the score is too low (potential spam)
+    // reCAPTCHA v3 returns a score from 0.0 to 1.0, where 1.0 is very likely a good interaction
+    if (recaptchaResult.score !== undefined && recaptchaResult.score < 0.5) {
+      // Still save the message but mark it as potential spam
+      await prisma.contactMessage.create({
+        data: {
+          name: validatedData.name,
+          email: validatedData.email,
+          subject: validatedData.subject,
+          message: validatedData.message,
+          status: "SPAM",
+          notes: `Potential spam. reCAPTCHA score: ${recaptchaResult.score}`,
+        },
+      })
+
+      return {
+        success: false,
+        error: "Your message was flagged as potential spam. If this is a mistake, please contact us directly.",
+      }
+    }
 
     // Store the contact message in the database
     const contactMessage = await prisma.contactMessage.create({
@@ -27,6 +102,7 @@ export async function submitContactForm(formData: ContactFormData) {
         subject: validatedData.subject,
         message: validatedData.message,
         status: "NEW",
+        notes: `reCAPTCHA score: ${recaptchaResult.score}`,
       },
     })
 
@@ -42,6 +118,7 @@ export async function submitContactForm(formData: ContactFormData) {
           <p><strong>From:</strong> ${validatedData.name}</p>
           <p><strong>Email:</strong> ${validatedData.email}</p>
           <p><strong>Subject:</strong> ${validatedData.subject}</p>
+          <p><strong>reCAPTCHA Score:</strong> ${recaptchaResult.score}</p>
           <h3>Message:</h3>
           <p>${validatedData.message.replace(/\n/g, "<br>")}</p>
           <p>This message is available in your admin dashboard.</p>
@@ -51,6 +128,7 @@ export async function submitContactForm(formData: ContactFormData) {
           
           Email: ${validatedData.email}
           Subject: ${validatedData.subject}
+          reCAPTCHA Score: ${recaptchaResult.score}
           
           Message:
           ${validatedData.message}
@@ -100,7 +178,7 @@ export async function submitContactForm(formData: ContactFormData) {
       await prisma.contactMessage.update({
         where: { id: contactMessage.id },
         data: {
-          notes: "Notification emails sent successfully.",
+          notes: `Notification emails sent successfully. reCAPTCHA score: ${recaptchaResult.score}`,
         },
       })
     } catch (emailError) {
@@ -110,7 +188,9 @@ export async function submitContactForm(formData: ContactFormData) {
       await prisma.contactMessage.update({
         where: { id: contactMessage.id },
         data: {
-          notes: `Failed to send notification emails: ${emailError instanceof Error ? emailError.message : "Unknown error"}`,
+          notes: `Failed to send notification emails: ${
+            emailError instanceof Error ? emailError.message : "Unknown error"
+          }. reCAPTCHA score: ${recaptchaResult.score}`,
         },
       })
 

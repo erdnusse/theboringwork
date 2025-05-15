@@ -8,8 +8,6 @@ import { TestimonialCard } from "@/components/testimonial-card"
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <SiteHeader />
-
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-white">
         <div className="absolute inset-0 section-pattern opacity-30"></div>

@@ -1,21 +1,31 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from "next"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.ritabarrela.com'
-  
+  // Base URL for your site
+  const baseUrl = "https://www.ritabarrela.com"
+
+  // Get the current date for lastModified
+  const currentDate = new Date()
+
+  // Define your routes and their metadata
   return [
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
+      lastModified: currentDate,
+      changeFrequency: "daily",
       priority: 1,
     },
     {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      url: `${baseUrl}/contact`,
+      lastModified: currentDate,
+      changeFrequency: "monthly",
       priority: 0.8,
     },
-    // Add more routes as needed
+    {
+      url: `${baseUrl}/dashboard`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
   ]
 }

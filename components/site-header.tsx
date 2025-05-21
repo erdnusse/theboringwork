@@ -51,9 +51,7 @@ export function SiteHeader() {
           >
             Case Studies
           </Link>
-          <Link href="/about" className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">
-            About
-          </Link>
+         
           <Link href="/contact" className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">
             Contact
           </Link>
@@ -114,12 +112,7 @@ export function SiteHeader() {
                 >
                   Case Studies
                 </Link>
-                <Link
-                  href="/about"
-                  className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
-                >
-                  About
-                </Link>
+                
                 <Link
                   href="/contact"
                   className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"

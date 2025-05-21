@@ -4,6 +4,13 @@ import { ArrowRight, CheckCircle, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { TestimonialCard } from "@/components/testimonial-card"
 
+export const metadata = {
+  robots: {
+    index: true,
+    follow: true,
+  }
+}
+
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">

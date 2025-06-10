@@ -10,8 +10,9 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/components/ui/use-toast"
 import { submitContactForm } from "@/actions/contact-actions"
+
+import { toast } from "sonner"
 
 // Add reCAPTCHA script dynamically
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "missing_recaptcha_site_key"
@@ -45,7 +46,7 @@ type FormValues = z.infer<typeof formSchema>
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false)
-  const { toast } = useToast()
+
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -98,17 +99,14 @@ export default function ContactForm() {
 
   async function onSubmit(values: FormValues) {
     setIsSubmitting(true)
+     const start = Date.now() // Start timing
 
     try {
       // Get reCAPTCHA token
       const recaptchaToken = await getRecaptchaToken()
 
       if (!recaptchaToken) {
-        toast({
-          title: "reCAPTCHA verification failed",
-          description: "Please try again or contact support if the problem persists.",
-          variant: "destructive",
-        })
+        toast.error("reCAPTCHA verification failed");
         setIsSubmitting(false)
         return
       }
@@ -120,26 +118,15 @@ export default function ContactForm() {
       })
 
       if (result.success) {
-        toast({
-          title: "Message sent!",
-          description: "Thank you for contacting us. We'll respond shortly.",
-          variant: "default",
-        })
+        toast.success("Message sent");
         form.reset()
       } else {
-        toast({
-          title: "Something went wrong",
-          description: result.error || "Failed to send your message. Please try again.",
-          variant: "destructive",
-        })
+        toast.error("Failed to send your message. Please try again.");
       }
     } catch (error) {
       console.error("Contact form submission error:", error)
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred. Please try again later.",
-        variant: "destructive",
-      })
+      toast.error("An unexpected error occurred. Please try again later.");
+ 
     } finally {
       setIsSubmitting(false)
     }

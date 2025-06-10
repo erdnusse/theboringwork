@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs/server"
 import Link from "next/link"
 import { LayoutDashboard, Mail, MessageSquare, Settings } from "lucide-react"
-import { SiteHeader } from "@/components/site-header"
+import { ClerkProvider } from "@clerk/nextjs"
 
 export default async function DashboardLayout({
   children,
@@ -18,6 +18,7 @@ export default async function DashboardLayout({
   }
 
   return (
+    <ClerkProvider>
     <div className="flex min-h-screen flex-col">
 
       <div className="flex flex-1">
@@ -59,5 +60,6 @@ export default async function DashboardLayout({
         <main className="flex-1 overflow-auto p-4 md:p-6">{children}</main>
       </div>
     </div>
+    </ClerkProvider>
   )
 }

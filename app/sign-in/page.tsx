@@ -1,8 +1,9 @@
-import { SignIn } from "@clerk/nextjs"
+import { ClerkProvider, SignIn } from "@clerk/nextjs"
 import Link from "next/link"
 
 export default function SignInPage() {
   return (
+    <ClerkProvider>
     <div className="flex min-h-screen flex-col">
       <div className="flex min-h-screen flex-col items-center justify-center px-4 py-12">
         <Link href="/" className="flex items-center gap-2 mb-8">
@@ -30,5 +31,6 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
+    </ClerkProvider>
   )
 }

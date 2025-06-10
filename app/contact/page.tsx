@@ -1,9 +1,13 @@
 import type { Metadata } from "next"
 import ContactForm from "@/components/contact-form"
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Contact Us | StrategyPro",
   description: "Get in touch with our team for any inquiries or support.",
+  robots: {
+    index: true,
+    follow: true,
+  }
 }
 
 export default function ContactPage() {

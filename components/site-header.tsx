@@ -1,14 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { useAuth, UserButton } from "@clerk/nextjs"
 import { Menu } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export function SiteHeader() {
-  const { isSignedIn } = useAuth()
 
   return (
     <header className="bg-white/80 backdrop-blur-sm border-b sticky top-0 z-40 w-full">
@@ -39,51 +37,15 @@ export function SiteHeader() {
           <Link href="/" className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">
             Home
           </Link>
-          <Link
-            href="/services"
-            className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
-          >
-            Services
-          </Link>
-          <Link
-            href="/case-studies"
-            className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
-          >
-            Case Studies
-          </Link>
+       
+  
          
           <Link href="/contact" className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">
             Contact
           </Link>
         </nav>
-        <div className="flex items-center gap-4">
-          {isSignedIn ? (
-            <>
-              <Link
-                href="/dashboard"
-                className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors hidden md:block"
-              >
-                Dashboard
-              </Link>
-              <UserButton afterSignOutUrl="/" />
-            </>
-          ) : (
-            <>
-              <Link href="/sign-in" className="hidden md:block">
-                <Button variant="outline" size="sm" className="border-primary-200 text-primary-600 hover:bg-primary-50">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/sign-up" className="hidden md:block">
-                <Button
-                  size="sm"
-                  className="bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600"
-                >
-                  Sign Up
-                </Button>
-              </Link>
-            </>
-          )}
+        <div className="flex items-center gap-4">       
+    
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -100,18 +62,7 @@ export function SiteHeader() {
                 <Link href="/" className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">
                   Home
                 </Link>
-                <Link
-                  href="/services"
-                  className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
-                >
-                  Services
-                </Link>
-                <Link
-                  href="/case-studies"
-                  className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
-                >
-                  Case Studies
-                </Link>
+              
                 
                 <Link
                   href="/contact"
@@ -119,29 +70,7 @@ export function SiteHeader() {
                 >
                   Contact
                 </Link>
-                {isSignedIn ? (
-                  <Link
-                    href="/dashboard"
-                    className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
-                  >
-                    Dashboard
-                  </Link>
-                ) : (
-                  <>
-                    <Link
-                      href="/sign-in"
-                      className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
-                    >
-                      Sign In
-                    </Link>
-                    <Link
-                      href="/sign-up"
-                      className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
-                    >
-                      Sign Up
-                    </Link>
-                  </>
-                )}
+               
               </nav>
             </SheetContent>
           </Sheet>

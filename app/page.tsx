@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { TestimonialCard } from "@/components/testimonial-card"
 
 export const metadata = {
+  title: "Home | StrategyPro",
+  description: "Get in touch with our team for any inquiries or support.",
   robots: {
     index: true,
     follow: true,

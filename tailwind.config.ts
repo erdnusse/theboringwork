@@ -91,7 +91,6 @@ const config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "hero-pattern": "url('/hero-pattern.png')",
-        "dots-pattern": "url('/dots-pattern.png')",
       },
     },
   },

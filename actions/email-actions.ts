@@ -54,13 +54,16 @@ export async function completeOAuthSetup(formData: FormData) {
     }
 
     // Exchange authorization code for tokens
-    const { accessToken, refreshToken, tokenExpiry, email } = await exchangeCodeForTokens(authCode, state)
+    const { accessToken, refreshToken, tokenExpiry, email, clientId, clientSecret } = await exchangeCodeForTokens(
+      authCode,
+      state,
+    )
 
     // Save the complete OAuth configuration
     const config = {
       email,
-      clientId: "", // These will be retrieved from the state data
-      clientSecret: "", // These will be retrieved from the state data
+      clientId,
+      clientSecret,
       refreshToken,
       accessToken,
       tokenExpiry,

@@ -70,6 +70,19 @@ model EmailLog {
   createdAt DateTime    @default(now())
 }
 
+model TokenRefreshLog {
+  id              Int      @id @default(autoincrement())
+  timestamp       DateTime @default(now())
+  success         Boolean
+  error           String?
+  retry_count     Int?     @default(0)
+  execution_time_ms Int?
+  created_at      DateTime @default(now())
+
+  @@index([timestamp])
+  @@index([success])
+}
+
 // Enums
 enum Role {
   USER

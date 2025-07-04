@@ -1,13 +1,15 @@
-import Link from "next/link"
-import { ArrowRight, CheckCircle, ChevronRight } from "lucide-react"
-
+import { ArrowRight, Users, Clock, Zap, Target, CheckCircle, Star, TrendingUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { TestimonialCard } from "@/components/testimonial-card"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import BaseSection from "@/components/base-section"
+
 
 export const metadata = {
-  title: "Home | StrategyPro",
-  description: "Get in touch with our team for any inquiries or support.",
-  robots: {
+  title: "Home | The Boring Work - Consultoria Empresarial",
+  description:
+    "Fazemos o trabalho chato para que se possa focar no mais importante: a sua empresa. Especialistas em estruturação e crescimento de PMEs.",
+    robots: {
     index: true,
     follow: true,
   }
@@ -15,443 +17,268 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-white">
-        <div className="absolute inset-0 section-pattern opacity-30"></div>
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-accent-teal/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-accent-purple/10 rounded-full blur-3xl"></div>
-        <div className="max-w-screen-xl mx-auto px-4 md:px-6 relative">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="flex flex-col justify-center space-y-4">
-              <div className="inline-block rounded-full bg-primary-100 px-3 py-1 text-sm text-primary-700 mb-2">
-                Strategic Business Consulting
-              </div>
-              <div className="space-y-2">
-                <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  Transform Your Business With <span className="gradient-text">Strategic Consulting</span>
-                </h1>
-                <p className="max-w-[600px] text-slate-600 md:text-xl">
-                  We help companies unlock their potential through innovative strategies, operational excellence, and
-                  digital transformation.
-                </p>
-              </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
-                <Link href="/contact">
-                  <Button
-                    size="lg"
-                    className="gap-1.5 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 shadow-md"
-                  >
-                    Schedule a Consultation
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link href="/services">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-primary-300 text-primary-700 hover:bg-primary-50"
-                  >
-                    Explore Our Services
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[500px] aspect-square overflow-hidden blob-shape shadow-xl border-8 border-white">
-                <img
-                  src="/strategic-planning-session.png"
-                  alt="Professional consultant"
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <div className="absolute top-1/2 right-[10%] -translate-y-1/2 bg-white p-4 rounded-lg shadow-lg hidden lg:block">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-accent-emerald"></div>
-                  <span className="text-sm font-medium">95% Client Satisfaction</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="flex flex-col min-h-screen bg-[--background-primary-color] overflow-hidden">
 
-      {/* Services Section */}
-      <section className="w-full py-12 md:py-24 bg-gradient-to-b from-white to-blue-50">
-        <div className="max-w-screen-xl mx-auto px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <div className="inline-block rounded-full bg-secondary/10 px-3 py-1 text-sm text-secondary mb-2">
-              Our Services
-            </div>
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
-              Expert Solutions for <span className="text-secondary">Your Business</span>
-            </h2>
-            <p className="max-w-[700px] text-slate-600 md:text-xl">
-              We offer comprehensive consulting services tailored to meet your company's unique challenges and goals.
-            </p>
+         {/* Hero Section */}
+      <BaseSection/>
+
+      {/* Mission Section */}
+      <section className="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-lime-400/10 rounded-full blur-3xl animate-pulse delay-500"></div>
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {/* Service 1 */}
-            <div className="group relative overflow-hidden rounded-xl border border-blue-100 bg-white p-6 shadow-sm card-hover-effect gradient-border">
-              <div className="mb-4 text-primary-500">
-                <div className="p-3 bg-primary-50 rounded-lg inline-block">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-6 w-6"
-                  >
-                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path>
-                    <path d="M13 5v14"></path>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="mb-2 text-xl font-bold text-gray-800">Strategic Planning</h3>
-              <p className="mb-4 text-slate-600">
-                Develop comprehensive business strategies aligned with your vision and market opportunities.
-              </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-accent-emerald" />
-                  <span>Market Analysis</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-accent-emerald" />
-                  <span>Competitive Positioning</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-accent-emerald" />
-                  <span>Growth Planning</span>
-                </li>
-              </ul>
-              <Link
-                href="/services/strategic-planning"
-                className="inline-flex items-center text-primary-600 font-medium hover:text-primary-700"
-              >
-                Learn More <ChevronRight className="ml-1 h-4 w-4" />
-              </Link>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
+          <div className="text-center space-y-12">
+            <div className="animate-fade-in">
+              <Badge className="bg-lime-400/20 text-lime-300 hover:bg-lime-400/30 border-lime-400/30 px-6 py-3 text-base font-semibold">
+                A NOSSA MISSÃO É CLARA
+              </Badge>
             </div>
 
-            {/* Service 2 */}
-            <div className="group relative overflow-hidden rounded-xl border border-blue-100 bg-white p-6 shadow-sm card-hover-effect gradient-border">
-              <div className="mb-4 text-secondary">
-                <div className="p-3 bg-secondary/10 rounded-lg inline-block">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-6 w-6"
-                  >
-                    <path d="M20.2 7.8l-7.7 7.7-4-4-5.7 5.7"></path>
-                    <path d="M15 7h6v6"></path>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="mb-2 text-xl font-bold text-gray-800">Operational Excellence</h3>
-              <p className="mb-4 text-slate-600">
-                Optimize your business processes to improve efficiency, quality, and customer satisfaction.
-              </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-accent-emerald" />
-                  <span>Process Optimization</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-accent-emerald" />
-                  <span>Quality Management</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-accent-emerald" />
-                  <span>Cost Reduction</span>
-                </li>
-              </ul>
-              <Link
-                href="/services/operational-excellence"
-                className="inline-flex items-center text-secondary font-medium hover:text-secondary/80"
-              >
-                Learn More <ChevronRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-
-            {/* Service 3 */}
-            <div className="group relative overflow-hidden rounded-xl border border-blue-100 bg-white p-6 shadow-sm card-hover-effect gradient-border">
-              <div className="mb-4 text-accent-teal">
-                <div className="p-3 bg-accent-teal/10 rounded-lg inline-block">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-6 w-6"
-                  >
-                    <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-                    <path d="M7 7h10"></path>
-                    <path d="M7 12h10"></path>
-                    <path d="M7 17h10"></path>
-                  </svg>
-                </div>
-              </div>
-              <h3 className="mb-2 text-xl font-bold text-gray-800">Digital Transformation</h3>
-              <p className="mb-4 text-slate-600">
-                Leverage technology to transform your business models and create new opportunities for growth.
-              </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-accent-emerald" />
-                  <span>Technology Assessment</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-accent-emerald" />
-                  <span>Digital Strategy</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="mr-2 h-4 w-4 text-accent-emerald" />
-                  <span>Implementation Support</span>
-                </li>
-              </ul>
-              <Link
-                href="/services/digital-transformation"
-                className="inline-flex items-center text-accent-teal font-medium hover:text-accent-teal/80"
-              >
-                Learn More <ChevronRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section className="w-full py-12 md:py-24 bg-gradient-to-br from-indigo-50 via-white to-blue-50 relative overflow-hidden">
-        <div className="absolute inset-0 section-pattern opacity-20"></div>
-        <div className="max-w-screen-xl mx-auto px-4 md:px-6 relative">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[500px] aspect-video overflow-hidden rounded-xl shadow-xl">
-                <img
-                  src="/collaborative-strategy-session.png"
-                  alt="Consulting team meeting"
-                  className="object-cover w-full h-full"
-                />
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary-600/20 to-transparent"></div>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center space-y-4">
-              <div className="inline-block rounded-full bg-accent-teal/10 px-3 py-1 text-sm text-accent-teal w-fit mb-2">
-                About Us
-              </div>
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-gray-800">
-                Experienced Consultants <span className="text-accent-teal">Dedicated to Your Success</span>
+            <div className="space-y-8 animate-slide-up delay-200">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                Especialistas na
+                <br />
+                <span className="bg-gradient-to-r from-lime-400 to-lime-500 bg-clip-text text-transparent">estruturação do caos</span>
               </h2>
-              <p className="text-slate-600">
-                With over 15 years of experience working with businesses across industries, our team of expert
-                consultants brings deep knowledge and practical insights to every engagement.
+
+              <p className="text-xl md:text-2xl text-purple-100 max-w-4xl mx-auto leading-relaxed font-light">
+                Somos uma marca de consultoria empresarial especializada na estruturação e crescimento de PMEs, 
+                com mais de 8 anos de experiência e soluções adaptáveis a diversos setores.
               </p>
-              <p className="text-slate-600">
-                We believe in building long-term partnerships with our clients, understanding their unique challenges,
-                and delivering tailored solutions that drive measurable results.
-              </p>
-              <div className="grid grid-cols-2 gap-4 pt-4">
-                <div className="flex flex-col p-4 bg-white rounded-lg shadow-sm">
-                  <span className="text-3xl font-bold text-primary-600">150+</span>
-                  <span className="text-sm text-slate-600">Clients Served</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12 animate-slide-up delay-400">
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-lime-400 to-lime-500 rounded-2xl flex items-center justify-center mx-auto">
+                  <Users className="h-8 w-8 text-white" />
                 </div>
-                <div className="flex flex-col p-4 bg-white rounded-lg shadow-sm">
-                  <span className="text-3xl font-bold text-secondary">95%</span>
-                  <span className="text-sm text-slate-600">Client Satisfaction</span>
-                </div>
-                <div className="flex flex-col p-4 bg-white rounded-lg shadow-sm">
-                  <span className="text-3xl font-bold text-accent-teal">12+</span>
-                  <span className="text-sm text-slate-600">Industries</span>
-                </div>
-                <div className="flex flex-col p-4 bg-white rounded-lg shadow-sm">
-                  <span className="text-3xl font-bold text-accent-purple">$500M+</span>
-                  <span className="text-sm text-slate-600">Client Value Created</span>
-                </div>
+                <h3 className="text-xl font-bold">PMEs Estruturadas</h3>
+                <p className="text-purple-200">Organizamos processos e consolidamos vendas</p>
               </div>
-              <div className="pt-4">
-                <Link href="/about">
-                  <Button
-                    variant="outline"
-                    className="gap-1.5 border-accent-teal/30 text-accent-teal hover:bg-accent-teal/10 hover:text-accent-teal/80"
-                  >
-                    Learn More About Us
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto">
+                  <Target className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold">Foco no Crescimento</h3>
+                <p className="text-purple-200">Estratégias práticas para expansão sustentável</p>
+              </div>
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-500 rounded-2xl flex items-center justify-center mx-auto">
+                  <Zap className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold">Resultados Rápidos</h3>
+                <p className="text-purple-200">Implementação eficiente e acompanhamento próximo</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="w-full py-12 md:py-24 bg-gradient-to-b from-blue-50 to-white">
-        <div className="max-w-screen-xl mx-auto px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <div className="inline-block rounded-full bg-accent-purple/10 px-3 py-1 text-sm text-accent-purple mb-2">
-              Testimonials
-            </div>
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-gray-800">
-              What Our <span className="text-accent-purple">Clients Say</span>
+      {/* Advantages Section */}
+      <section id="services" className="py-24 bg-gradient-to-br from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="text-center mb-20 animate-fade-in">
+            <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-200 mb-6 px-4 py-2 text-sm font-semibold">
+              VANTAGENS COMPETITIVAS
+            </Badge>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-8 leading-tight">
+              Vantagens de contar
+              <br />
+              com a nossa <span className="bg-gradient-to-r from-lime-500 to-lime-600 bg-clip-text text-transparent">equipa</span>
             </h2>
-            <p className="max-w-[700px] text-slate-600 md:text-xl">
-              Hear from the businesses we've helped transform through our consulting services.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Estamos alinhados com os seus objetivos e garantimos que o trabalho é feito de acordo com os seus moldes, 
+              proporcionando uma extensão natural da sua empresa.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <TestimonialCard
-              quote="The strategic planning process led by their team was transformative for our business. We now have a clear roadmap for growth and the tools to execute it effectively."
-              author="Sarah Johnson"
-              role="CEO, TechInnovate"
-              image="/serene-gaze.png"
-              accentColor="primary"
-            />
-            <TestimonialCard
-              quote="Their operational excellence program helped us reduce costs by 22% while improving customer satisfaction. The ROI on this engagement has been exceptional."
-              author="Michael Chen"
-              role="COO, Global Manufacturing"
-              image="/thoughtful-gaze.png"
-              accentColor="secondary"
-            />
-            <TestimonialCard
-              quote="The digital transformation guidance we received was invaluable. They didn't just recommend technology—they helped us reimagine our entire business model for the digital age."
-              author="Elena Rodriguez"
-              role="CTO, Financial Services Inc."
-              image="/confident-leader.png"
-              accentColor="teal"
-            />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Advantage 1 */}
+            <Card className="group bg-gradient-to-br from-orange-400 to-orange-500 border-0 rounded-3xl overflow-hidden hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl animate-slide-up">
+              <CardContent className="p-10 text-white relative">
+                <div className="absolute -top-6 -right-6 w-32 h-32 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-500"></div>
+                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white/5 rounded-full"></div>
+                <div className="relative z-10 space-y-6">
+                  <div className="bg-white/20 w-20 h-20 rounded-3xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
+                    <Users className="h-10 w-10 text-white" />
+                  </div>
+                  <div className="text-5xl font-black mb-4 text-white/90">01</div>
+                  <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight">Extensão da sua empresa</h3>
+                  <p className="text-orange-100 leading-relaxed text-lg">
+                    A nossa equipa integra-se perfeitamente nos seus processos, oferecendo apoio especializado em gestão administrativa, 
+                    projetos e organização contabilística.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Advantage 2 */}
+            <Card className="group bg-gradient-to-br from-lime-400 to-lime-500 border-0 rounded-3xl overflow-hidden hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl animate-slide-up delay-200">
+              <CardContent className="p-10 text-white relative">
+                <div className="absolute -top-6 -right-6 w-32 h-32 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-500"></div>
+                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white/5 rounded-full"></div>
+                <div className="relative z-10 space-y-6">
+                  <div className="bg-white/20 w-20 h-20 rounded-3xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
+                    <Target className="h-10 w-10 text-white" />
+                  </div>
+                  <div className="text-5xl font-black mb-4 text-white/90">02</div>
+                  <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight">Apoio em todos os desafios</h3>
+                  <p className="text-lime-100 leading-relaxed text-lg">
+                    Crescimento sustentável sem necessidade de contratar recursos internos. Escalamos consoante as suas necessidades 
+                    e objetivos empresariais.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Advantage 3 */}
+            <Card className="group bg-gradient-to-br from-purple-500 to-purple-600 border-0 rounded-3xl overflow-hidden hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl animate-slide-up delay-400">
+              <CardContent className="p-10 text-white relative">
+                <div className="absolute -top-6 -right-6 w-32 h-32 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-500"></div>
+                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white/5 rounded-full"></div>
+                <div className="relative z-10 space-y-6">
+                  <div className="bg-white/20 w-20 h-20 rounded-3xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
+                    <Clock className="h-10 w-10 text-white" />
+                  </div>
+                  <div className="text-5xl font-black mb-4 text-white/90">03</div>
+                  <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight">Tempo e recursos otimizados</h3>
+                  <p className="text-purple-100 leading-relaxed text-lg">
+                    Libertamos o seu tempo para se focar na estratégia e crescimento, enquanto gerimos eficientemente 
+                    todo o trabalho administrativo e operacional.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-0 w-96 h-96 bg-lime-400/5 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-orange-400/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
+          <div className="text-center mb-20 animate-fade-in">
+            <Badge className="bg-orange-400/20 text-orange-300 hover:bg-orange-400/30 border-orange-400/30 mb-6 px-4 py-2 text-sm font-semibold">
+              RESULTADOS COMPROVADOS
+            </Badge>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 leading-tight">
+              Entregamos <span className="bg-gradient-to-r from-lime-400 to-lime-500 bg-clip-text text-transparent">valor</span> e{" "}
+              <span className="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">clareza</span>,
+              <br />
+              no meio do caos
+            </h2>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+              Mais do que consultoria, entregamos acompanhamento próximo, soluções à medida e resultados sustentáveis 
+              que transformam a forma como gere o seu negócio.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
+            <div className="text-center group animate-slide-up">
+              <div className="relative mb-8">
+                <div className="bg-gradient-to-br from-orange-400 to-orange-500 w-40 h-40 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-2xl">
+                  <span className="text-5xl font-black text-white">€</span>
+                </div>
+                <div className="absolute -inset-4 bg-gradient-to-br from-orange-400/20 to-orange-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div className="text-6xl md:text-7xl lg:text-8xl font-black bg-gradient-to-br from-orange-400 to-orange-500 bg-clip-text text-transparent mb-4">
+                80.000€
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">Valor Poupado</h3>
+              <p className="text-lg text-gray-300 font-medium leading-relaxed max-w-sm mx-auto">
+                Valor total poupado pelos nossos clientes ao delegar funções administrativas na nossa equipa especializada
+              </p>
+            </div>
+
+            <div className="text-center group animate-slide-up delay-200">
+              <div className="relative mb-8">
+                <div className="bg-gradient-to-br from-lime-400 to-lime-500 w-40 h-40 rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-2xl">
+                  <Clock className="h-20 w-20 text-white" />
+                </div>
+                <div className="absolute -inset-4 bg-gradient-to-br from-lime-400/20 to-lime-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div className="text-6xl md:text-7xl lg:text-8xl font-black bg-gradient-to-br from-lime-400 to-lime-500 bg-clip-text text-transparent mb-4">
+                500H
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">Horas Otimizadas</h3>
+              <p className="text-lg text-gray-300 font-medium leading-relaxed max-w-sm mx-auto">
+                Horas de trabalho burocrático e administrativo poupadas, permitindo foco total na estratégia empresarial
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="w-full py-12 md:py-24 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-dots-pattern opacity-10"></div>
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="max-w-screen-xl mx-auto px-4 md:px-6 relative">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="flex flex-col justify-center space-y-4">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Ready to Transform Your Business?</h2>
-              <p className="max-w-[600px] md:text-xl text-blue-100">
-                Schedule a free consultation with our experts to discuss your business challenges and how we can help
-                you overcome them.
-              </p>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
-                <Link href="/contact">
-                  <Button
-                    size="lg"
-                    variant="secondary"
-                    className="gap-1.5 bg-white text-primary-700 hover:bg-blue-50 shadow-lg"
-                  >
-                    Schedule Consultation
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link href="/case-studies">
-                  <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
-                    View Case Studies
-                  </Button>
-                </Link>
-              </div>
+      <section className="py-24 bg-gradient-to-br from-white via-orange-50/30 to-purple-50/30 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute -top-40 -left-40 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-lime-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
+          <div className="text-center space-y-12">
+            <div className="animate-fade-in">
+              <Badge className="bg-gradient-to-r from-purple-100 to-orange-100 text-purple-800 hover:from-purple-200 hover:to-orange-200 mb-6 px-4 py-2 text-sm font-semibold border-0">
+                TRANSFORME O SEU NEGÓCIO
+              </Badge>
             </div>
-            <div className="flex items-center justify-center">
-              <div className="grid grid-cols-2 gap-4 w-full max-w-[500px]">
-                <div className="aspect-square overflow-hidden rounded-lg transform rotate-2 shadow-lg">
-                  <img
-                    src="/collaborative-growth-session.png"
-                    alt="Strategy meeting"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <div className="aspect-square overflow-hidden rounded-lg transform -rotate-2 shadow-lg">
-                  <img
-                    src="/interactive-data-dashboard.png"
-                    alt="Data analysis"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <div className="aspect-square overflow-hidden rounded-lg transform -rotate-2 shadow-lg">
-                  <img
-                    src="/collaborative-growth.png"
-                    alt="Team collaboration"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <div className="aspect-square overflow-hidden rounded-lg transform rotate-2 shadow-lg">
-                  <img
-                    src="/interconnected-future.png"
-                    alt="Digital transformation"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
+
+            <div className="space-y-8 animate-slide-up delay-200">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 leading-tight">
+                Pronto para <span className="bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent">organizar</span>
+                <br />o seu <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">negócio</span>?
+              </h2>
+
+              <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                Ajudamos todo o tipo de PMEs a organizar processos e consolidar vendas. 
+                Comece hoje a transformação que o seu negócio merece.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8 animate-slide-up delay-400">
+              <Button
+                size="lg"
+                className="group bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold px-12 py-6 text-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              >
+                Começar Hoje
+                <Zap className="ml-3 h-6 w-6 group-hover:rotate-12 transition-transform" />
+              </Button>
+
+              <Button
+                variant="outline"
+                size="lg"
+                className="group border-2 border-orange-200 text-orange-700 hover:bg-orange-50 hover:border-orange-300 font-semibold px-12 py-6 text-xl rounded-3xl transition-all duration-300"
+              >
+                Agendar Consulta
+                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 animate-slide-up delay-600">
+              <div className="flex items-center justify-center space-x-3 text-gray-600">
+                <CheckCircle className="h-6 w-6 text-green-500" />
+                <span className="font-medium">Consulta Gratuita</span>
+              </div>
+              <div className="flex items-center justify-center space-x-3 text-gray-600">
+                <CheckCircle className="h-6 w-6 text-green-500" />
+                <span className="font-medium">Sem Compromisso</span>
+              </div>
+              <div className="flex items-center justify-center space-x-3 text-gray-600">
+                <CheckCircle className="h-6 w-6 text-green-500" />
+                <span className="font-medium">Resultados Garantidos</span>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="w-full border-t py-6 md:py-0 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-4 md:h-24 md:px-6">
-          <div className="flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-5 w-5 text-primary-500"
-            >
-              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
-              <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
-              <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
-              <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
-            </svg>
-            <span className="text-lg font-semibold bg-gradient-to-r from-primary-600 to-secondary bg-clip-text text-transparent">
-              StrategyPro Consulting
-            </span>
-          </div>
-          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-            <Link
-              href="/terms"
-              className="text-xs md:text-sm text-slate-500 hover:text-primary-600 hover:underline underline-offset-4"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              href="/privacy"
-              className="text-xs md:text-sm text-slate-500 hover:text-primary-600 hover:underline underline-offset-4"
-            >
-              Privacy Policy
-            </Link>
-            <div className="text-xs md:text-sm text-slate-500">© 2023 StrategyPro Consulting. All rights reserved.</div>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

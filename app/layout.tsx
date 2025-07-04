@@ -2,9 +2,9 @@ import type React from "react"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { SiteHeader } from "@/components/site-header"
 import { Metadata } from 'next'
 import { Toaster } from "sonner"
+import Navbar from "@/components/navbar"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -46,9 +46,15 @@ export default function RootLayout({
   return (
     
       <html lang="en">
+        <head>
+              <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+        </head>
         <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <SiteHeader />
+          <Navbar/>  
             {children}
              <Toaster richColors position="top-center" />
           </ThemeProvider>

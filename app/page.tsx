@@ -1,8 +1,9 @@
 import { ArrowRight, Users, Clock, Zap, Target, CheckCircle, Star, TrendingUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+
 import { Badge } from "@/components/ui/badge"
 import BaseSection from "@/components/base-section"
+import MissionSection from "@/components/mission-statement-section"
 
 
 export const metadata = {
@@ -21,6 +22,9 @@ export default function HomePage() {
 
          {/* Hero Section */}
       <BaseSection/>
+
+       {/* Advantages Section */}
+     <MissionSection/>
 
       {/* Mission Section */}
       <section className="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
@@ -77,85 +81,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Advantages Section */}
-      <section id="services" className="py-24 bg-gradient-to-br from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="text-center mb-20 animate-fade-in">
-            <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-200 mb-6 px-4 py-2 text-sm font-semibold">
-              VANTAGENS COMPETITIVAS
-            </Badge>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-8 leading-tight">
-              Vantagens de contar
-              <br />
-              com a nossa <span className="bg-gradient-to-r from-lime-500 to-lime-600 bg-clip-text text-transparent">equipa</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Estamos alinhados com os seus objetivos e garantimos que o trabalho é feito de acordo com os seus moldes, 
-              proporcionando uma extensão natural da sua empresa.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Advantage 1 */}
-            <Card className="group bg-gradient-to-br from-orange-400 to-orange-500 border-0 rounded-3xl overflow-hidden hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl animate-slide-up">
-              <CardContent className="p-10 text-white relative">
-                <div className="absolute -top-6 -right-6 w-32 h-32 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-500"></div>
-                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white/5 rounded-full"></div>
-                <div className="relative z-10 space-y-6">
-                  <div className="bg-white/20 w-20 h-20 rounded-3xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
-                    <Users className="h-10 w-10 text-white" />
-                  </div>
-                  <div className="text-5xl font-black mb-4 text-white/90">01</div>
-                  <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight">Extensão da sua empresa</h3>
-                  <p className="text-orange-100 leading-relaxed text-lg">
-                    A nossa equipa integra-se perfeitamente nos seus processos, oferecendo apoio especializado em gestão administrativa, 
-                    projetos e organização contabilística.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Advantage 2 */}
-            <Card className="group bg-gradient-to-br from-lime-400 to-lime-500 border-0 rounded-3xl overflow-hidden hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl animate-slide-up delay-200">
-              <CardContent className="p-10 text-white relative">
-                <div className="absolute -top-6 -right-6 w-32 h-32 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-500"></div>
-                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white/5 rounded-full"></div>
-                <div className="relative z-10 space-y-6">
-                  <div className="bg-white/20 w-20 h-20 rounded-3xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
-                    <Target className="h-10 w-10 text-white" />
-                  </div>
-                  <div className="text-5xl font-black mb-4 text-white/90">02</div>
-                  <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight">Apoio em todos os desafios</h3>
-                  <p className="text-lime-100 leading-relaxed text-lg">
-                    Crescimento sustentável sem necessidade de contratar recursos internos. Escalamos consoante as suas necessidades 
-                    e objetivos empresariais.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Advantage 3 */}
-            <Card className="group bg-gradient-to-br from-purple-500 to-purple-600 border-0 rounded-3xl overflow-hidden hover:scale-105 transition-all duration-500 shadow-xl hover:shadow-2xl animate-slide-up delay-400">
-              <CardContent className="p-10 text-white relative">
-                <div className="absolute -top-6 -right-6 w-32 h-32 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-500"></div>
-                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white/5 rounded-full"></div>
-                <div className="relative z-10 space-y-6">
-                  <div className="bg-white/20 w-20 h-20 rounded-3xl flex items-center justify-center group-hover:rotate-12 transition-transform duration-500">
-                    <Clock className="h-10 w-10 text-white" />
-                  </div>
-                  <div className="text-5xl font-black mb-4 text-white/90">03</div>
-                  <h3 className="text-2xl lg:text-3xl font-bold mb-6 leading-tight">Tempo e recursos otimizados</h3>
-                  <p className="text-purple-100 leading-relaxed text-lg">
-                    Libertamos o seu tempo para se focar na estratégia e crescimento, enquanto gerimos eficientemente 
-                    todo o trabalho administrativo e operacional.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
+     
       {/* Stats Section */}
       <section className="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
         <div className="absolute inset-0">

@@ -1,12 +1,9 @@
 import type React from "react"
-import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Metadata } from 'next'
 import { Toaster } from "sonner"
 import Navbar from "@/components/navbar"
-
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: {
@@ -52,7 +49,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
         </head>
-        <body className={inter.className}>
+        <body>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <Navbar/>  
             {children}

@@ -66,9 +66,9 @@ export default function ContactSection() {
               whileHover={{
                 scale: 1.05,
                 rotate: 2,
-                transition: { duration: 0.3 },
+                transition: { duration: 0.1 },
               }}
-              className="relative w-full h-full mx-auto cursor-pointer"
+              className="relative w-full h-full mx-auto"
             >
               {/* Paper Airplane Base */}
               <div className="relative">

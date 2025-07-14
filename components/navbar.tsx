@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,7 +39,7 @@ export default function Navbar() {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm"
+          ? "bg-[#f6ede4] backdrop-blur-md shadow-sm"
           : "bg-transparent"
       }`}
     >
@@ -46,18 +47,20 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <motion.div
-  whileHover={{ scale: 1.05 }}
-  className="font-bold text-xl text-foreground w-32 h-18 flex items-center"
->
-  <Image
-    src="/Logótipo Rita Barrela-03.png"
-    alt="Logo boring work"
-    width={500}
-    height={300}
-    className="object-contain w-32 h-18"
-    priority
-  />
-</motion.div>
+            whileHover={{ scale: 1.05 }}
+            className="font-bold text-xl text-foreground w-32 h-18 flex items-center"
+          >
+            <Link href="/" passHref>
+              <Image
+                src="/Logótipo Rita Barrela-03.png"
+                alt="Logo boring work"
+                width={500}
+                height={300}
+                className="object-contain w-32 h-18"
+                priority
+              />
+            </Link>
+          </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -65,8 +68,7 @@ export default function Navbar() {
               <button
                 key={item.label}
                 onClick={() => scrollToSection(item.href)}
-                className={`text-[var(--primary-color)] text-sm font-medium transition-colors hover:text-primary relative group ${
-                  isScrolled ? "text-foreground" : "text-foreground/90"
+                className={`text-[#f3864d] text-lg font-medium transition-colors hover:text-primary relative group 
                 }`}
               >
                 {item.label}

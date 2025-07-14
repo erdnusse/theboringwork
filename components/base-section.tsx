@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function BaseSection() {
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
-  const imageSrc = isMobile ? "/main-no-logo-mobile.png" : "/main-no-logo.png"
+  const imageSrc = isMobile ? "/mobile-last.png" : "/main-no-logo.png";
 
   return (
-    <section 
-      id="home" 
+    <section
+      id="home"
       className="bg-[hsl(36,30%,92%)] relative w-full min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Centered image absolutely positioned */}
@@ -24,7 +24,13 @@ export default function BaseSection() {
           <img
             src={imageSrc}
             alt="Main background"
-            className="max-w-full max-h-full mx-auto my-auto object-center"
+            className={`mx-auto my-auto object-center
+    ${
+      isMobile
+        ? "h-[700px] sm:h-[400px] md:h-[700px] lg:h-[600px]"
+        : "max-h-full max-w-full"
+    }
+  `}
             loading="eager"
           />
         </motion.div>

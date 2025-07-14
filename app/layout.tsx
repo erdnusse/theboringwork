@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Metadata } from 'next'
 import { Toaster } from "sonner"
 import Navbar from "@/components/navbar"
+import Footer from "@/components/footer"
 
 export const metadata: Metadata = {
   title: {
@@ -57,6 +58,7 @@ export default function RootLayout({
              <Toaster richColors position="top-center" />
           </ThemeProvider>
         </body>
+        <Footer/>
       </html>
 
   )

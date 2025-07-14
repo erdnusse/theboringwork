@@ -1,8 +1,6 @@
-import { ArrowRight, Users, Clock, Zap, Target, CheckCircle, Star, TrendingUp } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
-import { Badge } from "@/components/ui/badge"
-import BaseSection from "@/components/base-section"
+//import BaseSection from "@/components/base-section"
+import BaseSection from "@/components/base-section-copy"
 import MissionSection from "@/components/mission-statement-section"
 import AboutSection from "@/components/about-section"
 import ServicesSection from "@/components/services-section"
@@ -21,7 +19,7 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen bg-[--background-primary-color] overflow-hidden">
+    <div className="flex flex-col min-h-screen bg-[--background-primary-color]">
 
          {/* Hero Section */}
       <BaseSection/>

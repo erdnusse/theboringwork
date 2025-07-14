@@ -1,200 +1,115 @@
-"use client"
-import Link from "next/link"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import { Menu, X } from "lucide-react"
-import { useIsMobile } from "@/hooks/use-mobile"
+"use client";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const isMobile = useIsMobile()
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-    window.addEventListener("scroll", onScroll)
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
 
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = "unset"
-    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    // Cleanup on unmount
-    return () => {
-      document.body.style.overflow = "unset"
+  const navItems = [
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Services", href: "#services" },
+    { label: "Contact", href: "#contact" },
+  ];
+
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  }, [mobileMenuOpen])
+    setIsMobileMenuOpen(false);
+  };
 
   return (
-    <>
-      <div
-        className={`fixed top-0 z-40 w-full transition-all duration-500 ease-in-out backdrop-blur-sm ${
-          scrolled ? "backdrop-blur-xl" : "bg-[--background-primary-color]"
-        }`}
-      >
-        <div
-          className={`max-w-screen-xl mx-auto flex transition-all duration-500 ease-in-out ${
-            scrolled ? "h-14" : "h-24"
-          } items-center justify-between px-4 md:px-6`}
-        >
-          <nav className="w-full flex items-center justify-between">
-            {/* Left: Logo (hide on mobile) */}
-            {!isMobile && (
-              <div className="flex items-center">
-                <Link href="/">
-                  <Image
-                    src="/Logótipo Rita Barrela-03.png"
-                    alt="Rita Barrela Logo"
-                    width={80}
-                    height={80}
-                    className={`${scrolled ? "h-14" : "h-24"} w-auto object-contain`}
-                    priority
-                  />
-                </Link>
-              </div>
-            )}
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <motion.div
+  whileHover={{ scale: 1.05 }}
+  className="font-bold text-xl text-foreground w-32 h-18 flex items-center"
+>
+  <Image
+    src="/Logótipo Rita Barrela-03.png"
+    alt="Logo boring work"
+    width={500}
+    height={300}
+    className="object-contain w-32 h-18"
+    priority
+  />
+</motion.div>
 
-            {/* Center: Logo on mobile */}
-            {isMobile && (
-              <div className="flex items-center">
-                <Link href="/">
-                  <Image
-                    src="/Logótipo Rita Barrela-03.png"
-                    alt="Rita Barrela Logo"
-                    width={60}
-                    height={60}
-                    className={`${scrolled ? "h-10" : "h-16"} w-auto object-contain`}
-                    priority
-                  />
-                </Link>
-              </div>
-            )}
-
-            {/* Right: Navigation Links or Burger */}
-            {isMobile ? (
-              <div className="flex items-center">
-                <button
-                  aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-                  onClick={() => setMobileMenuOpen((v) => !v)}
-                  className="text-[--primary-color] focus:outline-none z-50 relative"
-                >
-                  {mobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-8">
-                <Link
-                  href="/"
-                  className={`text-[--primary-color] hover:text-primary ${
-                    scrolled ? "font-medium " : "font-medium text-lg"
-                  }  transition-colors`}
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/about"
-                  className={`text-[--primary-color] hover:text-primary ${
-                    scrolled ? "font-medium " : "font-medium text-lg"
-                  }  transition-colors`}
-                >
-                  About
-                </Link>
-                <Link
-                  href="/services"
-                  className={`text-[--primary-color] hover:text-primary ${
-                    scrolled ? "font-medium " : "font-medium text-lg"
-                  }  transition-colors`}
-                >
-                  Services
-                </Link>
-                <Link
-                  href="/contact"
-                  className={`text-[--primary-color] hover:text-primary ${
-                    scrolled ? "font-medium " : "font-medium text-lg"
-                  }  transition-colors`}
-                >
-                  Contact
-                </Link>
-              </div>
-            )}
-          </nav>
-        </div>
-      </div>
-
-      {/* Mobile Menu Overlay - Moved outside main navbar */}
-      {isMobile && mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">
-          {/* Sidebar */}
-          <div className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out">
-            <div className="flex flex-col h-full">
-              {/* Header with close button */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                <div className="flex items-center">
-                  <Image
-                    src="/Logótipo Rita Barrela-03.png"
-                    alt="Rita Barrela Logo"
-                    width={40}
-                    height={40}
-                    className="h-10 w-auto object-contain"
-                    priority
-                  />
-                </div>
-                <button
-                  aria-label="Close menu"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-600 hover:text-gray-800 transition-colors"
-                >
-                  <X size={24} />
-                </button>
-              </div>
-
-              {/* Navigation Links */}
-              <nav className="flex-1 px-6 py-8">
-                <div className="flex flex-col space-y-6">
-                  <Link
-                    href="/"
-                    className="text-[--primary-color] text-lg font-semibold py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    href="/about"
-                    className="text-[--primary-color] text-lg font-semibold py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    About
-                  </Link>
-                  <Link
-                    href="/services"
-                    className="text-[--primary-color] text-lg font-semibold py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Services
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="text-[--primary-color] text-lg font-semibold py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Contact
-                  </Link>
-                </div>
-              </nav>
-            </div>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <button
+                key={item.label}
+                onClick={() => scrollToSection(item.href)}
+                className={`text-[var(--primary-color)] text-sm font-medium transition-colors hover:text-primary relative group ${
+                  isScrolled ? "text-foreground" : "text-foreground/90"
+                }`}
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </button>
+            ))}
           </div>
 
-          {/* Backdrop - Click to close */}
-          <div className="absolute inset-0 -z-10" onClick={() => setMobileMenuOpen(false)} />
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 rounded-md hover:bg-muted transition-colors"
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+          </button>
         </div>
-      )}
-    </>
-  )
+
+        {/* Mobile Navigation */}
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden border-t border-border bg-background/95 backdrop-blur-md"
+          >
+            <div className="py-4 space-y-3">
+              {navItems.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => scrollToSection(item.href)}
+                  className="block w-full text-[var(--primary-color)] text-left px-4 py-2 text-sm font-medium  hover:bg-muted rounded-md transition-colors"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </motion.nav>
+  );
 }

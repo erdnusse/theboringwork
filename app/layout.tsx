@@ -52,6 +52,7 @@ export default function RootLayout({
         <body>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <Navbar/>  
+
             {children}
              <Toaster richColors position="top-center" />
           </ThemeProvider>

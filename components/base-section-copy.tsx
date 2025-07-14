@@ -1,12 +1,12 @@
-"use client"
-
-import { motion } from "framer-motion"
-import { useIsMobile } from "@/hooks/use-mobile"
+"use client";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { motion } from "framer-motion";
 
 export default function BaseSection() {
-  const isMobile = useIsMobile()
 
-  const imageSrc = isMobile ? "/main-no-logo-mobile.png" : "/main-no-logo.png"
+  const isMobile = useIsMobile()
+  
+    const imageSrc = isMobile ? "/main-no-logo-mobile.png" : "/main-no-logo.png"
 
   return (
     <section 
@@ -23,14 +23,14 @@ export default function BaseSection() {
         >
           <img
             src={imageSrc}
-            alt="Main background"
+            alt="Hero background"
             className="w-full h-full object-cover"
             loading="eager"
           />
         </motion.div>
       </div>
 
-     
+   
     </section>
   );
 }

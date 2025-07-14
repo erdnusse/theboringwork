@@ -19,19 +19,11 @@ export default function Navbar() {
   }, []);
 
   const navItems = [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Services", href: "#services" },
-    { label: "Contact", href: "#contact" },
+    { label: "Início", href: "/" },
+    { label: "Serviços", href: "/services" },
+    { label: "Contactos", href: "/contact" },
+    { label: "Sobre", href: "/about" },
   ];
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-    setIsMobileMenuOpen(false);
-  };
 
   return (
     <motion.nav
@@ -48,15 +40,15 @@ export default function Navbar() {
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="font-bold text-xl text-foreground w-32 h-18 flex items-center"
+            className="font-bold text-xl text-foreground w-44 h-44 flex items-center"
           >
             <Link href="/" passHref>
               <Image
                 src="/Logótipo Rita Barrela-03.png"
                 alt="Logo boring work"
                 width={500}
-                height={300}
-                className="object-contain w-32 h-18"
+                height={500}
+                className="object-contain"
                 priority
               />
             </Link>
@@ -65,15 +57,14 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <button
+              <Link
                 key={item.label}
-                onClick={() => scrollToSection(item.href)}
-                className={`text-[#f3864d] text-lg font-medium transition-colors hover:text-primary relative group 
-                }`}
+                href={item.href}
+                className={`text-[#f3864d] text-lg font-medium transition-colors hover:text-primary relative group`}
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-              </button>
+              </Link>
             ))}
           </div>
 
@@ -100,13 +91,14 @@ export default function Navbar() {
           >
             <div className="py-4 space-y-3">
               {navItems.map((item) => (
-                <button
+                <Link
                   key={item.label}
-                  onClick={() => scrollToSection(item.href)}
-                  className="block w-full text-[var(--primary-color)] text-left px-4 py-2 text-sm font-medium  hover:bg-muted rounded-md transition-colors"
+                  href={item.href}
+                  className="block w-full text-[var(--primary-color)] text-left px-4 py-2 text-sm font-medium hover:bg-muted rounded-md transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
-                </button>
+                </Link>
               ))}
             </div>
           </motion.div>

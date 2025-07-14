@@ -15,7 +15,7 @@ export default function MissionSection() {
   })
   return (
     <section className="relative min-h-screen bg-[--background-secondary-color] overflow-hidden">
-        <AnimatedBackground />
+
       {/* Background Pattern/Texture */}
       <div className="absolute inset-0" />
 
@@ -26,7 +26,7 @@ export default function MissionSection() {
             {/* Mission Statement */}
 
             <div className="space-y-6">
-              <p className="text-orange-400 text-lg lg:text-xl font-medium tracking-wide uppercase">
+              <p className="text-orange-400 text-xl lg:text-2xl font-medium tracking-wide uppercase">
                 A nossa missão é clara
               </p>
 
@@ -37,7 +37,7 @@ export default function MissionSection() {
                 <span className="text-white">
                   <SplitText
                     text="a sua empresa"
-                    className="text-2xl font-semibold text-center"
+                    className="text-4xl lg:text-5xl xl:text-6xl font-bold text-center text-orange-400"
                     delay={100}
                     duration={0.6}
                     ease="power3.out"

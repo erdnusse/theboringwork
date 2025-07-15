@@ -44,7 +44,7 @@ export default function Navbar() {
           >
             <Link href="/" passHref>
               <Image
-                src="/Logótipo Rita Barrela-03.png"
+                src="/logo-boring-work.png"
                 alt="Logo boring work"
                 width={500}
                 height={500}

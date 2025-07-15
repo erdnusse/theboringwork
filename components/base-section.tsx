@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
-import ModernSpinner from "./loading-spinner-v0";
+import ModernSpinner from "./loading-spinner";
 
 export default function BaseSection() {
   const isMobile = useIsMobile();

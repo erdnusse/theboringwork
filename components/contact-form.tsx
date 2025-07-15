@@ -28,16 +28,16 @@ declare global {
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+    message: "O nome deve ter pelo menos 2 caracteres.",
   }),
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: "Por favor, insira um endereço de email válido.",
   }),
   subject: z.string().min(5, {
-    message: "Subject must be at least 5 characters.",
+    message: "O assunto deve ter pelo menos 5 caracteres.",
   }),
   message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
+    message: "A mensagem deve ter pelo menos 10 caracteres.",
   }),
 })
 
@@ -46,7 +46,6 @@ type FormValues = z.infer<typeof formSchema>
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false)
-
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -84,7 +83,7 @@ export default function ContactForm() {
   // Get reCAPTCHA token
   const getRecaptchaToken = async (): Promise<string> => {
     if (!recaptchaLoaded) {
-      console.warn("reCAPTCHA not loaded yet")
+      console.warn("O reCAPTCHA ainda não foi carregado")
       return ""
     }
 
@@ -92,21 +91,21 @@ export default function ContactForm() {
       const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "contact_form" })
       return token
     } catch (error) {
-      console.error("Error getting reCAPTCHA token:", error)
+      console.error("Erro ao obter o token do reCAPTCHA:", error)
       return ""
     }
   }
 
   async function onSubmit(values: FormValues) {
     setIsSubmitting(true)
-     const start = Date.now() // Start timing
+    const start = Date.now() // Start timing
 
     try {
       // Get reCAPTCHA token
       const recaptchaToken = await getRecaptchaToken()
 
       if (!recaptchaToken) {
-        toast.error("reCAPTCHA verification failed");
+        toast.error("Falha na verificação do reCAPTCHA");
         setIsSubmitting(false)
         return
       }
@@ -118,15 +117,14 @@ export default function ContactForm() {
       })
 
       if (result.success) {
-        toast.success("Message sent");
+        toast.success("Mensagem enviada com sucesso");
         form.reset()
       } else {
-        toast.error("Failed to send your message. Please try again.");
+        toast.error("Falha ao enviar a sua mensagem. Por favor, tente novamente.");
       }
     } catch (error) {
-      console.error("Contact form submission error:", error)
-      toast.error("An unexpected error occurred. Please try again later.");
- 
+      console.error("Erro ao submeter o formulário de contacto:", error)
+      toast.error("Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.");
     } finally {
       setIsSubmitting(false)
     }
@@ -141,9 +139,9 @@ export default function ContactForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Nome</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your name" {...field} />
+                  <Input placeholder="O seu nome" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -157,7 +155,7 @@ export default function ContactForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="your.email@example.com" {...field} />
+                  <Input placeholder="o.seu.email@exemplo.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -170,9 +168,9 @@ export default function ContactForm() {
           name="subject"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Subject</FormLabel>
+              <FormLabel>Assunto</FormLabel>
               <FormControl>
-                <Input placeholder="What is this regarding?" {...field} />
+                <Input placeholder="Sobre o que pretende falar?" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -184,51 +182,52 @@ export default function ContactForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel>Mensagem</FormLabel>
               <FormControl>
-                <Textarea placeholder="How can we help you?" className="min-h-[120px] resize-y" {...field} />
+                <Textarea placeholder="Como podemos ajudar?" className="min-h-[120px] resize-y" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        {!recaptchaLoaded && <div className="text-sm text-amber-600">Loading security verification...</div>}
+        {!recaptchaLoaded && <div className="text-sm text-amber-600">A carregar verificação de segurança...</div>}
 
         <div className="text-xs text-muted-foreground">
-          This site is protected by reCAPTCHA and the Google{" "}
+          Este site é protegido pelo reCAPTCHA e pela{" "}
           <a
             href="https://policies.google.com/privacy"
             target="_blank"
             rel="noreferrer"
             className="underline hover:text-primary"
           >
-            Privacy Policy
+            Política de Privacidade
           </a>{" "}
-          and{" "}
+          e pelos{" "}
           <a
             href="https://policies.google.com/terms"
             target="_blank"
             rel="noreferrer"
             className="underline hover:text-primary"
           >
-            Terms of Service
+            Termos de Serviço
           </a>{" "}
-          apply.
+          da Google.
         </div>
 
         <Button
           type="submit"
-          className="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600"
+          className="w-full bg-[#5344b4] hover:bg-[#dff506] text-[#dff506] hover:text-[#5344b4] 
+          group inline-flex items-center justify-center px-8 py-5 text-base font-semibold tracking-wide rounded-xl transition-all duration-300  hover:shadow-xl"
           disabled={isSubmitting || !recaptchaLoaded}
         >
           {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Sending...
+              A enviar...
             </>
           ) : (
-            "Send Message"
+            "Enviar Mensagem"
           )}
         </Button>
       </form>

@@ -46,7 +46,7 @@ export default function AboutSection() {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="text-white text-lg lg:text-xl leading-relaxed opacity-90"
               >
-                Somos uma empresa de consultoria empresarial com mais de 10 anos de experiância na estruturação e crescimento de PMEs, com uma forte base de experiência e soluções adaptáveis a diversos setores.
+                Somos uma empresa de consultoria empresarial com mais de 10 anos de experiência na estruturação e crescimento de PMEs, com uma forte base de experiência e soluções adaptáveis a diversos setores.
               </motion.p>
             </div>
           </motion.div>

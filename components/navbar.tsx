@@ -35,19 +35,19 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+      <div className="container mx-auto px-4 h-20">
+        <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="font-bold text-xl text-foreground w-44 h-44 flex items-center"
+            className="font-bold text-xl text-foreground w-52 h-20 flex items-center"
           >
             <Link href="/" passHref>
               <Image
                 src="/logo-boring-work.png"
                 alt="Logo boring work"
-                width={500}
-                height={500}
+                width={600}
+                height={600}
                 className="object-contain"
                 priority
               />

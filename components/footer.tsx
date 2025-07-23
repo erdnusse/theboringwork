@@ -18,11 +18,10 @@ export default function Footer() {
   ];
 
   const socialLinks = [
-    { name: "Facebook", href: "#", icon: Facebook },
-    { name: "Twitter", href: "#", icon: Twitter },
-    { name: "Instagram", href: "#", icon: Instagram },
-    { name: "LinkedIn", href: "#", icon: Linkedin },
-    { name: "YouTube", href: "#", icon: YoutubeIcon }, // Use YoutubeIcon instead of Youtube
+    { name: "Facebook", href: "https://www.facebook.com/profile.php?id=61577336057767", icon: Facebook },
+    { name: "Instagram", href: "https://www.instagram.com/the_boringwork/#", icon: Instagram },
+    { name: "LinkedIn", href: "https://pt.linkedin.com/company/the-boring-work?trk=public_profile_topcard-current-company ", icon: Linkedin },
+
   ];
 
   return (
@@ -43,11 +42,11 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <span>+351 123 456 789</span>
+                <span>+351912735542</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <span>hello@theboringwork.com</span>
+                <span>rita@theboringwork.pt</span>
               </div>
             </div>
           </div>

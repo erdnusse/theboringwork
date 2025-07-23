@@ -244,3 +244,7 @@ html {
   backface-visibility: hidden;
   perspective: 1000px;
 }
+
+.grecaptcha-badge {
+  display: none !important;
+}

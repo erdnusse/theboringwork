@@ -1,6 +1,16 @@
 import { ClerkProvider, SignUp } from "@clerk/nextjs"
 import Link from "next/link"
 
+export const metadata = {
+  title: "Sign Up | The Boring Work - Consultoria Empresarial",
+  description:
+    "Fazemos o trabalho chato para que se possa focar no mais importante: a sua empresa. Especialistas em estruturação e crescimento de PMEs.",
+    robots: {
+    index: false,
+    follow: false,
+  }
+}
+
 export default function SignUpPage() {
   return (
       <ClerkProvider>

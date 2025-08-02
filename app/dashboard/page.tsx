@@ -7,6 +7,16 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+export const metadata = {
+  title: "Dashboard | The Boring Work - Consultoria Empresarial",
+  description:
+    "Fazemos o trabalho chato para que se possa focar no mais importante: a sua empresa. Especialistas em estruturação e crescimento de PMEs.",
+    robots: {
+    index: false,
+    follow: false,
+  }
+}
+
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("overview")
 

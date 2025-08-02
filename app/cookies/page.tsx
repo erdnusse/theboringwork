@@ -1,3 +1,13 @@
+export const metadata = {
+  title: "Cookies | The Boring Work - Consultoria Empresarial",
+  description:
+    "Fazemos o trabalho chato para que se possa focar no mais importante: a sua empresa. Especialistas em estruturação e crescimento de PMEs.",
+    robots: {
+    index: true,
+    follow: true,
+  }
+}
+
 export default function CookiesPage() {
   return (
     <section className="max-w-3xl mx-auto px-4 py-16 bg-white rounded-xl shadow-lg mt-8 mb-16">

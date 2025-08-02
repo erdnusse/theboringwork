@@ -31,7 +31,7 @@ function TextBlock({
       initial={{ opacity: 0, y: 60 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="relative bg-white rounded-2xl shadow-xl px-6 py-8 md:px-10 md:py-10 mb-16"
+      className="group relative bg-white border-[#e8ddd1] rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 px-6 py-8 md:px-10 md:py-10 mb-16"
     >
       <div className="flex items-center gap-2 mb-2">
         {highlight}
@@ -41,7 +41,7 @@ function TextBlock({
       </div>
       <div className="text-gray-700 text-base leading-relaxed">{children}</div>
       {imageSrc && (
-        <div className="mt-4 flex justify-center">
+        <div className="rounded-full object-cover group-hover:scale-105 transition-transform duration-300">
           <Image
             src={imageSrc}
             alt={imageAlt || "Placeholder"}
@@ -56,66 +56,130 @@ function TextBlock({
 }
 
 // --- PlaceholderImageBlock Component ---
-function PlaceholderImageBlock() {
-  return (
-    <div className="relative flex items-center justify-center h-56 mb-16">
-      <div className="absolute inset-0 flex items-center justify-center z-10">
-        <div className="w-40 h-40 md:w-56 md:h-56 bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl flex items-center justify-center shadow-inner">
-          <span className="text-orange-400 text-4xl font-bold opacity-60">
-            Imagem
-          </span>
+function PlaceholderImageBlock({
+  arrowSrc,
+  arrowPosition = "right", // "left" or "right"
+  arrowSize = "250px",
+  imageSrc,
+  align = "center", // "left" | "right" | "center"
+  arrowRotate = 0, // degrees to rotate the arrow image
+  arrowTopPosition = "50px", // vertical position of the arrow
+}: {
+  arrowSrc?: string;
+  arrowPosition?: "left" | "right";
+  arrowSize?: string;
+  imageSrc?: string;
+  align?: "left" | "right" | "center";
+  arrowRotate?: number;
+  arrowTopPosition?: string; // vertical position of the arrow
+}) {
+  // Alignment classes for the whole block
+  let justifyClass = "justify-center";
+  if (align === "left") justifyClass = "justify-start";
+  if (align === "right") justifyClass = "justify-end";
+
+  // Arrow positioning
+  const arrowLeft = arrowPosition === "left" ? "left-0" : "";
+  const arrowRight = arrowPosition === "right" ? "right-0" : "";
+  const arrowTranslate =
+    arrowPosition === "left"
+      ? "-translate-x-1/4"
+      : arrowPosition === "right"
+      ? "translate-x-1/4"
+      : "";
+  if (arrowSrc === undefined) {
+    return (
+      <div
+        className={`relative flex ${justifyClass} items-center h-60 md:h-72 lg:h-80`}
+      >
+        {/* Highlighted placeholder box */}
+        <div className="relative z-10 w-full h-full flex items-center justify-center">
+          <Image
+            src={imageSrc!}
+            alt="Placeholder"
+            fill
+            className="object-contain"
+            sizes="100vw"
+          />
         </div>
       </div>
-      {/* SVG Arrow overlays the image */}
-      <div className="absolute inset-0 z-20 top-10 pointer-events-none flex items-center justify-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          version="1.1"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          viewBox="0 0 800 800"
-          className="w-40 h-40 md:w-56 md:h-56"
+    );
+  } else if (imageSrc === undefined) {
+    return (
+      <div
+        className={`relative flex ${justifyClass} items-center h-60 md:h-72 lg:h-80`}
+      >
+        {/* Arrow as background, absolutely positioned */}
+        <div
+          className={`absolute ${arrowLeft} ${arrowRight} -translate-y-1/2 ${arrowTranslate} z-0 pointer-events-none`}
+          style={{
+            top: arrowTopPosition,
+            width: arrowSize,
+            height: arrowSize,
+            transform: `translateY(-50%) ${
+              arrowTranslate ? ` ${arrowTranslate}` : ""
+            } rotate(${arrowRotate}deg)`,
+          }}
         >
-          <g
-            strokeWidth={12}
-            stroke="hsl(0, 0%, 0%)"
-            fill="none"
-            strokeLinecap="square"
-            transform="matrix(1,0,0,1,-31,0)"
-          >
-            <path
-              d="M250 250Q438 350 400 400Q294 533 550 550 "
-              markerEnd="url(#SvgjsMarker1326)"
-            />
-          </g>
-          <defs>
-            <marker
-              markerWidth={10.5}
-              markerHeight={10.5}
-              refX={5.25}
-              refY={5.25}
-              viewBox="0 0 10.5 10.5"
-              orient="auto"
-              id="SvgjsMarker1326"
-            >
-              <polygon
-                points="0,10.5 3.5,5.25 0,0 10.5,5.25"
-                fill="hsl(0, 0%, 0%)"
-              />
-            </marker>
-          </defs>
-        </svg>
+          <Image
+            src={arrowSrc}
+            alt="Arrow"
+            fill
+            className="object-contain opacity-70"
+            sizes={arrowSize}
+            style={{ transform: `rotate(${arrowRotate}deg)` }}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div
+        className={`relative flex ${justifyClass} items-center h-60 md:h-72 lg:h-80`}
+      >
+        {/* Arrow as background, absolutely positioned */}
+        <div
+          className={`absolute ${arrowLeft} ${arrowRight} -translate-y-1/2 ${arrowTranslate} z-0 pointer-events-none`}
+          style={{
+            top: arrowTopPosition,
+            width: arrowSize,
+            height: arrowSize,
+            transform: `translateY(-50%) ${
+              arrowTranslate ? ` ${arrowTranslate}` : ""
+            } rotate(${arrowRotate}deg)`,
+          }}
+        >
+          <Image
+            src={arrowSrc}
+            alt="Arrow"
+            fill
+            className="object-contain opacity-70"
+            sizes={arrowSize}
+            style={{ transform: `rotate(${arrowRotate}deg)` }}
+          />
+        </div>
+        {/* Highlighted placeholder box */}
+        <div className="relative z-10 w-full h-full flex items-center justify-center">
+          <Image
+            src={imageSrc}
+            alt="Placeholder"
+            fill
+            className="object-contain"
+            sizes="100vw"
+          />
+        </div>
+      </div>
+    );
+  }
 }
 
-function GreenAsterisk() {
+function Asterisk({ color }: { color: string }) {
   return (
     <span className="inline-block mr-2 align-middle">
       <svg width={36} height={36} viewBox="0 0 36 36" fill="none">
         <path
           d="M18 3v30M3 18h30M7.5 7.5l21 21M28.5 7.5l-21 21"
-          stroke="#D9F99D"
+          stroke={color}
           strokeWidth={4}
           strokeLinecap="round"
         />
@@ -128,14 +192,14 @@ function GreenAsterisk() {
 export default function FlowPage() {
   return (
     <div className="min-h-screen bg-[#f6ede4] py-10 px-2 md:px-0 flex flex-col items-center">
-      <div className="max-w-5xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-12">
+      <div className="max-w-5xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-6">
         {/* Row 1: Left Block, Right Placeholder */}
         <div>
           <TextBlock
             id="block1"
             title="Gestão Administrativa"
             titleClass="text-[#1e40af]"
-            highlight={""}
+            highlight={<Asterisk color="#D9F99D" />}
           >
             Empresas que querem crescer não podem desperdiçar tempo com tarefas
             administrativas. Ter alguém dedicado à gestão administrativa é
@@ -146,19 +210,30 @@ export default function FlowPage() {
           </TextBlock>
         </div>
         <div>
-          <PlaceholderImageBlock />
+          <PlaceholderImageBlock
+            imageSrc="/hand-exclamation.png"
+            arrowSrc="/arrow1-inverted.png"
+            arrowPosition="left"
+            align="center"
+            arrowRotate={-45}
+            arrowSize={"400px"}
+            arrowTopPosition="250px"
+          />
         </div>
 
         {/* Row 2: Left Placeholder, Right Block */}
         <div>
-          <PlaceholderImageBlock />
+          <PlaceholderImageBlock
+            imageSrc="/Copilot_20250802_165751.png"
+            align="center"
+          />
         </div>
         <div>
           <TextBlock
             id="block2"
             title="Planeamento estratégico"
-            titleClass="text-[#7c3aed]"
-            highlight={<GreenAsterisk />}
+            titleClass="text-[#1e40af]"
+            highlight={<Asterisk color="#ffe534" />}
           >
             Tudo começa com um diagnóstico claro: onde está o negócio, para onde
             pode ir e como lá chegar. Com base nisso, é desenvolvido um plano
@@ -173,7 +248,8 @@ export default function FlowPage() {
           <TextBlock
             id="block3"
             title="Reestruturação & Otimização Operacional"
-            titleClass="text-[#222]"
+            titleClass="text-[#1e40af]"
+            highlight={<Asterisk color="#ff99d1" />}
           >
             Processos confusos, tarefas duplicadas e falhas de comunicação
             custam tempo e dinheiro. A nossa consultoria ajuda a mapear,
@@ -183,7 +259,7 @@ export default function FlowPage() {
           </TextBlock>
         </div>
         <div>
-          <PlaceholderImageBlock />
+          <PlaceholderImageBlock imageSrc="/hand-peace.png" arrowSrc="/arrow2-inverted.png" arrowPosition="left" arrowRotate={45} arrowSize="200px"/>
         </div>
       </div>
     </div>

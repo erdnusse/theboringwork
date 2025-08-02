@@ -31,15 +31,7 @@ const oauthSettingsSchema = z.object({
 
 type OAuthSettingsFormValues = z.infer<typeof oauthSettingsSchema>
 
-export const metadata = {
-  title: "Eamil | The Boring Work - Consultoria Empresarial",
-  description:
-    "Fazemos o trabalho chato para que se possa focar no mais importante: a sua empresa. Especialistas em estruturação e crescimento de PMEs.",
-    robots: {
-    index: false,
-    follow: false,
-  }
-}
+
 
 export default function EmailSettingsPage() {
   const [activeTab, setActiveTab] = useState("settings")

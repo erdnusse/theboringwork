@@ -46,15 +46,15 @@ export default function ContactSection() {
             <div className="flex items-start gap-3">
               <Phone className="h-8 w-8 text-[#f4864f] font-semibold" />
               <div>
-                <h3 className="font-semibold">Telefone</h3>
-                <p className="mt-1 text-muted-foreground">+351912735542</p>
+                <h3 className="h-8 w-8 text-[#f4864f] font-semibold">Telefone</h3>
+                <p className="mt-1 text-muted-foreground">(+351) 912735542</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
               <Mail className="h-8 w-8 text-[#f4864f] font-semibold" />
               <div>
-                <h3 className="font-semibold">Email</h3>
+                <h3 className="h-8 w-8 text-[#f4864f] font-semibold">Email</h3>
                 <p className="mt-1 text-muted-foreground">rita@theboringwork.pt</p>
               </div>
             </div>

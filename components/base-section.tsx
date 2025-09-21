@@ -24,13 +24,16 @@ export default function BaseSection() {
 
   const imageSrc = isMobile ? "/mobile-last.png" : "/main-no-logo.png";
 
+  console.log("Rendering BaseSection, isMobile:", isMobile);
+
   return (
     <section
       id="home"
+      style={{paddingTop: isMobile ? '4rem' : '0'}}
       className="bg-[hsl(36,30%,92%)] relative w-full min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Centered image absolutely positioned */}
-      <div className="w-full h-full z-0 flex items-center justify-center">
+      <div className="w-full h-full z-0 flex items-center justify-center ">
         <motion.div
           initial={{ y: 0 }}
           animate={{ y: [-20, 0] }}
@@ -43,7 +46,7 @@ export default function BaseSection() {
             className={`mx-auto my-auto object-center
     ${
       isMobile
-        ? "h-[700px] sm:h-[400px] md:h-[700px] lg:h-[600px]"
+        ? "h-[700px] "
         : "max-h-full max-w-full"
     }
   `}

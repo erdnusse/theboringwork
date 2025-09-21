@@ -29,7 +29,7 @@ export default function BaseSection() {
   return (
     <section
       id="home"
-      style={{paddingTop: isMobile ? '4rem' : '0'}}
+      style={{paddingTop: isMobile ? '8rem' : '0'}}
       className="bg-[hsl(36,30%,92%)] relative w-full min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Centered image absolutely positioned */}

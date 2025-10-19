@@ -235,6 +235,42 @@ export default function ServicesComponent() {
             {t("services_block3_text")}
           </TextBlock>
         </div>
+
+            {/* Row 4: Left Placeholder, Right Block */}    
+        <div>
+          <TextBlock
+            id="block4"
+            title={t("services_block4_title")}
+            titleClass="text-[#1e40af]"
+          >
+            <div>{t("services_block4_text")}</div>
+            <div className="mt-2">{t("services_block4_text2")}</div>
+          </TextBlock>
+        </div>
+
+         {/* Row 5: Left Placeholder, Right Block */}
+        <div>
+          <TextBlock
+            id="block5"
+            title={t("services_block5_title")}
+            titleClass="text-[#1e40af]"
+          >
+            {t("services_block5_text")}
+          </TextBlock>
+        </div>
+        
+             {/* Row 6: Left Placeholder, Right Block */}
+       
+        <div>
+          <TextBlock
+            id="block6"
+            title={t("services_block6_title")}
+            titleClass="text-[#1e40af]"
+          >
+            <div>{t("services_block6_text")}</div>
+            <div className="mt-2">{t("services_block6_text")}</div>
+          </TextBlock>
+        </div>
         
       </div>
     </div>
@@ -294,11 +330,113 @@ export default function ServicesComponent() {
             {t("services_block3_text")}
           </TextBlock>
         </div>
+         <div>
+          <PlaceholderImageBlock
+            imageSrc="/hand-peace.png"
+            arrowSrc="/arrow1-inverted.png"
+            arrowPosition="left"
+            align="center"
+            arrowRotate={-45}
+            arrowSize={"400px"}
+            arrowTopPosition="250px"
+          />
+        </div>
+
+            {/* Row 4: Left Placeholder, Right Block */}
+         <div>
+          <PlaceholderImageBlock
+            imageSrc="/rita-barrela-logo-16.png"
+            align="center"
+          />
+        </div>
+        <div>
+          <TextBlock
+            id="block4"
+            title={t("services_block4_title")}
+            titleClass="text-[#1e40af]"
+          >
+            <div>{t("services_block4_text")}</div>
+            <div className="mt-2">{t("services_block4_text2")}</div>
+          </TextBlock>
+        </div>
+ {/* Row 5: Left Placeholder, Right Block */}
+        <div>
+          <TextBlock
+            id="block5"
+            title={t("services_block5_title")}
+            titleClass="text-[#1e40af]"
+          >
+            {t("services_block5_text")}
+          </TextBlock>
+        </div>
+         <div>
+          <PlaceholderImageBlock
+            imageSrc="/statue.png"           
+            align="center"           
+          />
+        </div>
+
+             {/* Row 6: Left Placeholder, Right Block */}
+         <div>
+          <PlaceholderImageBlock
+            imageSrc="/statue.png"   
+            align="center"
+          />
+        </div>
+        <div>
+          <TextBlock
+            id="block6"
+            title={t("services_block6_title")}
+            titleClass="text-[#1e40af]"
+          >
+            <div>{t("services_block6_text")}</div>
+            <div className="mt-2">{t("services_block6_text")}</div>
+          </TextBlock>
+        </div>
+
+          {/* Row 7: Left Placeholder, Right Block */}
+        
+        <div>
+          <TextBlock
+            id="block7"
+            title={t("services_block7_title")}
+            titleClass="text-[#1e40af]"
+          >
+            <div>{t("services_block7_text")}</div>
+            <div className="mt-2">{t("services_block7_text")}</div>
+            <div className="mt-2">{t("services_block7_text2")}</div>
+          </TextBlock>
+        </div>
+
+         <div>
+          <PlaceholderImageBlock
+            imageSrc="/statue.png"   
+            align="center"
+       
+          />
+        </div>
+
+        {/* Row 8: Left Placeholder, Right Block */}
+         <div>
+          <PlaceholderImageBlock
+            imageSrc="/statue.png"   
+            align="center"
+          />
+        </div>
+        <div>
+          <TextBlock
+            id="block8"
+            title={t("services_block8_title")}
+            titleClass="text-[#1e40af]"
+          >
+            <div>{t("services_block8_text")}</div>
+            <div className="mt-2">{t("services_block8_text")}</div>
+            <div className="mt-2">{t("services_block8_text2")}</div>
+          </TextBlock>
+        </div>
 
   
-        <div>
-          <PlaceholderImageBlock imageSrc="/hand-peace.png" arrowSrc="/arrow2-inverted.png" arrowPosition="left" arrowRotate={45} arrowSize="200px"/>
-        </div>
+      
       </div>
     </div>
   );

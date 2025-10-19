@@ -223,5 +223,22 @@
   "cookies_page_section5_cookies_url": "www.allaboutcookies.org",
   "cookies_page_section6_title": "6. Contact",
   "cookies_page_section6_text": "If you have any questions about this policy, you can contact us at:",
-  "cookies_page_section6_email": "info@theboringwork.pt"
+  "cookies_page_section6_email": "info@theboringwork.pt",
+  "services_block4_title": "Financial Consulting",
+"services_block4_text": "The financial area should support decisions, not cause uncertainty.",
+"services_block4_text2": "A consultancy can analyze project feasibility, prepare business plans for investors or bank financing, organize budgets, and create cash flow control models. All with clear language and tools tailored to everyday business.",
+"services_block5_title":"Tax Management & Strategic Accounting",
+"services_block5_text": "In more technical areas, such as tax management and strategic accounting, we support companies in optimizing their tax burden (in conjunction with a certified accountant), reviewing the invoicing model, choosing the most appropriate tax regime, and strategically planning successions in family businesses.",
+
+"services_block6_title":"Human Resources & Organizational Culture",
+"services_block6_text": "Companies with good teams achieve better results. Assessing organizational climate, creating performance evaluation plans, defining roles, implementing incentive systems, or structuring recruitment processes are essential steps to align talent with strategy.",
+"services_block7_title":"Marketing & Sales",
+"services_block7_text": "Market presence needs to be thought out. A well-designed marketing strategy helps position the brand, attract the right customers, and increase sales.",
+"services_block7_text2":"This includes studying the target audience, working on the value proposition, building effective sales funnels, and adjusting communication across all channels.",
+
+"services_block8_title":"Complementary Services",
+"services_block8_text": "In addition to core consulting, there are additional services that can further enhance results. Practical training in areas such as leadership, sales, finance, and digital marketing helps teams grow.",
+"services_block8_text2":"Mentoring sessions for founders or managers allow for clearer and more focused decision-making. Comprehensive business plans, internal audits, and specialized commercial consulting are key solutions for companies looking to level up."
+
+
 }

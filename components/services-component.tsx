@@ -270,6 +270,37 @@ export default function ServicesComponent() {
             <div>{t("services_block6_text")}</div>
             <div className="mt-2">{t("services_block6_text")}</div>
           </TextBlock>
+        </div>       
+   
+
+          {/* Row 7: Left Placeholder, Right Block */}
+        
+        <div>
+          <TextBlock
+            id="block7"
+            title={t("services_block7_title")}
+            titleClass="text-[#1e40af]"
+          >
+            <div>{t("services_block7_text")}</div>
+            <div className="mt-2">{t("services_block7_text")}</div>
+            <div className="mt-2">{t("services_block7_text2")}</div>
+          </TextBlock>
+        </div>
+
+       
+
+        {/* Row 8: Left Placeholder, Right Block */}
+        
+        <div>
+          <TextBlock
+            id="block8"
+            title={t("services_block8_title")}
+            titleClass="text-[#1e40af]"
+          >
+            <div>{t("services_block8_text")}</div>
+            <div className="mt-2">{t("services_block8_text")}</div>
+            <div className="mt-2">{t("services_block8_text2")}</div>
+          </TextBlock>
         </div>
         
       </div>

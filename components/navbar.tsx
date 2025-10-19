@@ -47,7 +47,7 @@ export default function Navbar() {
             whileHover={{ scale: 1.05 }}
             className="font-bold text-xl text-foreground w-52 h-20 flex items-center"
           >
-            <Link href="/" passHref>
+            <Link href={`/${lang}`} passHref>
               <Image
                 src="/logo-boring-work.png"
                 alt="Logo boring work"

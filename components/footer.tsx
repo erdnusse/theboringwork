@@ -7,18 +7,18 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
 
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
   const siteMap = [
-    { name: t("home_title"), href: "/" },
-    { name: t("services"), href: "/services" },
-    { name: t("about"), href: "/about" },
-    { name: t("contact"), href: "/contact" },
+    { name: t("home_title"), href: `/${lang}` },
+    { name: t("services"), href: `/${lang}/services` },
+    { name: t("about"), href: `/${lang}/about` },
+    { name: t("contact"), href: `/${lang}/contact` },
   ];
 
   const legalLinks = [
-    { name: t("privacy_policy"), href: "/privacy" },
-    { name: t("cookies_policy"), href: "/cookies" },
-    { name: t("terms_of_service"), href: "/terms" },
+    { name: t("privacy_policy"), href: `/${lang}/privacy` },
+    { name: t("cookies_policy"), href: `/${lang}/cookies` },
+    { name: t("terms_of_service"), href: `/${lang}/terms` },
   ];
 
   const socialLinks = [

@@ -5,6 +5,7 @@ import { Toaster } from "sonner"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { LanguageProvider } from '@/context/LanguageProvider'
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: {
@@ -45,6 +46,20 @@ export default async function RootLayout({ children, params }: { children: React
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+
+         {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-SFHQRXLQLJ"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SFHQRXLQLJ');
+          `}
+        </Script>
       </head>
       <body>
         <LanguageProvider initialLang={awaitedParams.lang as 'pt' | 'en'}>

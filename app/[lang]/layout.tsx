@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     siteName: 'The Boring Work',
     images: [
       {
-        url: 'https://www.theboringwork.pt/logo-contactos.png',
+        url: 'https://www.theboringwork.pt/banner.png',
         width: 1200,
         height: 630,
       },
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'The Boring Work - Consultoria Empresarial',
     description: 'The Boring Work is a consulting firm specializing in providing expert advice and solutions to businesses and individuals.',
-    images: ['https://www.theboringwork.pt/logo-contactos.png'],
+    images: ['https://www.theboringwork.pt/banner.png'],
   },
 }
 

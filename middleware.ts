@@ -33,7 +33,7 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    // Match all routes except Next.js internals, static files, and excluded paths (but DO NOT exclude /dashboard)
-    '/((?!_next|static|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:png|jpg|jpeg|webp|svg|ico|css|js|json|txt|woff2?|ttf)|api|sign-in|sign-out).*)',
+    // Match all routes except Next.js internals, static files, and excluded paths
+    '/((?!_next|static|favicon.ico|robots.txt|sitemap.xml|api|sign-in|sign-out|.*\\.(?:png|jpg|jpeg|webp|svg|ico|css|js|json|txt|woff2?|ttf)).*)',
   ],
 }

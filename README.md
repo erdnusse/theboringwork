@@ -14,6 +14,18 @@ pnpm dev
 bun dev
 ```
 
+## Internationalization (i18n)
+
+This project uses a lightweight custom i18n system based on JSON files in `/locales` and a small middleware to ensure the URL contains a language prefix (`/en` or `/pt`).
+
+- Locale files: `/locales/en.json` and `/locales/pt.json`.
+- Server translator: `lib/i18n.ts` exposes `getTranslator(locale)` which you can use in server components.
+- Client language context: `context/LanguageProvider.tsx` provides `lang` and `setLang` and is already included in `app/layout.tsx`.
+- Language switcher: `components/language-switcher.tsx` (client) updates the URL to the selected language.
+- Middleware: `middleware.ts` will redirect `/` to `/en` and ensure unknown paths get the default locale prefixed.
+
+After editing the middleware or adding new routes, restart the dev server to pick up the changes.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

@@ -5,22 +5,23 @@ import { Metadata } from 'next'
 import { Toaster } from "sonner"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import { LanguageProvider } from '@/context/LanguageProvider'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Rita Barrela Consulting',
-    template: '%s | Rita Barrela Consultoria Empresarial',
+    default: 'The Boring Work - Consultoria Empresarial',
+    template: '%s | The Boring Work - Consultoria Empresarial',
   },
-  description: 'Rita Barrela Consulting is a consulting firm specializing in providing expert advice and solutions to businesses and individuals.',
-  keywords: ['Rita Barrela', 'Consulting', 'Solutions', 'Expert Advice'],
+  description: 'The Boring Work is a consulting firm specializing in providing expert advice and solutions to businesses and individuals.',
+  keywords: ['The Boring Work', 'Consulting', 'Solutions', 'Expert Advice'],
   openGraph: {
-    title: 'Rita Barrela Consultoria Empresarial',
-    description: 'Rita Barrela Consulting is a consulting firm specializing in providing expert advice and solutions to businesses and individuals.',
-    url: 'https://www.ritabarrela.com/',
-    siteName: 'Rita Barrela Consulting',
+    title: 'The Boring Work - Consultoria Empresarial',
+    description: 'The Boring Work is a consulting firm specializing in providing expert advice and solutions to businesses and individuals.',
+    url: 'https://www.theboringwork.pt/',
+    siteName: 'The Boring Work',
     images: [
       {
-        url: 'https://www.ritabarrela.com/banner.png',
+        url: 'https://www.theboringwork.pt/banner.png',
         width: 1200,
         height: 630,
       },
@@ -30,9 +31,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rita Barrela Consultoria Empresarial',
-    description: 'Rita Barrela Consulting is a consulting firm specializing in providing expert advice and solutions to businesses and individuals.',
-    images: ['https://www.ritabarrela.com/banner.png'],
+    title: 'The Boring Work - Consultoria Empresarial',
+    description: 'The Boring Work is a consulting firm specializing in providing expert advice and solutions to businesses and individuals.',
+    images: ['https://www.theboringwork.pt/banner.png'],
   },
 }
 
@@ -52,11 +53,14 @@ export default function RootLayout({
         </head>
         <body>
 
-          <Navbar/>  
+          <Navbar/>
 
+          <LanguageProvider initialLang={'en'}>
             {children}
-             <Toaster richColors position="top-center" />
-<Footer/>
+          </LanguageProvider>
+
+          <Toaster richColors position="top-center" />
+          <Footer/>
         </body>
         
       </html>

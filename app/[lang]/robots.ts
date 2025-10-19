@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: ["/"], // Public pages you want to allow
       disallow: ["/api/", "/dashboard/"], // Typically you'd want to disallow private areas
     },
-    sitemap: "https://www.ritabarrela.com/sitemap.xml",
+    sitemap: "https://www.theboringwork.pt/sitemap.xml",
   }
 }

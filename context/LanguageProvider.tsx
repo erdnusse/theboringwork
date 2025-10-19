@@ -12,7 +12,7 @@ const LanguageContext = createContext<{
 
 export const LanguageProvider = ({ children, initialLang }: { children: React.ReactNode; initialLang?: Lang }) => {
   const router = useRouter()
-  const [lang, setLangState] = useState<Lang>(initialLang ?? 'en')
+  const [lang, setLangState] = useState<Lang>(initialLang ?? 'pt')
 
   useEffect(() => {
     // Keep URL in sync when lang changes

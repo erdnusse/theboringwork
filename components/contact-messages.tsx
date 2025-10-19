@@ -55,6 +55,8 @@ import {
 
 import { getContactMessages, updateMessageStatus, deleteMessage } from "@/actions/message-actions"
 
+import { useTranslation } from "@/hooks/use-translation";
+
 // Initialize dayjs plugins
 dayjs.extend(relativeTime)
 
@@ -82,6 +84,7 @@ type MessageFilter = {
 export function ContactMessages() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { t } = useTranslation();
 
   // State
   const [messages, setMessages] = useState<ContactMessage[]>([])
@@ -224,17 +227,17 @@ export function ContactMessages() {
   function getStatusBadge(status: string) {
     switch (status) {
       case "NEW":
-        return <Badge variant="default">New</Badge>
+        return <Badge variant="default">{t("contact_messages_status_new")}</Badge>;
       case "READ":
-        return <Badge variant="secondary">Read</Badge>
+        return <Badge variant="secondary">{t("contact_messages_status_read")}</Badge>;
       case "REPLIED":
-        return <Badge variant="success">Replied</Badge>
+        return <Badge variant="success">{t("contact_messages_status_replied")}</Badge>;
       case "SPAM":
-        return <Badge variant="destructive">Spam</Badge>
+        return <Badge variant="destructive">{t("contact_messages_status_spam")}</Badge>;
       case "ARCHIVED":
-        return <Badge variant="outline">Archived</Badge>
+        return <Badge variant="outline">{t("contact_messages_status_archived")}</Badge>;
       default:
-        return null
+        return null;
     }
   }
 
@@ -249,13 +252,13 @@ export function ContactMessages() {
         <CardHeader className="pb-3">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <CardTitle>Contact Messages</CardTitle>
-              <CardDescription>You have {totalMessages} total messages</CardDescription>
+              <CardTitle>{t("contact_messages_title")}</CardTitle>
+              <CardDescription>{t("contact_messages_description")}{totalMessages}</CardDescription>
             </div>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" onClick={() => loadMessages()} disabled={loading}>
                 <RefreshCcw className="h-4 w-4 mr-1" />
-                Refresh
+                {t("contact_messages_refresh")}
               </Button>
             </div>
           </div>
@@ -264,12 +267,12 @@ export function ContactMessages() {
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-6 py-3 border-b gap-4">
               <TabsList>
-                <TabsTrigger value="all">All</TabsTrigger>
-                <TabsTrigger value="NEW">New</TabsTrigger>
-                <TabsTrigger value="READ">Read</TabsTrigger>
-                <TabsTrigger value="REPLIED">Replied</TabsTrigger>
-                <TabsTrigger value="SPAM">Spam</TabsTrigger>
-                <TabsTrigger value="ARCHIVED">Archived</TabsTrigger>
+                <TabsTrigger value="all">{t("contact_messages_tab_all")}</TabsTrigger>
+                <TabsTrigger value="NEW">{t("contact_messages_tab_new")}</TabsTrigger>
+                <TabsTrigger value="READ">{t("contact_messages_tab_read")}</TabsTrigger>
+                <TabsTrigger value="REPLIED">{t("contact_messages_tab_replied")}</TabsTrigger>
+                <TabsTrigger value="SPAM">{t("contact_messages_tab_spam")}</TabsTrigger>
+                <TabsTrigger value="ARCHIVED">{t("contact_messages_tab_archived")}</TabsTrigger>
               </TabsList>
 
               <div className="flex items-center gap-2">
@@ -278,7 +281,7 @@ export function ContactMessages() {
                   <Input
                     type="search"
                     name="search"
-                    placeholder="Search messages..."
+                    placeholder={t("contact_messages_search_placeholder")}
                     className="w-full pl-8 sm:w-[200px] md:w-[300px]"
                     defaultValue={filters.search || ""}
                   />
@@ -286,15 +289,15 @@ export function ContactMessages() {
 
                 <Select value={`${filters.sortBy}-${filters.sortDirection}`} onValueChange={handleSortChange}>
                   <SelectTrigger className="w-[160px]">
-                    <SelectValue placeholder="Sort by" />
+                    <SelectValue placeholder={t("contact_messages_sort_by")}/>
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="createdAt-desc">Newest first</SelectItem>
-                    <SelectItem value="createdAt-asc">Oldest first</SelectItem>
-                    <SelectItem value="name-asc">Name A-Z</SelectItem>
-                    <SelectItem value="name-desc">Name Z-A</SelectItem>
-                    <SelectItem value="subject-asc">Subject A-Z</SelectItem>
-                    <SelectItem value="subject-desc">Subject Z-A</SelectItem>
+                    <SelectItem value="createdAt-desc">{t("contact_messages_sort_created_desc")}</SelectItem>
+                    <SelectItem value="createdAt-asc">{t("contact_messages_sort_created_asc")}</SelectItem>
+                    <SelectItem value="name-asc">{t("contact_messages_sort_name_asc")}</SelectItem>
+                    <SelectItem value="name-desc">{t("contact_messages_sort_name_desc")}</SelectItem>
+                    <SelectItem value="subject-asc">{t("contact_messages_sort_subject_asc")}</SelectItem>
+                    <SelectItem value="subject-desc">{t("contact_messages_sort_subject_desc")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -308,23 +311,23 @@ export function ContactMessages() {
               ) : messages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                   <Mail className="h-12 w-12 text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-medium">No messages found</h3>
+                  <h3 className="text-lg font-medium">{t("contact_messages_no_found")}</h3>
                   <p className="text-muted-foreground mt-1">
                     {filters.search
-                      ? "Try adjusting your search or filters"
-                      : "You don't have any messages in this category yet"}
+                      ? t("contact_messages_no_found_search")
+                      : t("contact_messages_no_found_category")}
                   </p>
                 </div>
               ) : (
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-[180px]">Name</TableHead>
-                      <TableHead className="hidden md:table-cell">Subject</TableHead>
-                      <TableHead className="hidden lg:table-cell">Email</TableHead>
-                      <TableHead className="hidden sm:table-cell w-[120px]">Date</TableHead>
-                      <TableHead className="w-[100px]">Status</TableHead>
-                      <TableHead className="w-[100px] text-right">Actions</TableHead>
+                      <TableHead className="w-[180px]">{t("contact_messages_table_name")}</TableHead>
+                      <TableHead className="hidden md:table-cell">{t("contact_messages_table_subject")}</TableHead>
+                      <TableHead className="hidden lg:table-cell">{t("contact_messages_table_email")}</TableHead>
+                      <TableHead className="hidden sm:table-cell w-[120px]">{t("contact_messages_table_date")}</TableHead>
+                      <TableHead className="w-[100px]">{t("contact_messages_table_status")}</TableHead>
+                      <TableHead className="w-[100px] text-right">{t("contact_messages_table_actions")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -344,7 +347,7 @@ export function ContactMessages() {
                           <div className="flex justify-end gap-2">
                             <Button variant="ghost" size="icon" onClick={() => viewMessageDetails(message)}>
                               <Eye className="h-4 w-4" />
-                              <span className="sr-only">View</span>
+                              <span className="sr-only">{t("contact_messages_action_view")}</span>
                             </Button>
 
                             <DropdownMenu>
@@ -355,7 +358,7 @@ export function ContactMessages() {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuLabel>{t("contact_messages_table_actions")}</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
 
                                 {message.status !== "READ" && (
@@ -364,7 +367,7 @@ export function ContactMessages() {
                                     disabled={actionLoading === message.id}
                                   >
                                     <MailOpen className="h-4 w-4 mr-2" />
-                                    Mark as Read
+                                    {t("contact_messages_action_mark_read")}
                                   </DropdownMenuItem>
                                 )}
 
@@ -374,7 +377,7 @@ export function ContactMessages() {
                                     disabled={actionLoading === message.id}
                                   >
                                     <Mail className="h-4 w-4 mr-2" />
-                                    Mark as Unread
+                                    {t("contact_messages_action_mark_unread")}
                                   </DropdownMenuItem>
                                 )}
 
@@ -384,7 +387,7 @@ export function ContactMessages() {
                                     disabled={actionLoading === message.id}
                                   >
                                     <Check className="h-4 w-4 mr-2" />
-                                    Mark as Replied
+                                    {t("contact_messages_action_mark_replied")}
                                   </DropdownMenuItem>
                                 )}
 
@@ -394,7 +397,7 @@ export function ContactMessages() {
                                     disabled={actionLoading === message.id}
                                   >
                                     <Archive className="h-4 w-4 mr-2" />
-                                    Archive
+                                    {t("contact_messages_action_archive")}
                                   </DropdownMenuItem>
                                 )}
 
@@ -404,7 +407,7 @@ export function ContactMessages() {
                                     disabled={actionLoading === message.id}
                                   >
                                     <Inbox className="h-4 w-4 mr-2" />
-                                    Unarchive
+                                    {t("contact_messages_action_unarchive")}
                                   </DropdownMenuItem>
                                 )}
 
@@ -416,7 +419,7 @@ export function ContactMessages() {
                                   disabled={actionLoading === message.id}
                                 >
                                   <Trash2 className="h-4 w-4 mr-2" />
-                                  Delete
+                                  {t("contact_messages_action_delete")}
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
@@ -434,8 +437,10 @@ export function ContactMessages() {
         {!loading && messages.length > 0 && (
           <CardFooter className="flex items-center justify-between border-t p-4">
             <div className="text-sm text-muted-foreground">
-              Showing {(filters.page - 1) * filters.perPage + 1} to{" "}
-              {Math.min(filters.page * filters.perPage, totalMessages)} of {totalMessages} messages
+              {`${t("contact_messages_showing")} ${(filters.page - 1) * filters.perPage + 1}-${Math.min(
+                filters.page * filters.perPage,
+                totalMessages
+              )} ${totalMessages}`}
             </div>
 
             <Pagination>
@@ -499,7 +504,7 @@ export function ContactMessages() {
           <DialogHeader>
             <DialogTitle>{selectedMessage?.subject}</DialogTitle>
             <DialogDescription>
-              From {selectedMessage?.name} ({selectedMessage?.email})
+              {t("contact_messages_detail_from")} {selectedMessage?.name} ({selectedMessage?.email})
             </DialogDescription>
           </DialogHeader>
 
@@ -517,7 +522,7 @@ export function ContactMessages() {
 
             {selectedMessage?.notes && (
               <div className="border-t pt-4">
-                <h4 className="text-sm font-medium mb-1">Admin Notes:</h4>
+                <h4 className="text-sm font-medium mb-1">{t("contact_messages_detail_admin_notes")}</h4>
                 <p className="text-sm text-muted-foreground">{selectedMessage.notes}</p>
               </div>
             )}
@@ -552,7 +557,7 @@ export function ContactMessages() {
 
             <div className="flex items-center gap-2">
               <Button variant="outline" onClick={() => setIsDetailOpen(false)}>
-                Close
+                {t("contact_messages_detail_close")}
               </Button>
 
               <Button
@@ -564,7 +569,7 @@ export function ContactMessages() {
                   }
                 }}
               >
-                Reply via Email
+                {t("contact_messages_detail_reply_email")}
               </Button>
             </div>
           </DialogFooter>

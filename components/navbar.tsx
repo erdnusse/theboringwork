@@ -1,9 +1,12 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "@/hooks/use-translation";
+import { useLanguage } from "@/context/LanguageProvider";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,11 +21,13 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const { t } = useTranslation();
+  const { lang, setLang } = useLanguage();
   const navItems = [
-    { label: "Início", href: "/" },
-    { label: "Serviços", href: "/services" },
-    { label: "Contactos", href: "/contact" },
-    { label: "Sobre", href: "/about" },
+    { label: t("home_title"), href: `/${lang}` },
+    { label: t("services"), href: `/${lang}/services` },
+    { label: t("contact"), href: `/${lang}/contact` },
+    { label: t("about"), href: `/${lang}/about` },
   ];
 
   return (
@@ -66,6 +71,35 @@ export default function Navbar() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
+            {/* Language Selector - Flags */}
+            <div className="ml-6 flex items-center space-x-2">
+              <button
+                onClick={() => setLang('pt')}
+                aria-label="Portuguese"
+                className={`p-0 border-none bg-transparent focus:outline-none ${lang === 'pt' ? 'opacity-100' : 'opacity-60'}`}
+              >
+                <img
+                  src="https://flagcdn.com/24x18/pt.png"
+                  alt="Portuguese flag"
+                  width={24}
+                  height={18}
+                  style={{ borderRadius: '2px' }}
+                />
+              </button>
+              <button
+                onClick={() => setLang('en')}
+                aria-label="English"
+                className={`p-0 border-none bg-transparent focus:outline-none ${lang === 'en' ? 'opacity-100' : 'opacity-60'}`}
+              >
+                <img
+                  src="https://flagcdn.com/24x18/gb.png"
+                  alt="English flag"
+                  width={24}
+                  height={18}
+                  style={{ borderRadius: '2px' }}
+                />
+              </button>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -100,6 +134,35 @@ export default function Navbar() {
                   {item.label}
                 </Link>
               ))}
+              {/* Language Selector Mobile - Flags */}
+              <div className="px-4 pt-2 flex items-center space-x-2">
+                <button
+                  onClick={() => setLang('pt')}
+                  aria-label="Portuguese"
+                  className={`p-0 border-none bg-transparent focus:outline-none ${lang === 'pt' ? 'opacity-100' : 'opacity-60'}`}
+                >
+                  <img
+                    src="https://flagcdn.com/24x18/pt.png"
+                    alt="Portuguese flag"
+                    width={24}
+                    height={18}
+                    style={{ borderRadius: '2px' }}
+                  />
+                </button>
+                <button
+                  onClick={() => setLang('en')}
+                  aria-label="English"
+                  className={`p-0 border-none bg-transparent focus:outline-none ${lang === 'en' ? 'opacity-100' : 'opacity-60'}`}
+                >
+                  <img
+                    src="https://flagcdn.com/24x18/gb.png"
+                    alt="English flag"
+                    width={24}
+                    height={18}
+                    style={{ borderRadius: '2px' }}
+                  />
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

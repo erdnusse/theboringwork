@@ -6,9 +6,11 @@ import Image from "next/image";
 
 import ContactForm from "./contact-form";
 import ModernSpinner from "./loading-spinner";
+import { useTranslation } from "@/hooks/use-translation";
 
 export default function ContactSection() {
-    const isMobile = useIsMobile();
+  const isMobile = useIsMobile();
+  const { t } = useTranslation();
 
       // Prevent SSR/hydration mismatch: only render image when isMobile is defined
       if (typeof isMobile === "undefined") {
@@ -56,7 +58,7 @@ export default function ContactSection() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-[#36393b] text-2xl lg:text-3xl xl:text-7xl font-medium leading-tight relative z-10"
             >
-              Vamos falar sobre o seu projeto?
+              {t("contact_subtitle")}
             </motion.h3>
 
              {/* Right Visual Element (now absolutely positioned above subtitle, z-0) */}

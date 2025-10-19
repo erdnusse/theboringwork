@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "@/hooks/use-translation";
 
 export default function ServicesSection() {
+  const { t } = useTranslation();
   return (
     <section className="relative min-h-screen bg-[#f6ede6] overflow-hidden">
       <div className="relative z-10 container mx-auto px-4 py-16 lg:py-24">
@@ -54,8 +56,7 @@ export default function ServicesSection() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="text-3xl lg:text-4xl xl:text-5xl font-bold mb-8 text-[#dff506] leading-tight"
               >
-                Existimos para simplicar o seu dia-a-dia empresarial e reduzir o
-                stress do caos
+                {t("services_section_title")}
               </motion.h2>
 
               {/* CTA Button */}
@@ -70,7 +71,7 @@ export default function ServicesSection() {
                   href="/services"
                   className="group inline-flex items-center justify-center px-8 py-5 border border-[#dff506] text-[#dff506] text-lg font-semibold tracking-wide rounded-xl transition-all duration-300 hover:bg-[#dff506] hover:text-[#5344b4] hover:shadow-xl"
                 >
-                  <span className="mr-3">Conheça os nossos serviços</span>
+                  <span className="mr-3">{t("services_section_cta")}</span>
                   <svg
                     className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1"
                     fill="currentColor"

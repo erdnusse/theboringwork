@@ -1,6 +1,5 @@
 import type React from "react"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { Metadata } from 'next'
 import { Toaster } from "sonner"
 import Navbar from "@/components/navbar"
@@ -37,33 +36,24 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default async function RootLayout({ children, params }: { children: React.ReactNode, params: { lang: string } }) {
+  const awaitedParams = await params;
   return (
-    
-      <html lang="en">
-        <head>
-              <link
+    <html>
+      <head>
+        <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
-        </head>
-        <body>
-
-          <Navbar/>
-
-          <LanguageProvider initialLang={'en'}>
-            {children}
-          </LanguageProvider>
-
-          <Toaster richColors position="top-center" />
-          <Footer/>
-        </body>
-        
-      </html>
-
-  )
+      </head>
+      <body>
+        <LanguageProvider initialLang={awaitedParams.lang as 'pt' | 'en'}>
+          <Navbar />
+          {children}
+          <Footer />
+        </LanguageProvider>
+        <Toaster richColors position="top-center" />
+      </body>
+    </html>
+  );
 }

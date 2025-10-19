@@ -10,9 +10,12 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { submitContactForm } from "@/actions/contact-actions"
 
 import { toast } from "sonner"
+
+
+import { useTranslation } from "@/hooks/use-translation";
+import { submitContactForm } from "@/actions/contact-actions"
 
 // Add reCAPTCHA script dynamically
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "missing_recaptcha_site_key"
@@ -27,18 +30,10 @@ declare global {
 }
 
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "O nome deve ter pelo menos 2 caracteres.",
-  }),
-  email: z.string().email({
-    message: "Por favor, insira um endereço de email válido.",
-  }),
-  subject: z.string().min(5, {
-    message: "O assunto deve ter pelo menos 5 caracteres.",
-  }),
-  message: z.string().min(10, {
-    message: "A mensagem deve ter pelo menos 10 caracteres.",
-  }),
+  name: z.string().min(2),
+  email: z.string().email(),
+  subject: z.string().min(5),
+  message: z.string().min(10),
 })
 
 type FormValues = z.infer<typeof formSchema>
@@ -46,9 +41,17 @@ type FormValues = z.infer<typeof formSchema>
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false)
+  const { t } = useTranslation();
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema.refine((data) => {
+      // Custom error messages using translation
+      if (data.name.length < 2) throw new Error(t("contact_error_name"));
+      if (!/^[^@]+@[^@]+\.[^@]+$/.test(data.email)) throw new Error(t("contact_error_email"));
+      if (data.subject.length < 5) throw new Error(t("contact_error_subject"));
+      if (data.message.length < 10) throw new Error(t("contact_error_message"));
+      return true;
+    })),
     defaultValues: {
       name: "",
       email: "",
@@ -139,9 +142,9 @@ export default function ContactForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome</FormLabel>
+                <FormLabel>{t("contact_label_name")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="O seu nome" {...field} />
+                  <Input placeholder={t("contact_placeholder_name") || ""} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -153,9 +156,9 @@ export default function ContactForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{t("contact_label_email")}</FormLabel>
                 <FormControl>
-                  <Input placeholder="o.seu.email@exemplo.com" {...field} />
+                  <Input placeholder={t("contact_placeholder_email") || ""} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -168,9 +171,9 @@ export default function ContactForm() {
           name="subject"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Assunto</FormLabel>
+              <FormLabel>{t("contact_label_subject")}</FormLabel>
               <FormControl>
-                <Input placeholder="Sobre o que pretende falar?" {...field} />
+                <Input placeholder={t("contact_placeholder_subject") || ""} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -182,37 +185,37 @@ export default function ContactForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mensagem</FormLabel>
+              <FormLabel>{t("contact_label_message")}</FormLabel>
               <FormControl>
-                <Textarea placeholder="Como podemos ajudar?" className="min-h-[120px] resize-y" {...field} />
+                <Textarea placeholder={t("contact_placeholder_message") || ""} className="min-h-[120px] resize-y" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        {!recaptchaLoaded && <div className="text-sm text-amber-600">A carregar verificação de segurança...</div>}
+  {!recaptchaLoaded && <div className="text-sm text-amber-600">{t("contact_recaptcha_loading")}</div>}
 
         <div className="text-xs text-muted-foreground">
-          Este site é protegido pelo reCAPTCHA e pela{" "}
+          {t("contact_recaptcha_notice_start")}
           <a
             href="https://policies.google.com/privacy"
             target="_blank"
             rel="noreferrer"
             className="underline hover:text-primary"
           >
-            Política de Privacidade
-          </a>{" "}
-          e pelos{" "}
+            {t("contact_recaptcha_privacy")}
+          </a>
+          {t("contact_recaptcha_notice_middle")}
           <a
             href="https://policies.google.com/terms"
             target="_blank"
             rel="noreferrer"
             className="underline hover:text-primary"
           >
-            Termos de Serviço
-          </a>{" "}
-          da Google.
+            {t("contact_recaptcha_terms")}
+          </a>
+          {t("contact_recaptcha_notice_end")}
         </div>
 
         <Button
@@ -224,10 +227,10 @@ export default function ContactForm() {
           {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              A enviar...
+              {t("contact_button_sending")}
             </>
           ) : (
-            "Enviar Mensagem"
+            t("contact_button_send")
           )}
         </Button>
       </form>

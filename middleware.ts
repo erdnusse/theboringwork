@@ -12,7 +12,7 @@ export default clerkMiddleware(async (auth, req) => {
   // If root, redirect to default locale
   if (pathname === '/' || pathname === '') {
     const url = req.nextUrl.clone()
-    url.pathname = '/en'
+    url.pathname = '/pt'
     return NextResponse.redirect(url)
   }
 

@@ -3,40 +3,38 @@ import Image from "next/image";
 import SplitText from "@/components/SplitText/SplitText";
 import AnimatedBackground from "./animated-background";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer"
+import { useTranslation } from "@/hooks/use-translation";
 
-export default function MissionSection() {
+
+export default function MissionStatementSection() {
   const handleAnimationComplete = () => {
     console.log("All letters have animated!");
   };
 
-   const { elementRef: logoRef, isVisible: logoVisible } = useIntersectionObserver({
+  const { elementRef: logoRef, isVisible: logoVisible } = useIntersectionObserver({
     threshold: 0.2,
     rootMargin: "-50px",
-  })
+  });
+  const { t } = useTranslation();
   return (
     <section className="relative min-h-screen bg-[--background-secondary-color] overflow-hidden">
-
       {/* Background Pattern/Texture */}
       <div className="absolute inset-0" />
-
       <div className="relative z-10 container mx-auto px-4 py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
           {/* Left Content */}
           <div className="space-y-8">
             {/* Mission Statement */}
-
             <div className="space-y-6">
               <p className="text-orange-400 text-xl lg:text-2xl font-medium tracking-wide uppercase">
-                A nossa missão é clara
+                {t("mission_statement_heading")}
               </p>
-
               <h1 className="text-white text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
-                Fazemos o trabalho chato para que se possa focar no mais
-                importante:
+                {t("mission_statement_main")}
                 <br />
                 <span className="text-white">
                   <SplitText
-                    text="a sua empresa"
+                    text={t("mission_statement_highlight")}
                     className="text-4xl lg:text-5xl xl:text-6xl font-bold text-center text-orange-400"
                     delay={100}
                     duration={0.6}
@@ -53,8 +51,7 @@ export default function MissionSection() {
               </h1>
             </div>
           </div>
-
-           {/* Right Content - Logo with Animations */}
+          {/* Right Content - Logo with Animations */}
           <div className="relative flex justify-center lg:justify-end">
             <div
               ref={logoRef}
@@ -68,7 +65,6 @@ export default function MissionSection() {
               {/* Decorative Ring */}
               <div className="absolute inset-0 -m-8 border-2 border-lime-400/20 rounded-full animate-spin-slow" />
               <div className="absolute inset-0 -m-12 border border-purple-500/20 rounded-full animate-pulse" />
-
               {/* Floating Particles */}
               {Array.from({ length: 8 }).map((_, i) => (
                 <div
@@ -82,20 +78,17 @@ export default function MissionSection() {
                   }}
                 />
               ))}
-
               {/* Main Logo */}
               <div className="relative z-10 p-8 group rounded-lg  transition-all duration-500">
-              
                 <Image
                   src="/rita-barrela-logo-16.png"
-                  alt="Rita Barrela - Fazemos o trabalho chato para que se possa focar no mais importante"
+                  alt={t("mission_statement_logo_alt")}
                   width={400}
                   height={300}
                   className="transition-transform duration-500 group-hover:scale-110 w-full h-auto max-w-sm lg:max-w-md object-contain filter drop-shadow-2xl"
                   priority
                 />
               </div>
-
               {/* Sound Waves Animation */}
               <div className="absolute top-1/2 right-0 transform translate-x-8 -translate-y-1/2">
                 {Array.from({ length: 4 }).map((_, i) => (

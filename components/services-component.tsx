@@ -2,8 +2,10 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+
 import { useIsMobile } from "@/hooks/use-mobile";
 import ModernSpinner from "@/components/loading-spinner";
+import { useTranslation } from "@/hooks/use-translation";
 
 // --- TextBlock Component ---
 function TextBlock({
@@ -179,6 +181,7 @@ function PlaceholderImageBlock({
 // --- Main Page ---
 export default function ServicesComponent() {
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
 
     // Prevent SSR/hydration mismatch: only render image when isMobile is defined
     if (typeof isMobile === "undefined") {
@@ -202,16 +205,10 @@ export default function ServicesComponent() {
         <div>
           <TextBlock
             id="block1"
-            title="Gestão Administrativa"
+            title={t("services_block1_title")}
             titleClass="text-[#1e40af]"
-
           >
-            Empresas que querem crescer não podem desperdiçar tempo com tarefas
-            administrativas. Ter alguém dedicado à gestão administrativa é
-            essencial para manter a organização, o controlo e a eficiência. A
-            nossa empresa presta esse apoio de forma profissional e flexível,
-            permitindo que os gestores se concentrem no que realmente importa: o
-            desenvolvimento do negócio.
+            {t("services_block1_text")}
           </TextBlock>
         </div>
       
@@ -221,15 +218,10 @@ export default function ServicesComponent() {
         <div>
           <TextBlock
             id="block2"
-            title="Planeamento estratégico"
+            title={t("services_block2_title")}
             titleClass="text-[#1e40af]"
-    
           >
-            Tudo começa com um diagnóstico claro: onde está o negócio, para onde
-            pode ir e como lá chegar. Com base nisso, é desenvolvido um plano
-            estratégico adaptado à realidade da empresa. Definem-se metas,
-            indicadores de desempenho (KPIs) e uma visão sólida, sem teorias
-            vagas — apenas soluções práticas com impacto real.
+            {t("services_block2_text")}
           </TextBlock>
         </div>
 
@@ -237,15 +229,10 @@ export default function ServicesComponent() {
         <div>
           <TextBlock
             id="block3"
-            title="Reestruturação & Otimização Operacional"
+            title={t("services_block3_title")}
             titleClass="text-[#1e40af]"
-
           >
-            Processos confusos, tarefas duplicadas e falhas de comunicação
-            custam tempo e dinheiro. A nossa consultoria ajuda a mapear,
-            simplificar e reorganizar os fluxos internos para que a operação
-            funcione com mais fluidez e eficácia. Pequenas mudanças podem trazer
-            grandes ganhos em produtividade.
+            {t("services_block3_text")}
           </TextBlock>
         </div>
         
@@ -261,16 +248,11 @@ export default function ServicesComponent() {
         <div>
           <TextBlock
             id="block1"
-            title="Gestão Administrativa"
+            title={t("services_block1_title")}
             titleClass="text-[#1e40af]"
 
           >
-            Empresas que querem crescer não podem desperdiçar tempo com tarefas
-            administrativas. Ter alguém dedicado à gestão administrativa é
-            essencial para manter a organização, o controlo e a eficiência. A
-            nossa empresa presta esse apoio de forma profissional e flexível,
-            permitindo que os gestores se concentrem no que realmente importa: o
-            desenvolvimento do negócio.
+          {t("services_block1_text")}
           </TextBlock>
         </div>
         <div>
@@ -295,15 +277,10 @@ export default function ServicesComponent() {
         <div>
           <TextBlock
             id="block2"
-            title="Planeamento estratégico"
+            title={t("services_block2_title")}
             titleClass="text-[#1e40af]"
-    
           >
-            Tudo começa com um diagnóstico claro: onde está o negócio, para onde
-            pode ir e como lá chegar. Com base nisso, é desenvolvido um plano
-            estratégico adaptado à realidade da empresa. Definem-se metas,
-            indicadores de desempenho (KPIs) e uma visão sólida, sem teorias
-            vagas — apenas soluções práticas com impacto real.
+            {t("services_block2_text")}
           </TextBlock>
         </div>
 
@@ -311,17 +288,14 @@ export default function ServicesComponent() {
         <div>
           <TextBlock
             id="block3"
-            title="Reestruturação & Otimização Operacional"
+            title={t("services_block3_title")}
             titleClass="text-[#1e40af]"
-
           >
-            Processos confusos, tarefas duplicadas e falhas de comunicação
-            custam tempo e dinheiro. A nossa consultoria ajuda a mapear,
-            simplificar e reorganizar os fluxos internos para que a operação
-            funcione com mais fluidez e eficácia. Pequenas mudanças podem trazer
-            grandes ganhos em produtividade.
+            {t("services_block3_text")}
           </TextBlock>
         </div>
+
+  
         <div>
           <PlaceholderImageBlock imageSrc="/hand-peace.png" arrowSrc="/arrow2-inverted.png" arrowPosition="left" arrowRotate={45} arrowSize="200px"/>
         </div>

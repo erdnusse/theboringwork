@@ -1,5 +1,4 @@
 
-//import BaseSection from "@/components/base-section"
 import BaseSection from "@/components/base-section"
 import MissionSection from "@/components/mission-statement-section"
 import AboutSection from "@/components/about-section"

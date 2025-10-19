@@ -24,9 +24,7 @@ export default function BaseSection() {
 
   const imageSrc = isMobile ? "/mobile-last.png" : "/main-no-logo.png";
 
-  console.log("Rendering BaseSection, isMobile:", isMobile);
-
-  return (
+   return (
     <section
       id="home"
       style={{paddingTop: isMobile ? '8rem' : '0'}}

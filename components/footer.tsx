@@ -1,27 +1,30 @@
+'use client';
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { useTranslation } from "@/hooks/use-translation";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+
+  const { t } = useTranslation();
   const siteMap = [
-    { name: "Início", href: "/" },
-    { name: "Serviços", href: "/services" },
-    { name: "Sobre", href: "/about" },
-    { name: "Contacto", href: "/contact" },
+    { name: t("home_title"), href: "/" },
+    { name: t("services"), href: "/services" },
+    { name: t("about"), href: "/about" },
+    { name: t("contact"), href: "/contact" },
   ];
 
   const legalLinks = [
-    { name: "Política de Privacidade", href: "/privacy" },
-    { name: "Política de Cookies", href: "/cookies" },
-    { name: "Termos de Serviço", href: "/terms" },
+    { name: t("privacy_policy"), href: "/privacy" },
+    { name: t("cookies_policy"), href: "/cookies" },
+    { name: t("terms_of_service"), href: "/terms" },
   ];
 
   const socialLinks = [
     { name: "Facebook", href: "https://www.facebook.com/profile.php?id=61577336057767", icon: Facebook },
     { name: "Instagram", href: "https://www.instagram.com/the_boringwork/#", icon: Instagram },
     { name: "LinkedIn", href: "https://pt.linkedin.com/company/the-boring-work?trk=public_profile_topcard-current-company ", icon: Linkedin },
-
   ];
 
   return (
@@ -31,29 +34,29 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Company info */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold text-[#f4864f]">The Boring Work</h3>
+            <h3 className="text-xl font-bold text-[#f4864f]">{t("company_name")}</h3>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Simplificamos o seu dia-a-dia empresarial e reduzimos o stress do caos com soluções personalizadas.
+              {t("footer_tagline")}
             </p>
             <div className="flex flex-col space-y-2 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
-                <span>Lisboa, Portugal</span>
+                <span>{t("footer_location")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <span>(+351) 912735542</span>
+                <span>{t("footer_phone")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <span>rita@theboringwork.pt</span>
+                <span>{t("footer_email")}</span>
               </div>
             </div>
           </div>
 
           {/* Site map */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-[#f4864f] ">Mapa do Site</h4>
+            <h4 className="font-semibold text-[#f4864f] ">{t("footer_sitemap")}</h4>
             <nav className="flex flex-col space-y-2">
               {siteMap.map((link) => (
                 <Link
@@ -69,7 +72,7 @@ export default function Footer() {
 
           {/* Legal links */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-[#f4864f]">Legal</h4>
+            <h4 className="font-semibold text-[#f4864f]">{t("footer_legal")}</h4>
             <nav className="flex flex-col space-y-2">
               {legalLinks.map((link) => (
                 <Link
@@ -85,7 +88,7 @@ export default function Footer() {
 
           {/* Social media */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-[#f4864f]">Siga-nos</h4>
+            <h4 className="font-semibold text-[#f4864f]">{t("footer_follow_us")}</h4>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
                 <a
@@ -107,10 +110,10 @@ export default function Footer() {
         <div className="border-t border-border pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground text-center md:text-left">
-              © {currentYear} The Boring Work. Todos os direitos reservados.
+              © {currentYear} {t("company_name")}. {t("footer_rights")}
             </p>
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-              <span>Feito com ❤️ em Portugal</span>
+              <span>{t("footer_made_with_love")}</span>
             </div>
           </div>
         </div>

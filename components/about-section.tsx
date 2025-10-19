@@ -2,14 +2,12 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
-import AnimatedBackground from "./animated-background"
+import { useTranslation } from "@/hooks/use-translation";
 
 export default function AboutSection() {
+  const { t } = useTranslation();
   return (
     <section className="relative min-h-screen bg-[#5344b4] overflow-hidden">
-
-     
-
       <div className="relative z-10 container mx-auto px-4 py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content Card */}
@@ -26,7 +24,7 @@ export default function AboutSection() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-white text-lg font-medium mb-4 tracking-wide"
               >
-                QUEM SOMOS?
+                {t("about_heading")}
               </motion.h3>
 
               <motion.h2
@@ -35,9 +33,9 @@ export default function AboutSection() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-8 b bg-clip-text  leading-tight text-[#dff51e]"
               >
-                Especialistas na 
+                {t("about_title_line1")}
                 <br />
-                estruturação do caos
+                {t("about_title_line2")}
               </motion.h2>
 
               <motion.p
@@ -46,7 +44,7 @@ export default function AboutSection() {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="text-white text-lg lg:text-xl leading-relaxed opacity-90"
               >
-                Somos uma empresa de consultoria empresarial com mais de 10 anos de experiência na estruturação e crescimento de PMEs, com uma forte base de experiência e soluções adaptáveis a diversos setores.
+                {t("about_description")}
               </motion.p>
             </div>
           </motion.div>
@@ -76,14 +74,10 @@ export default function AboutSection() {
                   />
                 </div>
               </motion.div>
-
-            
             </div>
           </motion.div>
         </div>
       </div>
-
-    
     </section>
   )
 }

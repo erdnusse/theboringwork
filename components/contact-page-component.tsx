@@ -1,13 +1,15 @@
 "use client";
+
 import ContactForm from "@/components/contact-form"
 import ModernSpinner from "@/components/loading-spinner";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { useTranslation } from "@/hooks/use-translation";
 
 
-
-export default function ContactSection() {
-   const isMobile = useIsMobile();
+export default function ContactPage() {
+  const isMobile = useIsMobile();
+  const { t } = useTranslation();
   
       // Prevent SSR/hydration mismatch: only render image when isMobile is defined
       if (typeof isMobile === "undefined") {
@@ -37,34 +39,34 @@ export default function ContactSection() {
       
       <div className="grid gap-8 md:grid-cols-2">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight md:text-4xl">Entre em contacto</h1>
+          <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{t("contact_page_title")}</h1>
           <p className="mt-4 text-muted-foreground">
-            Tem dúvidas sobre os nossos serviços ou precisa de ajuda? Preencha o formulário e a nossa equipa entrará em contacto consigo
+            {t("contact_page_description")}
           </p>
 
           <div className="mt-8 space-y-6">
             <div className="flex items-start gap-3">
               <Phone className="h-8 w-8 text-[#f4864f] font-semibold" />
               <div>
-                <h3 className="h-8 w-8 text-[#f4864f] font-semibold">Telefone</h3>
-                <p className="mt-1 text-muted-foreground">(+351) 912735542</p>
+                <h3 className="h-8 w-8 text-[#f4864f] font-semibold">{t("contact_page_phone_label")}</h3>
+                <p className="mt-1 text-muted-foreground">{t("contact_page_phone_value")}</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
               <Mail className="h-8 w-8 text-[#f4864f] font-semibold" />
               <div>
-                <h3 className="h-8 w-8 text-[#f4864f] font-semibold">Email</h3>
-                <p className="mt-1 text-muted-foreground">rita@theboringwork.pt</p>
+                <h3 className="h-8 w-8 text-[#f4864f] font-semibold">{t("contact_page_email_label")}</h3>
+                <p className="mt-1 text-muted-foreground">{t("contact_page_email_value")}</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
              <MapPin className="h-8 w-8 text-[#f4864f] font-semibold"  />
               <div>
-                <h4 className="font-semibold text-[#f4864f]">Escritorio</h4>
+                <h4 className="font-semibold text-[#f4864f]">{t("contact_page_office_label")}</h4>
                 <p className="mt-1 text-muted-foreground">
-                  Lisboa
+                  {t("contact_page_office_value")}
                 </p>
               </div>
             </div>
@@ -74,7 +76,7 @@ export default function ContactSection() {
            
             {/* Social media */}
           <div className="space-y-4">
-            <h4 className="font-semibold text-[#f4864f]">Siga-nos</h4>
+            <h4 className="font-semibold text-[#f4864f]">{t("contact_page_follow_us")}</h4>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
                 <a
@@ -95,8 +97,8 @@ export default function ContactSection() {
 
         <div>
           <div className="rounded-lg border bg-card p-6 shadow-sm">
-            <h2 className="text-xl font-semibold">Entre em contacto</h2>
-            <p className="mt-1 text-sm text-muted-foreground">Responderemos assim que possível.</p>
+            <h2 className="text-xl font-semibold">{t("contact_page_form_title")}</h2>
+            <p className="mt-1 text-sm text-muted-foreground">{t("contact_page_form_description")}</p>
             <ContactForm />
           </div>
         </div>

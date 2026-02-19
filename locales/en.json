@@ -128,12 +128,23 @@
   "mission_statement_main": "We do the boring work so you can focus on what matters most:",
   "mission_statement_highlight": "your business",
   "mission_statement_logo_alt": "Rita Barrela - We do the boring work so you can focus on what matters most",
-  "services_block1_title": "Administrative Management",
-  "services_block1_text": "Companies that want to grow can't waste time on administrative tasks. Having someone dedicated to administrative management is essential to maintain organization, control, and efficiency. Our company provides this support professionally and flexibly, allowing managers to focus on what really matters: business development.",
-  "services_block2_title": "Strategic Planning",
-  "services_block2_text": "It all starts with a clear diagnosis: where the business is, where it can go, and how to get there. Based on this, a strategic plan is developed, tailored to the company's reality. Goals, performance indicators (KPIs), and a solid vision are defined—no vague theories, just practical solutions with real impact.",
-  "services_block3_title": "Restructuring & Operational Optimization",
-  "services_block3_text": "Confusing processes, duplicated tasks, and communication failures cost time and money. Our consulting helps map, simplify, and reorganize internal flows so that operations run more smoothly and efficiently. Small changes can bring big gains in productivity."
+  "services_block1_title": "Real Estate Projects",
+"services_block1_text": "With over 10 years of experience working with real estate developers, we have developed solid expertise in this field, supporting projects in different phases of their lifecycle, from product definition to sales operations.",
+"services_block2_title": "Restructuring & Operational Optimization",
+"services_block2_text": "Confusing processes, duplicated tasks, and communication failures cost time. Our consulting helps map, simplify, and reorganize internal flows so that operations run more smoothly and improve productivity.",
+"services_block3_title": "Financial Consulting",
+"services_block3_text": "The financial area should support decisions. Consulting can analyze project feasibility, prepare business plans for investors or bank financing, all with a clear approach tailored to everyday business needs.",
+"services_block4_title": "Human Resources & Organizational Culture",
+"services_block4_text": "Assessing organizational climate, creating performance evaluation plans, and defining roles are essential steps to align talent strategically.",
+"services_block5_title": "Tax Management & Strategic Accounting",
+"services_block5_text": "In areas such as tax management and strategic accounting, we support companies in optimizing their tax burden and financial organization (in conjunction with a certified accountant).",
+"services_block6_title": "Marketing & Sales",
+"services_block6_text": "A well-designed marketing strategy helps position the brand, attract the right customers, and increase sales. This includes studying the target audience, working on the value proposition, building effective sales funnels, and adjusting communication across all channels.",
+"services_block7_title": "Digital Transformation & Innovation",
+"services_block7_text": "Many companies waste time on tasks that can be automated. It's possible to implement management software to automate processes, improve data analysis, and make the business more agile, all without complexity and with access to European funds for company digitalization.",
+"services_block8_title": "Complementary Services",
+"services_block8_text": "Mentoring sessions for founders, managers, and teams that allow for clearer and more focused decision-making.",
+"services_block8_text2": "Let's talk about your project!"
   ,"cookies_page_title": "Cookies Policy",
   "cookies_page_last_update": "Last updated: [insert date]",
   "cookies_page_intro": "This Cookies Policy explains what cookies are, how we use them on our website, what types of cookies we use, and how you can manage your preferences.",
@@ -223,22 +234,7 @@
   "cookies_page_section5_cookies_url": "www.allaboutcookies.org",
   "cookies_page_section6_title": "6. Contact",
   "cookies_page_section6_text": "If you have any questions about this policy, you can contact us at:",
-  "cookies_page_section6_email": "info@theboringwork.pt",
-  "services_block4_title": "Financial Consulting",
-"services_block4_text": "The financial area should support decisions, not cause uncertainty.",
-"services_block4_text2": "A consultancy can analyze project feasibility, prepare business plans for investors or bank financing, organize budgets, and create cash flow control models. All with clear language and tools tailored to everyday business.",
-"services_block5_title":"Tax Management & Strategic Accounting",
-"services_block5_text": "In more technical areas, such as tax management and strategic accounting, we support companies in optimizing their tax burden (in conjunction with a certified accountant), reviewing the invoicing model, choosing the most appropriate tax regime, and strategically planning successions in family businesses.",
-
-"services_block6_title":"Human Resources & Organizational Culture",
-"services_block6_text": "Companies with good teams achieve better results. Assessing organizational climate, creating performance evaluation plans, defining roles, implementing incentive systems, or structuring recruitment processes are essential steps to align talent with strategy.",
-"services_block7_title":"Marketing & Sales",
-"services_block7_text": "Market presence needs to be thought out. A well-designed marketing strategy helps position the brand, attract the right customers, and increase sales.",
-"services_block7_text2":"This includes studying the target audience, working on the value proposition, building effective sales funnels, and adjusting communication across all channels.",
-
-"services_block8_title":"Complementary Services",
-"services_block8_text": "In addition to core consulting, there are additional services that can further enhance results. Practical training in areas such as leadership, sales, finance, and digital marketing helps teams grow.",
-"services_block8_text2":"Mentoring sessions for founders or managers allow for clearer and more focused decision-making. Comprehensive business plans, internal audits, and specialized commercial consulting are key solutions for companies looking to level up."
+  "cookies_page_section6_email": "info@theboringwork.pt"
 
 
 }

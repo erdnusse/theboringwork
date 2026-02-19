@@ -109,12 +109,27 @@
   "mission_statement_main": "Fazemos o trabalho chato para que se possa focar no mais importante:",
   "mission_statement_highlight": "a sua empresa",
   "mission_statement_logo_alt": "Rita Barrela - Fazemos o trabalho chato para que se possa focar no mais importante",
-  "services_block1_title": "Gestão Administrativa",
-  "services_block1_text": "Empresas que querem crescer não podem desperdiçar tempo com tarefas administrativas. Ter alguém dedicado à gestão administrativa é essencial para manter a organização, o controlo e a eficiência. A nossa empresa presta esse apoio de forma profissional e flexível, permitindo que os gestores se concentrem no que realmente importa: o desenvolvimento do negócio.",
-  "services_block2_title": "Planeamento estratégico",
-  "services_block2_text": "Tudo começa com um diagnóstico claro: onde está o negócio, para onde pode ir e como lá chegar. Com base nisso, é desenvolvido um plano estratégico adaptado à realidade da empresa. Definem-se metas, indicadores de desempenho (KPIs) e uma visão sólida, sem teorias vagas — apenas soluções práticas com impacto real.",
-  "services_block3_title": "Reestruturação & Otimização Operacional",
-  "services_block3_text": "Processos confusos, tarefas duplicadas e falhas de comunicação custam tempo e dinheiro. A nossa consultoria ajuda a mapear, simplificar e reorganizar os fluxos internos para que a operação funcione com mais fluidez e eficácia. Pequenas mudanças podem trazer grandes ganhos em produtividade.",
+  "services_block1_title": "Projetos Imobiliários",
+  "services_block1_text": "Com mais de 10 anos de experiência com promotores imobiliários, desenvolvemos uma especialização sólida neste campo, acompanhando projetos em diferentes fases do seu ciclo de vida, desde a definição do produto até à operação de vendas.",
+  "services_block2_title": "Reestruturação e Optimização Operacional",
+  "services_block2_text": "Processos confusos, tarefas duplicadas e falhar de comunicação custam tempo. A nossa consultoria ajuda a mapear, simplificar e reorganizar fluxos internos para que a operação funcione com mais fluidez e melhore a produtividade.",
+  "services_block3_title": "Consultoria Financeira",
+  "services_block3_text": "A área financeira deve apoiar decisões, uma consultoria pode analisar a viabilidade de projetos, elaborar planos de negócios para investidores ou financiamento bancário, tudo com uma abordagem clara e ajudada ao dia-a-dia-empresarial.",
+
+    "services_block4_title": "Recursos Humanos e Cultura Organizacional",
+"services_block4_text": "Avaliar o clima organizacional, criar planos de avaliação de desempenho e definir funções são passos essenciais para alinhar o talento de forma estratégica.",
+"services_block5_title":"Gestão Fiscal e Contabilidade Estratégica",
+"services_block5_text": "Em áreas como a gestão fiscal e contabilidade estratégica, apoiamos as empresas na otimização da carga fiscal e organização financeira (em articulação com um contabilista certificado).",
+
+"services_block6_title":"Marketing e Vendas",
+"services_block6_text": "Uma estratégia de marketing bem desenhada ajuda a posicionar a marca, atrair os clientes certos e aumentar as vendas. Isso inclui estudar o público-alvo, trabalhar a proposta de valor, construir funis de venda eficazes e ajustar a comunicação em todos os canais.",
+
+"services_block7_title":"Transformação Digital e Inovação",
+"services_block7_text": "Muitas empresas perdem tempo com tarefas que podem ser automatizadas. É possível implementar software de gestão para automatizar processos, melhorar a análise de dados e tornar o negócio mais ágil, tudo sem complexidade e com possibilidade de acesso a fundos europeus para a digitalização das empresas.",
+
+"services_block8_title":"Serviços complementares",
+"services_block8_text": "Sessões de mentoria para fundadores, gestores e equipas que permitem tomar decisões com mais clareza e foco.",
+"services_block8_text2":"Vamos falar sobre o seu projeto!",
  
   "services_section_title": "Existimos para simplicar o seu dia-a-dia empresarial e reduzir o stress do caos",
   "services_section_cta": "Conheça os nossos serviços",
@@ -224,22 +239,6 @@
   "cookies_page_section5_cookies_url": "www.allaboutcookies.org",
   "cookies_page_section6_title": "6. Contacto",
   "cookies_page_section6_text": "Se tiver alguma dúvida sobre esta política, pode contactar-nos através de:",
-  "cookies_page_section6_email": "info@theboringwork.pt",
-  "services_block4_title": "Consultoria Financeira",
-"services_block4_text": "A área financeira deve apoiar decisões, não causar incertezas.",
-"services_block4_text2": "Uma consultoria pode analisar a viabilidade de projetos, elaborar planos de negócio para investidores ou financiamento bancário, organizar orçamentos e criar modelos de controlo de tesouraria. Tudo com linguagem clara e ferramentas ajustadas ao dia-a-dia empresarial.",
-"services_block5_title":"Gestão Fiscal & Contabilidade Estratégica",
-"services_block5_text": "Em áreas mais técnicas, como a gestão fiscal e contabilidade estratégica, apoiamos as empresas na otimização da carga fiscal (em articulação com um TOC ou contabilista certificado), rever o modelo de faturação, escolher o regime fiscal mais adequado e planear estrategicamente sucessões em empresas familiares.",
-
-"services_block6_title":"Recursos Humanos & Cultura Organizacional",
-"services_block6_text": "Empresas com boas equipas têm melhores resultados. Avaliar o clima organizacional, criar planos de avaliação de desempenho, definir funções, implementar sistemas de incentivos ou estruturar processos de recrutamento são passos essenciais para alinhar talento com estratégica.",
-
-"services_block7_title":"Marketing & Vendas",
-"services_block7_text": "A presença no mercado precisa de ser pensada. Uma estratégia de marketing bem desenhada ajuda a posicionar a marca, atrair os clientes certos e aumentar as vendas.",
-"services_block7_text2":"Isso inclui estudar o público-alvo, trabalhar a proposta de valor, construir funis de venda eficazes e ajustar a comunicação em todos os canais.",
-
-"services_block8_title":"Serviços complementares",
-"services_block8_text": "Além da consultoria base, há serviços adicionais que podem potenciar ainda mais os resultados. Formações práticas em áreas como liderança, vendas, finanças e marketing digital ajudam equipas a crescer.",
-"services_block8_text2":"Sessões de mentoria para fundadores ou gestores permitem tomar decisões com mais clareza e foco. Planos de negócio completos, auditorias internas e consultoria comercial especializada são soluções chave para empresas que querem subir de nível."
+  "cookies_page_section6_email": "info@theboringwork.pt"
 
 }

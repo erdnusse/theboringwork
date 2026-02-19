@@ -35,17 +35,17 @@ function TextBlock({
       initial={{ opacity: 0, y: 60 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="group relative bg-white border-[#e8ddd1] rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 px-6 py-8 md:px-10 md:py-10 mb-16"
+      className="group relative bg-white border-[#e8ddd1] rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 px-6 py-6 md:px-8 md:py-8 h-full flex flex-col"
     >
-      <div className="flex items-center gap-2 mb-2">
+      <div className="flex items-center gap-2 mb-4">
         {highlight}
-        <h2 className={`text-xl md:text-2xl font-bold ${titleClass}`}>
+        <h2 className={`text-lg md:text-xl font-bold ${titleClass}`}>
           {title}
         </h2>
       </div>
-      <div className="text-gray-700 text-base leading-relaxed">{children}</div>
+      <div className="text-gray-700 text-sm md:text-base leading-relaxed text-justify flex-grow">{children}</div>
       {imageSrc && (
-        <div className="rounded-full object-cover group-hover:scale-105 transition-transform duration-300">
+        <div className="rounded-full object-cover group-hover:scale-105 transition-transform duration-300 mt-4">
           <Image
             src={imageSrc}
             alt={imageAlt || "Placeholder"}
@@ -197,11 +197,11 @@ export default function ServicesComponent() {
         </section>
       );
     }
-  if (isMobile) {
+   if (isMobile) {
      return (
     <div className="min-h-screen bg-[#f6ede4] pb-5 pt-28 px-2 md:px-0 flex flex-col items-center">
-      <div className="max-w-5xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-6">
-        {/* Row 1: Left Block, Right Placeholder */}
+      <div className="max-w-5xl w-full mx-auto grid grid-cols-1 gap-6 auto-rows-fr">
+        {/* Row 1 */}
         <div>
           <TextBlock
             id="block1"
@@ -211,10 +211,8 @@ export default function ServicesComponent() {
             {t("services_block1_text")}
           </TextBlock>
         </div>
-      
 
-        {/* Row 2: Left Placeholder, Right Block */}
-       
+        {/* Row 2 */}
         <div>
           <TextBlock
             id="block2"
@@ -225,7 +223,7 @@ export default function ServicesComponent() {
           </TextBlock>
         </div>
 
-        {/* Row 3: Left Block, Right Placeholder */}
+        {/* Row 3 */}
         <div>
           <TextBlock
             id="block3"
@@ -236,19 +234,18 @@ export default function ServicesComponent() {
           </TextBlock>
         </div>
 
-            {/* Row 4: Left Placeholder, Right Block */}    
+        {/* Row 4 */}
         <div>
           <TextBlock
             id="block4"
             title={t("services_block4_title")}
             titleClass="text-[#1e40af]"
           >
-            <div>{t("services_block4_text")}</div>
-            <div className="mt-2">{t("services_block4_text2")}</div>
+            {t("services_block4_text")}
           </TextBlock>
         </div>
 
-         {/* Row 5: Left Placeholder, Right Block */}
+        {/* Row 5 */}
         <div>
           <TextBlock
             id="block5"
@@ -258,39 +255,30 @@ export default function ServicesComponent() {
             {t("services_block5_text")}
           </TextBlock>
         </div>
-        
-             {/* Row 6: Left Placeholder, Right Block */}
-       
+
+        {/* Row 6 */}
         <div>
           <TextBlock
             id="block6"
             title={t("services_block6_title")}
             titleClass="text-[#1e40af]"
           >
-            <div>{t("services_block6_text")}</div>
-            <div className="mt-2">{t("services_block6_text")}</div>
+            {t("services_block6_text")}
           </TextBlock>
-        </div>       
-   
+        </div>
 
-          {/* Row 7: Left Placeholder, Right Block */}
-        
+        {/* Row 7 */}
         <div>
           <TextBlock
             id="block7"
             title={t("services_block7_title")}
             titleClass="text-[#1e40af]"
           >
-            <div>{t("services_block7_text")}</div>
-            <div className="mt-2">{t("services_block7_text")}</div>
-            <div className="mt-2">{t("services_block7_text2")}</div>
+            {t("services_block7_text")}
           </TextBlock>
         </div>
 
-       
-
-        {/* Row 8: Left Placeholder, Right Block */}
-        
+        {/* Row 8 */}
         <div>
           <TextBlock
             id="block8"
@@ -298,48 +286,26 @@ export default function ServicesComponent() {
             titleClass="text-[#1e40af]"
           >
             <div>{t("services_block8_text")}</div>
-            <div className="mt-2">{t("services_block8_text")}</div>
             <div className="mt-2">{t("services_block8_text2")}</div>
           </TextBlock>
         </div>
-        
       </div>
     </div>
   );
-  }  
+  }
   
-  return (
-    <div className="min-h-screen bg-[#f6ede4] py-10 px-2 md:px-0 flex flex-col items-center">
-      <div className="max-w-5xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-6">
-        {/* Row 1: Left Block, Right Placeholder */}
+ return (
+    <div className="min-h-screen bg-[#f6ede4] py-32 px-2 md:px-0 flex flex-col items-center">
+      <div className="max-w-5xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
+        {/* Row 1 */}
         <div>
           <TextBlock
             id="block1"
             title={t("services_block1_title")}
             titleClass="text-[#1e40af]"
-
           >
-          {t("services_block1_text")}
+            {t("services_block1_text")}
           </TextBlock>
-        </div>
-        <div>
-          <PlaceholderImageBlock
-            imageSrc="/hand-exclamation.png"
-            arrowSrc="/arrow1-inverted.png"
-            arrowPosition="left"
-            align="center"
-            arrowRotate={-45}
-            arrowSize={"400px"}
-            arrowTopPosition="250px"
-          />
-        </div>
-
-        {/* Row 2: Left Placeholder, Right Block */}
-        <div>
-          <PlaceholderImageBlock
-            imageSrc="/Copilot_20250802_165751.png"
-            align="center"
-          />
         </div>
         <div>
           <TextBlock
@@ -351,7 +317,7 @@ export default function ServicesComponent() {
           </TextBlock>
         </div>
 
-        {/* Row 3: Left Block, Right Placeholder */}
+        {/* Row 2 */}
         <div>
           <TextBlock
             id="block3"
@@ -361,36 +327,17 @@ export default function ServicesComponent() {
             {t("services_block3_text")}
           </TextBlock>
         </div>
-         <div>
-          <PlaceholderImageBlock
-            imageSrc="/hand-peace.png"
-            arrowSrc="/arrow1-inverted.png"
-            arrowPosition="left"
-            align="center"
-            arrowRotate={-45}
-            arrowSize={"400px"}
-            arrowTopPosition="250px"
-          />
-        </div>
-
-            {/* Row 4: Left Placeholder, Right Block */}
-         <div>
-          <PlaceholderImageBlock
-            imageSrc="/rita-barrela-logo-16.png"
-            align="center"
-          />
-        </div>
         <div>
           <TextBlock
             id="block4"
             title={t("services_block4_title")}
             titleClass="text-[#1e40af]"
           >
-            <div>{t("services_block4_text")}</div>
-            <div className="mt-2">{t("services_block4_text2")}</div>
+            {t("services_block4_text")}
           </TextBlock>
         </div>
- {/* Row 5: Left Placeholder, Right Block */}
+
+        {/* Row 3 */}
         <div>
           <TextBlock
             id="block5"
@@ -400,59 +347,25 @@ export default function ServicesComponent() {
             {t("services_block5_text")}
           </TextBlock>
         </div>
-         <div>
-          <PlaceholderImageBlock
-            imageSrc="/statue.png"           
-            align="center"           
-          />
-        </div>
-
-             {/* Row 6: Left Placeholder, Right Block */}
-         <div>
-          <PlaceholderImageBlock
-            imageSrc="/statue.png"   
-            align="center"
-          />
-        </div>
         <div>
           <TextBlock
             id="block6"
             title={t("services_block6_title")}
             titleClass="text-[#1e40af]"
           >
-            <div>{t("services_block6_text")}</div>
-            <div className="mt-2">{t("services_block6_text")}</div>
+            {t("services_block6_text")}
           </TextBlock>
         </div>
 
-          {/* Row 7: Left Placeholder, Right Block */}
-        
+        {/* Row 4 */}
         <div>
           <TextBlock
             id="block7"
             title={t("services_block7_title")}
             titleClass="text-[#1e40af]"
           >
-            <div>{t("services_block7_text")}</div>
-            <div className="mt-2">{t("services_block7_text")}</div>
-            <div className="mt-2">{t("services_block7_text2")}</div>
+            {t("services_block7_text")}
           </TextBlock>
-        </div>
-
-         <div>
-          <PlaceholderImageBlock
-            imageSrc="/statue.png"   
-            align="center"
-       
-          />
-        </div>
-
-        {/* Row 8: Left Placeholder, Right Block */}
-         <div>
-          <PlaceholderImageBlock
-            imageSrc="/statue.png"   
-            align="center"
-          />
         </div>
         <div>
           <TextBlock
@@ -461,13 +374,9 @@ export default function ServicesComponent() {
             titleClass="text-[#1e40af]"
           >
             <div>{t("services_block8_text")}</div>
-            <div className="mt-2">{t("services_block8_text")}</div>
             <div className="mt-2">{t("services_block8_text2")}</div>
           </TextBlock>
         </div>
-
-  
-      
       </div>
     </div>
   );

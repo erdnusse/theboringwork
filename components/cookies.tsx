@@ -1,95 +1,93 @@
-'use client';
-import { useTranslation } from "@/hooks/use-translation";
+"use client"
+import { useTranslation } from "@/hooks/use-translation"
+import { LegalLayout, LegalSection, legalLink } from "@/components/site/legal-layout"
+
+const COOKIES = ["ga", "ga_x", "gid", "gat"] as const
+const COLUMNS = ["name", "purpose", "duration", "type", "origin"] as const
 
 export default function CookiesComponent() {
-  const { t, lang } = useTranslation();
+  const { t, lang } = useTranslation()
+  const cell = (cookie: (typeof COOKIES)[number], column: (typeof COLUMNS)[number]) => {
+    if (column === "name") return t(`cookies_page_table_${cookie}`)
+    const suffix = column === "purpose" ? "desc" : column
+    return t(`cookies_page_table_${cookie}_${suffix}`)
+  }
+
   return (
-    <section className="max-w-3xl mx-auto px-4 py-16 bg-white rounded-xl shadow-lg mt-8 mb-16">
-      <h1 className="text-3xl font-bold mb-6 text-[#f3864d]">
-        {t("cookies_page_title")} – The Boring Work
-      </h1>
-      <p className="mb-2 text-gray-700">{t("cookies_page_last_update")}</p>
-      <p className="mb-4 text-gray-700">{t("cookies_page_intro")}</p>
+    <LegalLayout
+      eyebrow={t("footer_legal")}
+      title={t("cookies_page_title")}
+      updated={t("cookies_page_last_update")}
+      intro={t("cookies_page_intro")}
+    >
+      <LegalSection title={t("cookies_page_section1_title")}>
+        <p>{t("cookies_page_section1_text")}</p>
+      </LegalSection>
 
-      <h2 className="text-xl font-semibold mt-8 mb-2 text-[#f3864d]">{t("cookies_page_section1_title")}</h2>
-      <p className="mb-4 text-gray-700">{t("cookies_page_section1_text")}</p>
+      <LegalSection title={t("cookies_page_section2_title")}>
+        <p className="font-bold text-ink">{t("cookies_page_section2_a_title")}</p>
+        <p>{t("cookies_page_section2_a_text")}</p>
+        <p className="font-bold text-ink">{t("cookies_page_section2_b_title")}</p>
+        <p>{t("cookies_page_section2_b_text")}</p>
+      </LegalSection>
 
-      <h2 className="text-xl font-semibold mt-8 mb-2 text-[#f3864d]">{t("cookies_page_section2_title")}</h2>
-      <p className="mb-2 text-gray-700 font-semibold">{t("cookies_page_section2_a_title")}</p>
-      <p className="mb-4 text-gray-700">
-        {t("cookies_page_section2_a_text")}
-      </p>
-      <p className="mb-2 text-gray-700 font-semibold">{t("cookies_page_section2_b_title")}</p>
-      <p className="mb-4 text-gray-700">
-        {t("cookies_page_section2_b_text")}
-      </p>
+      <LegalSection title={t("cookies_page_section3_title")}>
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-ink text-ink">
+                {COLUMNS.map((column) => (
+                  <th key={column} className="px-3 py-3 font-bold">
+                    {t(`cookies_page_table_${column}`)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {COOKIES.map((cookie) => (
+                <tr key={cookie} className="border-b border-line">
+                  {COLUMNS.map((column) => (
+                    <td key={column} className="px-3 py-3 align-top">
+                      {cell(cookie, column)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs">{t("cookies_page_section3_note")}</p>
+      </LegalSection>
 
-      <h2 className="text-xl font-semibold mt-8 mb-2 text-[#f3864d]">{t("cookies_page_section3_title")}</h2>
-      <div className="overflow-x-auto mb-4">
-        <table className="min-w-full text-sm text-left border border-gray-200">
-          <thead>
-            <tr className="bg-[#f6ede6]">
-              <th className="py-2 px-3 border-b">{t("cookies_page_table_name")}</th>
-              <th className="py-2 px-3 border-b">{t("cookies_page_table_purpose")}</th>
-              <th className="py-2 px-3 border-b">{t("cookies_page_table_duration")}</th>
-              <th className="py-2 px-3 border-b">{t("cookies_page_table_type")}</th>
-              <th className="py-2 px-3 border-b">{t("cookies_page_table_origin")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_ga")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_ga_desc")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_ga_duration")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_ga_type")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_ga_origin")}</td>
-            </tr>
-            <tr>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_ga_x")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_ga_x_desc")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_ga_x_duration")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_ga_x_type")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_ga_x_origin")}</td>
-            </tr>
-            <tr>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_gid")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_gid_desc")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_gid_duration")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_gid_type")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_gid_origin")}</td>
-            </tr>
-            <tr>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_gat")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_gat_desc")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_gat_duration")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_gat_type")}</td>
-              <td className="py-2 px-3 border-b">{t("cookies_page_table_gat_origin")}</td>
-            </tr>
-          </tbody>
-        </table>
-        <p className="text-xs text-gray-500 mt-2">{t("cookies_page_section3_note")}</p>
-      </div>
+      <LegalSection title={t("cookies_page_section4_title")}>
+        <p>{t("cookies_page_section4_text")}</p>
+      </LegalSection>
 
-      <h2 className="text-xl font-semibold mt-8 mb-2 text-[#f3864d]">{t("cookies_page_section4_title")}</h2>
-      <p className="mb-4 text-gray-700">{t("cookies_page_section4_text")}</p>
+      <LegalSection title={t("cookies_page_section5_title")}>
+        <p>
+          {t("cookies_page_section5_text")}
+          <a href={`/${lang}/privacy`} className={legalLink}>
+            {t("cookies_page_section5_privacy_link")}
+          </a>
+          .
+        </p>
+        <p>
+          {t("cookies_page_section5_cookies_info")}{" "}
+          <a href="https://www.allaboutcookies.org" target="_blank" rel="noopener noreferrer" className={legalLink}>
+            {t("cookies_page_section5_cookies_url")}
+          </a>
+        </p>
+      </LegalSection>
 
-      <h2 className="text-xl font-semibold mt-8 mb-2 text-[#f3864d]">{t("cookies_page_section5_title")}</h2>
-      <p className="mb-4 text-gray-700">
-        {t("cookies_page_section5_text")}
-        <a href={`/${lang}/privacy`} className="text-[#f3864d] underline">{t("cookies_page_section5_privacy_link")}</a>.
-      </p>
-      <p className="mb-4 text-gray-700">
-        {t("cookies_page_section5_cookies_info")}{" "}
-        <a href="https://www.allaboutcookies.org" target="_blank" rel="noopener noreferrer" className="text-[#f3864d] underline">
-          {t("cookies_page_section5_cookies_url")}
-        </a>
-      </p>
-
-      <h2 className="text-xl font-semibold mt-8 mb-2 text-[#f3864d]">{t("cookies_page_section6_title")}</h2>
-      <p className="mb-4 text-gray-700">
-        {t("cookies_page_section6_text")}<br />
-        📧 <a href="mailto:info@theboringwork.pt" className="text-[#f3864d] underline">{t("cookies_page_section6_email")}</a>
-      </p>
-    </section>
-  );
+      <LegalSection title={t("cookies_page_section6_title")}>
+        <p>
+          {t("cookies_page_section6_text")}
+          <br />
+          <a href="mailto:info@theboringwork.pt" className={legalLink}>
+            {t("cookies_page_section6_email")}
+          </a>
+        </p>
+      </LegalSection>
+    </LegalLayout>
+  )
 }

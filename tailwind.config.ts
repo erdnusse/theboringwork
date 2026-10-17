@@ -28,6 +28,7 @@ const config = {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
           50: "#f0f9ff",
           100: "#e0f2fe",
           200: "#bae6fd",
@@ -68,6 +69,32 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        brand: "#5e3cf0",
+        lime: {
+          DEFAULT: "#e9f01a",
+          hover: "#d8df10",
+          foreground: "#1e1f34",
+        },
+        ink: {
+          DEFAULT: "#1e1f34",
+          soft: "#4a4a58",
+        },
+        line: "#dedad2",
+        cream: {
+          DEFAULT: "#fafaf7",
+          soft: "#e6e1f5",
+          faint: "#8267ec",
+        },
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"],
+      },
+      maxWidth: {
+        site: "78rem",
+      },
+      spacing: {
+        page: "clamp(1.25rem, 4vw, 4rem)",
       },
       borderRadius: {
         lg: "var(--radius)",

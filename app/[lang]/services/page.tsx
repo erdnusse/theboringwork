@@ -1,17 +1,15 @@
-import ServicesComponent from "@/components/services-component";
-
+import ServicesPage from "@/components/site/services-page"
 
 export const metadata = {
   title: "Serviços | The Boring Work - Consultoria Empresarial",
   description:
-    "Fazemos o trabalho chato para que se possa focar no mais importante: a sua empresa. Especialistas em estruturação e crescimento de PMEs.",
-    robots: {
+    "Gestão comercial para promotores e back-office para agências e consultores. Desenhamos a estrutura, organizamos os processos e acompanhamos a execução.",
+  robots: {
     index: true,
     follow: true,
-  }
+  },
 }
 
-export default function ServicesPage() {
-  return ( <ServicesComponent />)
-
+export default function Services() {
+  return <ServicesPage />
 }

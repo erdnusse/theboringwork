@@ -1,11 +1,19 @@
 import type React from "react"
 import "./globals.css"
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
+import { Bricolage_Grotesque, DM_Sans } from "next/font/google"
 import { Toaster } from "sonner"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
+import SiteHeader from "@/components/site/site-header"
+import SiteFooter from "@/components/site/site-footer"
 import { LanguageProvider } from '@/context/LanguageProvider'
 import Script from "next/script";
+
+const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" })
+const bricolage = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", display: "swap" })
+
+export const viewport: Viewport = {
+  themeColor: "#5e3cf0",
+}
 
 export const metadata: Metadata = {
   title: {
@@ -42,7 +50,6 @@ export const metadata: Metadata = {
     shortcut: '/favicon.ico',
     apple: '/favicon.ico',
   },
-  themeColor: '#f3864d',
   alternates: {
     canonical: 'https://www.theboringwork.pt/',
   },
@@ -51,13 +58,8 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children, params }: { children: React.ReactNode, params: { lang: string } }) {
   const awaitedParams = await params;
   return (
-    <html>
+    <html lang={awaitedParams.lang === 'en' ? 'en' : 'pt-PT'} className={`${dmSans.variable} ${bricolage.variable}`}>
       <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-
          {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-SFHQRXLQLJ"
@@ -74,9 +76,9 @@ export default async function RootLayout({ children, params }: { children: React
       </head>
       <body>
         <LanguageProvider initialLang={awaitedParams.lang as 'pt' | 'en'}>
-          <Navbar />
+          <SiteHeader />
           {children}
-          <Footer />
+          <SiteFooter />
         </LanguageProvider>
         <Toaster richColors position="top-center" />
       </body>

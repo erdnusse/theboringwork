@@ -4,9 +4,9 @@ export function PageIntro({ eyebrow, title, children }: { eyebrow: string; title
   return (
     <section className="section-dark page-section">
       <div className="mx-auto max-w-site px-page">
-        <p className="eyebrow">{eyebrow}</p>
-        <h1 className="mt-6 max-w-5xl text-display">{title}</h1>
-        {children ? <p className="mt-8 max-w-2xl text-body-lg">{children}</p> : null}
+        <p className="eyebrow hero-in">{eyebrow}</p>
+        <h1 className="hero-in mt-6 max-w-5xl text-display" style={{ "--d": "120ms" } as React.CSSProperties}>{title}</h1>
+        {children ? <p className="hero-in mt-8 max-w-2xl text-body-lg" style={{ "--d": "260ms" } as React.CSSProperties}>{children}</p> : null}
       </div>
     </section>
   )

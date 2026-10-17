@@ -65,7 +65,7 @@ export default function SiteHeader() {
               key={item.href}
               href={item.href}
               aria-current={isActive(item.href) ? "page" : undefined}
-              className={`nav-link ${isActive(item.href) ? "underline decoration-lime decoration-2 underline-offset-8" : ""}`}
+              className="nav-link"
             >
               {item.label}
             </Link>
@@ -89,7 +89,7 @@ export default function SiteHeader() {
       </div>
 
       {open ? (
-        <nav id="mobile-nav" className="border-t border-cream-faint px-page py-6 md:hidden" aria-label={t("nav_mobile")}>
+        <nav id="mobile-nav" className="menu-in border-t border-cream-faint px-page py-6 md:hidden" aria-label={t("nav_mobile")}>
           <div className="flex flex-col gap-4">
             {navItems.map((item) => (
               <Link

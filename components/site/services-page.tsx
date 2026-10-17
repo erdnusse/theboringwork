@@ -4,6 +4,7 @@ import Link from "next/link"
 import { ArrowUpRight, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { PageIntro } from "@/components/site/page-intro"
+import { Reveal } from "@/components/site/reveal"
 import { useTranslation } from "@/hooks/use-translation"
 
 export const OFFERS = [
@@ -23,7 +24,8 @@ export default function ServicesPage() {
       <section className="section-light page-section">
         <div className="mx-auto grid max-w-site gap-6 px-page md:grid-cols-2">
           {OFFERS.map((offer, index) => (
-            <article key={offer.id} className="surface-card p-8 md:p-10">
+            <Reveal key={offer.id} delay={index * 80}>
+            <article className="surface-card h-full p-8 md:p-10">
               <p className="font-display text-lg font-bold text-primary">{String(index + 1).padStart(2, "0")}</p>
               <h2 className="mt-6 text-card-title">{t(`services_lv_${offer.id}_title`)}</h2>
               <p className="eyebrow eyebrow-dark mt-8">{t("services_lv_who_label")}</p>
@@ -38,6 +40,7 @@ export default function ServicesPage() {
                 ))}
               </ul>
             </article>
+            </Reveal>
           ))}
         </div>
       </section>

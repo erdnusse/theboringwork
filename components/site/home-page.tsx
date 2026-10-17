@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { HandUnderline } from "@/components/site/page-intro"
 import { OFFERS } from "@/components/site/services-page"
+import { Reveal } from "@/components/site/reveal"
 import { useTranslation } from "@/hooks/use-translation"
 
 export default function HomePage() {
@@ -15,7 +16,7 @@ export default function HomePage() {
     <main>
       <section className="section-dark pb-24 pt-24 md:pb-32 md:pt-36">
         <div className="mx-auto max-w-site px-page">
-          <h1 className="max-w-5xl text-hero">
+          <h1 className="hero-in max-w-5xl text-hero">
             {t("home_lv_hero_pre")}
             <span className="relative inline-block">
               {t("home_lv_hero_word")}
@@ -23,8 +24,8 @@ export default function HomePage() {
             </span>
             {t("home_lv_hero_post")}
           </h1>
-          <p className="mt-10 max-w-2xl text-lead">{t("home_lv_hero_lead")}</p>
-          <Button asChild variant="lime" size="lg" className="mt-10">
+          <p className="hero-in mt-10 max-w-2xl text-lead" style={{ "--d": "160ms" } as React.CSSProperties}>{t("home_lv_hero_lead")}</p>
+          <Button asChild variant="lime" size="lg" className="hero-in mt-10" style={{ "--d": "340ms" } as React.CSSProperties}>
             <Link href={`/${lang}/contact`}>
               {t("cta_talk_to_us")} <ArrowUpRight aria-hidden="true" />
             </Link>
@@ -37,11 +38,13 @@ export default function HomePage() {
           <p className="eyebrow eyebrow-dark mb-10">{t("home_lv_where_eyebrow")}</p>
           <div className="grid gap-6 md:grid-cols-2">
             {OFFERS.map((offer, index) => (
-              <article key={offer.id} className="surface-card p-8 md:p-10">
+              <Reveal key={offer.id} delay={index * 80}>
+              <article className="surface-card h-full p-8 md:p-10">
                 <p className="font-display text-lg font-bold text-primary">{String(index + 1).padStart(2, "0")}</p>
                 <h2 className="mt-6 text-card-title">{t(`services_lv_${offer.id}_title`)}</h2>
                 <p className="mt-4 text-ink-soft">{t(`services_lv_${offer.id}_summary`)}</p>
               </article>
+              </Reveal>
             ))}
           </div>
           <div className="mt-8 flex justify-end">
@@ -53,7 +56,7 @@ export default function HomePage() {
       </section>
 
       <section className="section-dark page-section">
-        <div className="mx-auto grid max-w-site gap-10 px-page md:grid-cols-2 md:gap-16">
+        <Reveal className="mx-auto grid max-w-site gap-10 px-page md:grid-cols-2 md:gap-16">
           <div>
             <p className="eyebrow">{t("home_lv_about_eyebrow")}</p>
             <h2 className="mt-6 text-display-sm">{t("home_lv_about_title")}</h2>
@@ -65,7 +68,7 @@ export default function HomePage() {
               {t("home_lv_about_tagline")}
             </p>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="section-light page-section">

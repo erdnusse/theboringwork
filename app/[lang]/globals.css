@@ -5,6 +5,8 @@
 @layer base {
   :root {
     /* Semantic tokens (HSL triplets) used by components/ui and the dashboard */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-hero: cubic-bezier(0.22, 0.61, 0.36, 1);
     --background: 60 21% 97%;
     --foreground: 237 27% 16%;
 
@@ -126,7 +128,20 @@
   }
 
   .nav-link {
-    @apply text-[0.9rem] font-medium transition-opacity hover:opacity-75;
+    @apply relative text-[0.9rem] font-medium;
+  }
+  .nav-link::after {
+    content: "";
+    @apply absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 bg-lime;
+    transition: transform 220ms var(--ease-out);
+  }
+  .nav-link[aria-current="page"]::after {
+    @apply scale-x-100;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link:hover::after {
+      @apply scale-x-100;
+    }
   }
   .footer-link {
     @apply text-[0.9rem] text-cream-soft transition-opacity hover:opacity-75;
@@ -151,8 +166,45 @@
   .field {
     @apply w-full rounded-none border-0 border-b border-line bg-transparent pb-3 pt-[0.6rem] text-base normal-case tracking-normal text-ink outline-none;
   }
+  .field {
+    transition: border-color 200ms var(--ease-out);
+  }
   .field:focus {
     @apply border-primary;
+  }
+
+  /* Page-load entrance: CSS only, so content never waits on JS */
+  .hero-in {
+    animation: rise-in 850ms var(--ease-hero) backwards;
+    animation-delay: calc(100ms + var(--d, 0ms));
+  }
+
+  /* Scroll reveal: toggled by components/site/reveal.tsx */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 500ms var(--ease-out) var(--d, 0ms),
+      transform 500ms var(--ease-out) var(--d, 0ms);
+  }
+  .reveal[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .menu-in {
+    animation: rise-in 200ms var(--ease-out) both;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -164,6 +216,14 @@
   *::before,
   *::after {
     transition-duration: 0.01ms !important;
+  }
+  .hero-in,
+  .menu-in {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
   }
 }
 

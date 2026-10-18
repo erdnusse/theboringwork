@@ -67,6 +67,7 @@ export async function submitContactForm(formData: ContactFormData) {
     const recaptchaResult = await verifyRecaptcha(validatedData.recaptchaToken)
 
     if (!recaptchaResult.success) {
+      console.error("reCAPTCHA verification failed:", recaptchaResult.error)
       return {
         success: false,
         error: "Security verification failed. Please try again.",
@@ -110,7 +111,7 @@ export async function submitContactForm(formData: ContactFormData) {
     try {
       const adminEmail = process.env.ADMIN_EMAIL || "admin@example.com"
 
-      await sendEmail({
+      const adminSent = await sendEmail({
         to: adminEmail,
         subject: `New Contact Form Submission: ${validatedData.subject}`,
         html: `
@@ -137,8 +138,10 @@ export async function submitContactForm(formData: ContactFormData) {
         `,
       })
 
+      if (!adminSent) throw new Error("Admin notification email failed (see sendEmail log)")
+
       // Send confirmation email to the user
-      await sendEmail({
+      const userSent = await sendEmail({
         to: validatedData.email,
         subject: "We've received your message - StrategyPro",
         html: `
@@ -173,6 +176,8 @@ export async function submitContactForm(formData: ContactFormData) {
           The StrategyPro Team
         `,
       })
+
+      if (!userSent) throw new Error("User confirmation email failed (see sendEmail log)")
 
       // Update the contact message status to indicate emails were sent
       await prisma.contactMessage.update({

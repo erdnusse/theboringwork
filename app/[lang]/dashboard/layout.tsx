@@ -7,14 +7,17 @@ import { ClerkProvider } from "@clerk/nextjs"
 
 export default async function DashboardLayout({
   children,
+  params,
 }: {
   children: React.ReactNode
+  params: Promise<{ lang: string }>
 }) {
+  const { lang } = await params
   // Use await with auth() since it returns a Promise
   const { userId } = await auth()
 
   if (!userId) {
-    redirect("/sign-in")
+    redirect(`/${lang}/sign-in`)
   }
 
   return (

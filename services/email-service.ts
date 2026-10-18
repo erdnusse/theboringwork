@@ -155,35 +155,19 @@ export async function getAccessToken(config: EmailOAuthConfig): Promise<string> 
 
 // Create a transporter for sending emails
 export async function createTransporter() {
-  try {
-    // Get email configuration from database
-    const config = await getEmailConfig()
+  const user = process.env.GMAIL_USER
+  const pass = process.env.GMAIL_APP_PASSWORD
 
-    if (!config) {
-      throw new Error("Email configuration not found")
-    }
-
-    // Get fresh access token
-    const accessToken = await getAccessToken(config)
-
-    // Create nodemailer transporter with OAuth2
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        type: "OAuth2",
-        user: config.email,
-        clientId: config.clientId,
-        clientSecret: config.clientSecret,
-        refreshToken: config.refreshToken,
-        accessToken: accessToken,
-      },
-    })
-
-    return transporter
-  } catch (error) {
-    console.error("Error creating email transporter:", error)
-    throw error
+  if (!user || !pass) {
+    throw new Error("GMAIL_USER and GMAIL_APP_PASSWORD must be set")
   }
+
+  return nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: { user, pass },
+  })
 }
 
 // Send an email
@@ -191,11 +175,6 @@ export async function sendEmail(message: EmailMessage): Promise<boolean> {
   try {
     const transporter = await createTransporter()
 
-    // Get the from address from the config
-    const config = await getEmailConfig()
-    if (!config) {
-      throw new Error("Email configuration not found")
-    }
 
     // Create email log entry
     const emailLog = await prisma.emailLog.create({
@@ -210,7 +189,7 @@ export async function sendEmail(message: EmailMessage): Promise<boolean> {
     try {
       // Send the email
       const info = await transporter.sendMail({
-        from: config.email,
+        from: process.env.GMAIL_USER,
         to: message.to,
         subject: message.subject,
         text: message.text,

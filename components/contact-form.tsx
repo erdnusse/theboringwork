@@ -90,6 +90,7 @@ export default function ContactForm() {
         toast.success("Mensagem enviada com sucesso")
         reset()
       } else {
+        console.error("Contact form failed:", result.error)
         toast.error("Falha ao enviar a sua mensagem. Por favor, tente novamente.")
       }
     } catch (error) {

@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout({ children, params }: { children: React.ReactNode, params: { lang: string } }) {
+export default async function RootLayout({ children, params }: { children: React.ReactNode, params: Promise<{ lang: string }> }) {
   const awaitedParams = await params;
   return (
     <html lang={awaitedParams.lang === 'en' ? 'en' : 'pt-PT'} className={`${dmSans.variable} ${bricolage.variable}`}>

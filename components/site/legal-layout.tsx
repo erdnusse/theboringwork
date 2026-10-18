@@ -21,7 +21,7 @@ export function LegalLayout({
       </PageIntro>
       <section className="section-light page-section">
         <div className="mx-auto max-w-3xl px-page">
-          <p className="pb-10 text-lg text-ink-soft">{intro}</p>
+          {intro && <p className="pb-10 text-lg text-ink-soft">{intro}</p>}
           {children}
         </div>
       </section>

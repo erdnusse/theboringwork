@@ -1,5 +1,6 @@
 "use client"
 import { useTranslation } from "@/hooks/use-translation"
+import { openCookieSettings } from "@/lib/cookie-consent"
 import { LegalLayout, LegalSection, legalLink } from "@/components/site/legal-layout"
 
 const COOKIES = ["ga", "ga_x", "gid", "gat"] as const
@@ -61,6 +62,9 @@ export default function CookiesComponent() {
 
       <LegalSection title={t("cookies_page_section4_title")}>
         <p>{t("cookies_page_section4_text")}</p>
+        <button type="button" onClick={openCookieSettings} className={legalLink}>
+          {t("cookie_settings")}
+        </button>
       </LegalSection>
 
       <LegalSection title={t("cookies_page_section5_title")}>

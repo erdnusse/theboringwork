@@ -6,7 +6,7 @@ import { Toaster } from "sonner"
 import SiteHeader from "@/components/site/site-header"
 import SiteFooter from "@/components/site/site-footer"
 import { LanguageProvider } from '@/context/LanguageProvider'
-import Script from "next/script";
+import CookieConsent from "@/components/site/cookie-consent"
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" })
 const bricolage = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", display: "swap" })
@@ -59,26 +59,12 @@ export default async function RootLayout({ children, params }: { children: React
   const awaitedParams = await params;
   return (
     <html lang={awaitedParams.lang === 'en' ? 'en' : 'pt-PT'} className={`${dmSans.variable} ${bricolage.variable}`}>
-      <head>
-         {/* Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-SFHQRXLQLJ"
-          strategy="afterInteractive"
-        />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-SFHQRXLQLJ');
-          `}
-        </Script>
-      </head>
       <body>
         <LanguageProvider initialLang={awaitedParams.lang as 'pt' | 'en'}>
           <SiteHeader />
           {children}
           <SiteFooter />
+          <CookieConsent />
         </LanguageProvider>
         <Toaster richColors position="top-center" />
       </body>

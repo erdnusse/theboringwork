@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Facebook, Instagram, Linkedin } from "lucide-react"
 import { useTranslation } from "@/hooks/use-translation"
 import { CONTACT_EMAIL, SOCIAL } from "@/lib/site"
+import { openCookieSettings } from "@/lib/cookie-consent"
 
 const socialLink =
   "flex size-8 items-center justify-center text-cream transition-colors hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime"
@@ -68,6 +69,9 @@ export default function SiteFooter() {
           <nav className="flex flex-wrap gap-x-6 gap-y-1" aria-label={t("footer_legal_nav")}>
             <Link href={`/${lang}/privacy`} className="py-1 transition-opacity hover:opacity-75">{t("footer_privacy")}</Link>
             <Link href={`/${lang}/cookies`} className="py-1 transition-opacity hover:opacity-75">Cookies</Link>
+            <button type="button" onClick={openCookieSettings} className="py-1 transition-opacity hover:opacity-75">
+              {t("cookie_settings")}
+            </button>
             <Link href={`/${lang}/terms`} className="py-1 transition-opacity hover:opacity-75">{t("footer_terms")}</Link>
           </nav>
         </div>

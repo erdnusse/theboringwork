@@ -68,6 +68,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^22",
     "@types/react": "^19",
@@ -75,7 +76,7 @@
     "eslint": "^9.39.5",
     "postcss": "^8",
     "prisma": "^6.7.0",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5"
   },
   "overrides": {

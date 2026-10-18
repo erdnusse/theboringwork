@@ -37,7 +37,7 @@ Database	Neon
  + Prisma
 	Serverless Postgres with schema-based ORM
 Email System	Nodemailer
- + Google APIs	Sends messages via Gmail OAuth2
+	Sends messages via Gmail SMTP (app password)
 Analytics	Google Analytics (gtag.js)	Tracks traffic and engagement
 Deployment	Vercel
 	CI/CD and environment management
@@ -55,7 +55,7 @@ Deployment	Vercel
 │   │   ├── sign-up/
 │   │   ├── terms/       # Terms & conditions
 │   │   └── layout.tsx   # Language context provider
-│   ├── api/             # API routes (cron, oauth-callback)
+│   ├── api/             # API routes
 │   ├── sitemap.ts       # Sitemap generator
 │   ├── robots.ts        # Robots.txt
 │   └── globals.css      # Global styles
@@ -89,10 +89,8 @@ DATABASE_URL="postgresql://user:password@host/dbname"
 GOOGLE_CLIENT_ID="your-google-client-id"
 GOOGLE_CLIENT_SECRET="your-google-client-secret"
 NEXTAUTH_SECRET="your-random-secret"
-EMAIL_HOST="smtp.yourmail.com"
-EMAIL_PORT=465
-EMAIL_USER="contact@theboringwork.pt"
-EMAIL_PASS="your-email-password"
+GMAIL_USER="you@gmail.com"
+GMAIL_APP_PASSWORD="your-16-char-app-password"
 
 🧱 Database Setup
 
@@ -113,8 +111,7 @@ Used to authenticate administrators and protect routes like /dashboard.
 
 📧 Email Contact System
 
-Visitors can contact the company directly through a form that sends structured emails using Nodemailer with Gmail OAuth2.
-Email credentials and tokens are managed securely via environment variables and the database.
+Visitors can contact the company directly through a form that sends structured emails using Nodemailer with Gmail SMTP and an app password (`GMAIL_USER`, `GMAIL_APP_PASSWORD`).
 
 🌍 Internationalization (i18n)
 

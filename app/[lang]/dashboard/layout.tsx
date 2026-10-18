@@ -2,7 +2,7 @@ import type React from "react"
 import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs/server"
 import Link from "next/link"
-import { LayoutDashboard, Mail, MessageSquare, Settings } from "lucide-react"
+import { LayoutDashboard, MessageSquare, Settings } from "lucide-react"
 import { ClerkProvider } from "@clerk/nextjs"
 
 export default async function DashboardLayout({
@@ -33,14 +33,6 @@ export default async function DashboardLayout({
             >
               <LayoutDashboard className="h-4 w-4" />
               Overview
-            </Link>
-
-            <Link
-              href="/dashboard/email"
-              className="flex items-center gap-2 rounded-lg px-3 py-2 transition-all hover:bg-muted"
-            >
-              <Mail className="h-4 w-4" />
-              Email
             </Link>
 
             <Link

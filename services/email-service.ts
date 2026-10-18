@@ -1,22 +1,6 @@
 import nodemailer from "nodemailer"
-import { google } from "googleapis"
 import prisma from "@/lib/prisma"
-import crypto from "crypto"
 
-const OAuth2 = google.auth.OAuth2
-
-// Interface for OAuth email configuration
-export interface EmailOAuthConfig {
-  email: string
-  clientId: string
-  clientSecret: string
-  refreshToken: string
-  accessToken?: string
-  tokenExpiry?: number
-  lastUsed?: Date
-}
-
-// Interface for email message
 export interface EmailMessage {
   to: string
   subject: string
@@ -24,136 +8,6 @@ export interface EmailMessage {
   html?: string
 }
 
-// Get email configuration from database
-export async function getEmailConfig(): Promise<EmailOAuthConfig | null> {
-  try {
-    const config = await prisma.emailOAuthConfig.findFirst({
-      where: {
-        isActive: true,
-      },
-    })
-
-    if (!config) return null
-
-    // Update the last used timestamp to keep the token active
-    await prisma.emailOAuthConfig.update({
-      where: { id: config.id },
-      data: { updatedAt: new Date() },
-    })
-
-    return {
-      email: config.email,
-      clientId: config.clientId,
-      clientSecret: config.clientSecret,
-      refreshToken: config.refreshToken,
-      accessToken: config.accessToken || undefined,
-      tokenExpiry: config.tokenExpiry ? Number(config.tokenExpiry) : undefined,
-    }
-  } catch (error) {
-    console.error("Error fetching email configuration:", error)
-    return null
-  }
-}
-
-// Save email configuration to database
-export async function saveEmailConfig(config: EmailOAuthConfig): Promise<boolean> {
-  try {
-    // Deactivate all existing configurations first
-    await prisma.emailOAuthConfig.updateMany({
-      where: {
-        isActive: true,
-      },
-      data: {
-        isActive: false,
-      },
-    })
-
-    // Insert new configuration
-    await prisma.emailOAuthConfig.create({
-      data: {
-        email: config.email,
-        clientId: config.clientId,
-        clientSecret: config.clientSecret,
-        refreshToken: config.refreshToken,
-        accessToken: config.accessToken,
-        tokenExpiry: config.tokenExpiry ? BigInt(config.tokenExpiry) : null,
-        isActive: true,
-      },
-    })
-
-    return true
-  } catch (error) {
-    console.error("Error saving email configuration:", error)
-    return false
-  }
-}
-
-// Update access token in database
-export async function updateAccessToken(email: string, accessToken: string, tokenExpiry: number): Promise<boolean> {
-  try {
-    await prisma.emailOAuthConfig.updateMany({
-      where: {
-        email,
-        isActive: true,
-      },
-      data: {
-        accessToken,
-        tokenExpiry: BigInt(tokenExpiry),
-        updatedAt: new Date(), // Update the timestamp to keep the token active
-      },
-    })
-    return true
-  } catch (error) {
-    console.error("Error updating access token:", error)
-    return false
-  }
-}
-
-// Create OAuth2 client
-export function createOAuth2Client(config: EmailOAuthConfig) {
-  const oauth2Client = new OAuth2(
-    config.clientId,
-    config.clientSecret,
-    process.env.OAUTH_REDIRECT_URI || "https://developers.google.com/oauthplayground",
-  )
-
-  oauth2Client.setCredentials({
-    refresh_token: config.refreshToken,
-    access_token: config.accessToken,
-    expiry_date: config.tokenExpiry,
-  })
-
-  return oauth2Client
-}
-
-// Get fresh access token if needed
-export async function getAccessToken(config: EmailOAuthConfig): Promise<string> {
-  try {
-    const oauth2Client = createOAuth2Client(config)
-
-    // Check if token is expired or will expire soon (within 5 minutes)
-    const isTokenExpired = !config.tokenExpiry || config.tokenExpiry < Date.now() + 5 * 60 * 1000
-
-    if (isTokenExpired) {
-      const { credentials } = await oauth2Client.refreshAccessToken()
-
-      if (credentials.access_token) {
-        // Update the token in the database
-        await updateAccessToken(config.email, credentials.access_token, credentials.expiry_date || Date.now() + 3600000)
-
-        return credentials.access_token
-      }
-      throw new Error("Failed to refresh access token")
-    }
-
-    return config.accessToken || ""
-  } catch (error) {
-    console.error("Error getting access token:", error)
-    throw error
-  }
-}
-
-// Create a transporter for sending emails
 export async function createTransporter() {
   const user = process.env.GMAIL_USER
   const pass = process.env.GMAIL_APP_PASSWORD
@@ -170,13 +24,10 @@ export async function createTransporter() {
   })
 }
 
-// Send an email
 export async function sendEmail(message: EmailMessage): Promise<boolean> {
   try {
     const transporter = await createTransporter()
 
-
-    // Create email log entry
     const emailLog = await prisma.emailLog.create({
       data: {
         to: message.to,
@@ -187,7 +38,6 @@ export async function sendEmail(message: EmailMessage): Promise<boolean> {
     })
 
     try {
-      // Send the email
       const info = await transporter.sendMail({
         from: process.env.GMAIL_USER,
         to: message.to,
@@ -196,19 +46,14 @@ export async function sendEmail(message: EmailMessage): Promise<boolean> {
         html: message.html,
       })
 
-      // Update email log with success
       await prisma.emailLog.update({
         where: { id: emailLog.id },
-        data: {
-          status: "SENT",
-          sentAt: new Date(),
-        },
+        data: { status: "SENT", sentAt: new Date() },
       })
 
       console.log("Email sent:", info.messageId)
       return true
     } catch (error) {
-      // Update email log with error
       await prisma.emailLog.update({
         where: { id: emailLog.id },
         data: {
@@ -222,251 +67,4 @@ export async function sendEmail(message: EmailMessage): Promise<boolean> {
     console.error("Error sending email:", error)
     return false
   }
-}
-
-// Test email configuration
-export async function testEmailConfig(config: EmailOAuthConfig): Promise<{ success: boolean; message: string }> {
-  try {
-    // Create OAuth2 client
-    const oauth2Client = createOAuth2Client(config)
-
-    // If we have a fresh access token (not expired), skip the refresh test
-    const isTokenFresh = config.tokenExpiry && config.tokenExpiry > Date.now() + 10 * 60 * 1000 // Token is valid for more than 10 minutes
-
-    if (isTokenFresh && config.accessToken) {
-      // Token is fresh, just verify we can create the client
-      console.log("Using fresh access token, skipping refresh test")
-      return {
-        success: true,
-        message: "Email configuration verified successfully with fresh token",
-      }
-    }
-
-    // Only try to refresh if the token is older or about to expire
-    try {
-      const { credentials } = await oauth2Client.refreshAccessToken()
-
-      if (!credentials.access_token) {
-        return {
-          success: false,
-          message: "Failed to refresh access token with provided credentials",
-        }
-      }
-
-      // Update the config with the new access token
-      config.accessToken = credentials.access_token
-      config.tokenExpiry = credentials.expiry_date || Date.now() + 3600000
-    } catch (refreshError) {
-      console.error("Error refreshing token during test:", refreshError)
-
-      // If we have a fresh token but refresh failed, that might be okay
-      if (isTokenFresh && config.accessToken) {
-        console.log("Refresh failed but token is still fresh, proceeding")
-        return {
-          success: true,
-          message: "Email configuration verified successfully (refresh test skipped for fresh token)",
-        }
-      }
-
-      return {
-        success: false,
-        message: `OAuth credentials validation failed: ${refreshError instanceof Error ? refreshError.message : "Unknown error"}`,
-      }
-    }
-
-    return {
-      success: true,
-      message: "Email configuration verified successfully",
-    }
-  } catch (error) {
-    console.error("Error verifying email configuration:", error)
-    return {
-      success: false,
-      message: `Failed to verify email configuration: ${error instanceof Error ? error.message : "Unknown error"}`,
-    }
-  }
-}
-
-// Generate OAuth URL for authorization
-export function generateOAuthUrl(clientId: string, clientSecret: string, email: string): string {
-  try {
-    if (!clientId || !clientSecret) {
-      throw new Error("Client ID and Client Secret are required")
-    }
-
-    const redirectUri = process.env.OAUTH_REDIRECT_URI || "https://developers.google.com/oauthplayground"
-
-    console.log("Using redirect URI:", redirectUri)
-
-    const oauth2Client = new OAuth2(clientId, clientSecret, redirectUri)
-
-    const scopes = [
-      "https://mail.google.com/",
-      "https://www.googleapis.com/auth/gmail.send",
-      "https://www.googleapis.com/auth/gmail.compose",
-      "https://www.googleapis.com/auth/gmail.modify",
-    ]
-
-    // Generate a random state value for security
-    const state = crypto.randomBytes(20).toString("hex")
-
-    // Store the state with client credentials in the database for verification
-    prisma.oAuthState
-      .upsert({
-        where: { id: 1 },
-        update: {
-          state,
-          email,
-          clientId,
-          clientSecret,
-          expiresAt: new Date(Date.now() + 3600000), // Expires in 1 hour
-          updatedAt: new Date(),
-        },
-        create: {
-          id: 1,
-          state,
-          email,
-          clientId,
-          clientSecret,
-          expiresAt: new Date(Date.now() + 3600000), // Expires in 1 hour
-        },
-      })
-      .catch((error) => {
-        console.error("Error storing OAuth state:", error)
-      })
-
-    // Configure the OAuth URL to maximize token longevity
-    const url = oauth2Client.generateAuthUrl({
-      // Request offline access to get a refresh token that doesn't expire with the session
-      access_type: "offline",
-
-      // Include all the required scopes
-      scope: scopes,
-
-      // Force approval prompt to ensure we get a refresh token every time
-      // This is important for getting a new refresh token if needed
-      prompt: "consent",
-
-      // Include the state parameter for security
-      state: state,
-
-      // Include login_hint to pre-fill the email
-      login_hint: email,
-
-      // Request a refresh token that doesn't expire
-      // Note: Google may still invalidate tokens for security reasons
-      include_granted_scopes: true,
-    })
-
-    console.log("Generated OAuth URL with state:", url)
-
-    return url
-  } catch (error) {
-    console.error("Error generating OAuth URL:", error)
-    throw error
-  }
-}
-
-// Exchange authorization code for tokens
-export async function exchangeCodeForTokens(
-  code: string,
-  state: string,
-): Promise<{
-  accessToken: string
-  refreshToken: string
-  tokenExpiry: number
-  email: string
-  clientId: string
-  clientSecret: string
-}> {
-  try {
-    // Retrieve the stored state data
-    const stateData = await prisma.oAuthState.findUnique({
-      where: { id: 1 },
-    })
-
-    if (!stateData || stateData.state !== state) {
-      throw new Error("Invalid state parameter")
-    }
-
-    // Check if the state has expired
-    if (stateData.expiresAt < new Date()) {
-      throw new Error("State parameter has expired")
-    }
-
-    const { clientId, clientSecret, email } = stateData
-    const redirectUri = process.env.OAUTH_REDIRECT_URI || "https://developers.google.com/oauthplayground"
-
-    const oauth2Client = new OAuth2(clientId, clientSecret, redirectUri)
-
-    // Exchange the authorization code for tokens
-    const { tokens } = await oauth2Client.getToken(code)
-
-    if (!tokens.refresh_token || !tokens.access_token) {
-      throw new Error("Failed to obtain tokens")
-    }
-
-    // Set a long expiry for the access token if not provided
-    const tokenExpiry = tokens.expiry_date || Date.now() + 3600000
-
-    return {
-      accessToken: tokens.access_token,
-      refreshToken: tokens.refresh_token,
-      tokenExpiry: tokenExpiry,
-      email,
-      clientId,
-      clientSecret,
-    }
-  } catch (error) {
-    console.error("Error exchanging code for tokens:", error)
-    throw error
-  }
-}
-
-// Implement a token refresh scheduler to keep tokens active
-export async function scheduleTokenRefresh(): Promise<void> {
-  try {
-    // Get the active email configuration
-    const config = await getEmailConfig()
-
-    if (!config) {
-      console.log("No active email configuration found for token refresh")
-      return
-    }
-
-    // Refresh the access token to keep the refresh token active
-    await getAccessToken(config)
-
-    console.log("Successfully refreshed access token to keep OAuth credentials active")
-  } catch (error) {
-    console.error("Error in scheduled token refresh:", error)
-  }
-}
-
-// Function to handle token revocation detection and recovery
-export async function handlePossibleTokenRevocation(error: any): Promise<boolean> {
-  // Check if the error is related to invalid_grant or token revocation
-  const isTokenRevoked =
-    error.message?.includes("invalid_grant") || error.message?.includes("Token has been expired or revoked")
-
-  if (isTokenRevoked) {
-    console.error("OAuth token appears to be revoked or invalid:", error.message)
-
-    // You could implement logic here to:
-    // 1. Mark the configuration as invalid
-    // 2. Notify administrators
-    // 3. Trigger a re-authorization flow
-
-    await prisma.emailOAuthConfig.updateMany({
-      where: { isActive: true },
-      data: {
-        isActive: false,
-        // You could add a status field to indicate the token was revoked
-      },
-    })
-
-    return true
-  }
-
-  return false
 }
